@@ -44,7 +44,7 @@ public class Armor
         level = 1;
         armor = _armor;
     }
-
+    //
     public void level_up()
     {
         this.level++;
