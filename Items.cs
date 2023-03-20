@@ -1,6 +1,6 @@
 ﻿public class Items
 {
-    int[] coordinates;
+    public int[] coordinates;
     public Items()
     {
         coordinates = new int[2] { 0, 0 };
@@ -12,7 +12,7 @@
     }
 }
 
-public class Weapon
+public class Weapon: Items
 {
     public string name;
     public int level;
@@ -26,14 +26,15 @@ public class Weapon
         damage = _damage;
     }
 
-    public void level_up()
+    // левел ап оружия
+    public void levelUp()
     {
         this.level++;
         this.damage += 10; // либо определенная прибавка, либо умножение на коэфициент
     }
 }
 
-public class Armor
+public class Armor: Items
 {
     public int level;
     public int armor;
@@ -45,7 +46,8 @@ public class Armor
         armor = _armor;
     }
 
-    public void level_up()
+    // левел ап брони
+    public void levelUp()
     {
         this.level++;
         this.armor += 10; // либо определенная прибавка, либо умножение на коэфициент
