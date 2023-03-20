@@ -1,6 +1,11 @@
-﻿Console.WriteLine("Test Git Hub");
+﻿Monsters goblin = new Monsters(1, 5);
+Items sword = new Items(1, 3);
+
+World world = new World(1, 5);
+
+world.monster = goblin;
+world.item = sword;
 
 
-/*Как это работает 
- * 1 Как отправить. Нажимаем Git -> фиксация или скрытие -> отправить -> справа выбираем СВОЮ!!! ветвь и отправляем все в нее
- * 2 Как получить код. Нажимаем Git -> клонировать репозиторий
+Console.WriteLine(world.GetXY()[1]);
+

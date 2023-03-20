@@ -1,6 +1,15 @@
-﻿public class Item
+﻿public class Items
 {
+    int[] coordinates;
+    public Items()
+    {
+        coordinates = new int[2] { 0, 0 };
+    }
 
+    public Items(int x, int y) : this()
+    {
+        coordinates = new int[2] { x, y };
+    }
 }
 
 public class Weapon
