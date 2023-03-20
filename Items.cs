@@ -29,20 +29,20 @@ public class Weapon
     public void level_up()
     {
         this.level++;
-        this.damage += 0;
+        this.damage += 10; // либо определенная прибавка, либо умножение на коэфициент
     }
 }
 
 public class Armor
 {
-    public string name;
+    // public string name;
     public int level;
     public int armor;
     public int id;
 
-    public Armor(string _name, int _armor)
+    public Armor(/* string _name, */ int _armor)
     {
-        name = _name;
+        // name = _name;
         level = 1;
         armor = _armor;
     }
@@ -50,6 +50,6 @@ public class Armor
     public void level_up()
     {
         this.level++;
-        this.armor += 0;
+        this.armor += 10; // либо определенная прибавка, либо умножение на коэфициент
     }
 }
