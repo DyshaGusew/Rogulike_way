@@ -35,14 +35,12 @@ public class Weapon
 
 public class Armor
 {
-    // public string name;
     public int level;
     public int armor;
     public int id;
 
-    public Armor(/* string _name, */ int _armor)
+    public Armor(int _armor)
     {
-        // name = _name;
         level = 1;
         armor = _armor;
     }
