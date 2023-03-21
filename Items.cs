@@ -1,6 +1,7 @@
 ﻿public class Items
 {
-    int[] coordinates;
+    public int[] coordinates;
+    public string name;
     public Items()
     {
         coordinates = new int[2] { 0, 0 };
