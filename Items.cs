@@ -27,7 +27,7 @@ public class Weapon: Items
     }
 
     // левел ап оружия
-    public void levelUp()
+    public void LevelUp()
     {
         this.level++;
         this.damage += 10; // либо определенная прибавка, либо умножение на коэфициент
@@ -47,7 +47,7 @@ public class Armor: Items
     }
 
     // левел ап брони
-    public void levelUp()
+    public void LevelUp()
     {
         this.level++;
         this.armor += 10; // либо определенная прибавка, либо умножение на коэфициент
