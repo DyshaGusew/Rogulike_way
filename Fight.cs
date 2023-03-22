@@ -14,7 +14,7 @@ namespace Rogulike_way
         public double boost = 1.22;
         public double damage = 40;
         public double stamina = 100;
-    }*/
+    }
     public class Fight
     {
         //Начало файта
@@ -22,5 +22,5 @@ namespace Rogulike_way
         {
 
         }
-    }
+    }*/
 }
