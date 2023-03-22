@@ -8,5 +8,6 @@ namespace Rogulike_way
 {
     internal class Class1
     {
+        int a;
     }
 }
