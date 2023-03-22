@@ -36,20 +36,6 @@ public class Items
     }
 }
 
-public class Monsters
-{
-    public int[] coordinates;
-    public string name;
-    public Monsters()
-    {
-        coordinates = new int[2] { 0, 0 };
-    }
-
-    public Monsters(int x, int y) : this()
-    {
-        coordinates = new int[2] { x, y };
-    }
-}
 
 public class Weapon : Items
 {

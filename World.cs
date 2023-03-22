@@ -93,8 +93,7 @@ public class World
             Borders border = new Borders(x, y_len - 1);
             AppBorders(border);
         }
-            
-
+       
         return map;
     }
       
@@ -118,6 +117,15 @@ public class World
             if (monster.coordinates.SequenceEqual(coordinates_move))
             {
                 return monster;                 //Возыращает монстра на указанных координатах
+            }
+
+        }
+
+        foreach (Borders border in borders_list)
+        {
+            if (border.coordinates.SequenceEqual(coordinates_move))
+            {
+                return border;                 //Возыращает монстра на указанных координатах
             }
 
         }
