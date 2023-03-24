@@ -17,7 +17,7 @@ else if (obj is Items)   //Проверяю принадлежит ли объе
 //Создаю мир
 
 //
-Console.SetWindowSize(100, 100);
+//Console.SetWindowSize(100, 100);
 
 World world = new World(1, 5);
 
