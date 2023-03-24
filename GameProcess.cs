@@ -37,16 +37,18 @@ Console.CursorVisible = false;    //Отключение курсора
 do
 {
     keyInfo = Console.ReadKey(true);
-    switch (keyInfo.KeyChar)
-    {
-        
-        case 'w': MovePlayer.Move("Up", map, world, gg);  break;
-        case 's': MovePlayer.Move("Down", map, world,  gg); break;
-        case 'd': MovePlayer.Move("Right", map, world,  gg); break;
-        case 'a': MovePlayer.Move("Left", map, world, gg); break;
-        default:
-            break;
-    }
+    if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
+        MovePlayer.Move("Up", map, world, gg);
+   
+    else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
+        MovePlayer.Move("Down", map, world, gg);
+
+    else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
+        MovePlayer.Move("Right", map, world, gg);
+
+    else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
+        MovePlayer.Move("Left", map, world, gg);
+
 } while (keyInfo.KeyChar != 'q');
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
