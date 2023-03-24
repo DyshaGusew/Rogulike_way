@@ -15,6 +15,10 @@ else if (obj is Items)   //Проверяю принадлежит ли объе
 
 //Основнй цикл
 //Создаю мир
+
+//
+//Console.SetWindowSize(100, 100);
+
 World world = new World(1, 5);
 
 //Создаю текущую карту
