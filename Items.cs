@@ -6,19 +6,7 @@
 
 
 
-public class Borders
-{
-    public int[] coordinates;
-    public Borders()
-    {
-        coordinates = new int[2] { 0, 0 };
-    }
 
-    public Borders(int x, int y) : this()
-    {
-        coordinates = new int[2] { x, y };
-    }
-}
 
 public class Items
 {

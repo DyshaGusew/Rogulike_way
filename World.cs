@@ -24,6 +24,35 @@ public class MiniRooms
     leftDoor = false;
     }
 }
+
+public class Borders
+{
+    public int[] coordinates;
+    public Borders()
+    {
+        coordinates = new int[2] { 0, 0 };
+    }
+
+    public Borders(int x, int y) : this()
+    {
+        coordinates = new int[2] { x, y };
+    }
+}
+
+public class Doors
+{
+    public int[] coordinates;
+    public int room_num;   //Указывает в какую комнату ведет
+    public Doors()
+    {
+        coordinates = new int[2] { 0, 0 };
+    }
+
+    public Doors(int x, int y) : this()
+    {
+        coordinates = new int[2] { x, y };
+    }
+}
 public class World
 {
     //Работа с координатами игрока
@@ -53,6 +82,8 @@ public class World
     public List<Monsters> monsters_list = new List<Monsters>();  //Пустая коллекция монстров
     public List<Items> items_list = new List<Items>();                  //Пустая коллекция объектов
     public List<Borders> borders_list = new List<Borders>();
+    public List<Doors> doors_list = new List<Doors>();
+
     public void AppMonsters(Monsters monster, bool life)  //Заполняю/удаляю, если передали монстра
     {
         if (life == true)
@@ -75,6 +106,18 @@ public class World
     {
             borders_list.Add(border);
     }
+
+    public void DelBorders(int[] coordDoor)  //Заполняю/удаляю, если передали стенку
+    {
+        Borders border = (Borders)DefiningArea(coordDoor);
+        borders_list.Remove(border);
+    }
+
+    public void AppDoors(Doors door)  //Заполняю/удаляю, если передали дверь
+    {
+        doors_list.Add(door);
+    }
+
 
     //Создание рандомной мини карты
     public char[,] CreateMiniMap()
@@ -178,6 +221,7 @@ public class World
     }
 
 
+    //Коллекция мини комнат со своими координатами
     public List<MiniRooms> roomsMini = new List<MiniRooms>();
     public void CreateArrRooms(char[,] miniMap)
     {
@@ -205,9 +249,9 @@ public class World
                     {
                         miniRoom.downDoor = true;
                     }
-                    miniRoom.number_inputs = i;
+                    
                     miniRoom.x = y; miniRoom.y = x;
-                    i++;
+                    
 
                     roomsMini.Add(miniRoom);
                 }
@@ -286,21 +330,58 @@ public class World
             AppBorders(border);
         }
 
+
+        //Добовляю двери
         if(miniRoom.rightDoor == true)
         {
+            //Указываю серединчатые координаты дверей
+            int[] coordDoor = new int[] { x_len - 1, y_len / 2 };
+
+            //Удаляю стену на месте двери
+            DelBorders(coordDoor);
+
             map[y_len / 2, x_len - 1] = '╬';
+            Doors door = new Doors(coordDoor[0], coordDoor[1]);
+            AppDoors(door);
         }
+       
+        
         if (miniRoom.upDoor == true)
         {
+            //Указываю серединчатые координаты дверей
+            int[] coordDoor = new int[] { (x_len - 1) / 2, 0 };
+
+            //Удаляю стену на месте двери
+            DelBorders(coordDoor);
+
             map[0, (x_len - 1) / 2] = '╬';
+            Doors door = new Doors(coordDoor[0], coordDoor[1]);
+            AppDoors(door);
         }
         if (miniRoom.downDoor == true)
         {
+            //Указываю серединчатые координаты дверей
+            int[] coordDoor = new int[] { x_len / 2, y_len - 1 };
+
+            //Удаляю стену на месте двери
+            DelBorders(coordDoor);
+
             map[y_len - 1, x_len/2] = '╬';
+            Doors door = new Doors(coordDoor[0], coordDoor[1]);
+            AppDoors(door);
         }
+
         if (miniRoom.leftDoor == true)
         {
+            //Указываю серединчатые координаты дверей
+            int[] coordDoor = new int[] { 0 , y_len / 2 };
+
+            //Удаляю стену на месте двери
+            DelBorders(coordDoor);
+
             map[y_len / 2, 0] = '╬';
+            Doors door = new Doors(coordDoor[0], coordDoor[1]);
+            AppDoors(door);
         }
         return map;
     }
@@ -338,6 +419,15 @@ public class World
             if (border.coordinates.SequenceEqual(coordinates_move))
             {
                 return border;                 //Возыращает монстра на указанных координатах
+            }
+
+        }
+
+        foreach (Doors door in doors_list)
+        {
+            if (door.coordinates.SequenceEqual(coordinates_move))
+            {
+                return door;                 //Возыращает монстра на указанных координатах
             }
 
         }

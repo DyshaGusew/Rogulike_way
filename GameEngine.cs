@@ -1,54 +1,38 @@
-﻿//Напоминание о том, как перебирать что-либо, то есть на каждом шаге надо проверять 
-/*
-if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
-{
-    Monsters box_monster = (Monsters)obj; // (Monsters) приводит тип обджект к типу монстров
-    Console.WriteLine(box_monster.name);
-}
+﻿//Игровой движок в котором все и происходит
 
-else if (obj is Items)   //Проверяю принадлежит ли объект классу предметов
-{
-    Items box_items = (Items)obj;  
-    //Console.WriteLine(box_items.name);
-}
-*/
+//Создется объек мира
+World world = new World();
 
-//Основнй цикл
-//Создаю мир
-
-//
-//Console.SetWindowSize(100, 100);
-using Rogulike_way;
-
+//Отображение наччала игры
 Console.WriteLine("GameStart");
-Hero Hero = new Wizard();
+
+//Создание героя (создается в зависимости от выбора в меню)
+Hero hero = new Wizard();
+
+//Пример создания монстра
 Monsters Goblin = new Ghost(1);
 //Fight fight = new Fight(Hero, Goblin);
 
 
-World world = new World(1, 5);
-
-//Создаю мини карту
+//Создаю мини карту(и одновремено при пмощи нее делаю взаимодействия между комнатами)
 char[,] miniMap = world.CreateMiniMap();
 
+//Создание первой комнаты
 char[,] Room = world.CreateRoomReal(0);
 
-//Создаю героя указываю координаты
-Hero gg = new Hero();
+//задаю герою координаты
 int[] coordinates_hero = { Room.GetLength(1) / 2, Room.GetLength(0) / 2 };   //Делаю так, чтобы он был посередине
-gg.coordinates = coordinates_hero;
+hero.coordinates = coordinates_hero;
 
 
-//PaintGame.PaintConsoleRange(miniMap, 80, 0);                     //Отрисовываю карту без героя
-PaintGame.PaintConsole(Room, miniMap);
-//PaintGame.PaintConsoleRange(miniMap, 80, 0);
-
+//Отрисовываю карту без героя
+PaintGame.DraftCart(Room, miniMap);
 
 System.Threading.Thread.Sleep(1000);             //Задежка
 
 //Указываю героя в центре координат
-Room[gg.coordinates[1], gg.coordinates[0]] = '@';
-PaintGame.PaintConsole(Room, miniMap);                     //Отрисовываю карту
+Room[hero.coordinates[1], hero.coordinates[0]] = '@';
+PaintGame.DraftCart(Room, miniMap);                     //Отрисовываю карту уже с героем
 ConsoleKeyInfo keyInfo;
 
 Console.CursorVisible = false;    //Отключение курсора
@@ -56,16 +40,16 @@ do
 {
     keyInfo = Console.ReadKey(true);
     if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", Room, world, gg);
+        MovePlayer.Move("Up", Room, world, hero);
    
     else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", Room, world, gg);
+        MovePlayer.Move("Down", Room, world, hero);
 
     else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", Room, world, gg);
+        MovePlayer.Move("Right", Room, world, hero);
 
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", Room, world, gg);
+        MovePlayer.Move("Left", Room, world, hero);
 
 } while (keyInfo.KeyChar != 'q');
 
@@ -77,7 +61,7 @@ class PaintGame
     static public int StatX = 20, StatY = 5;  //Смещение карты
 
     //Отрисовка указанной карты
-    static public void PaintConsole(char[,] map, char[,] miniMap) //Рисует первую комнату по заготовке
+    static public void DraftCart(char[,] map, char[,] miniMap) //Рисует первую комнату по заготовке
     {
         int x_len = map.GetLength(1);
         int y_len = map.GetLength(0);
@@ -127,10 +111,20 @@ class MovePlayer
 
             //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
             //Если стена, то не двигаюсь
+
+            if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            {
+                
+                return;
+
+            }
+
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
             {
                 return;
             }
+
+            
 
             //Меняю карту и соответсвенно меняю координаты героя
             map[hero.coordinates[1], hero.coordinates[0]] = ' ';
@@ -146,6 +140,12 @@ class MovePlayer
             Object obj = world.DefiningArea(move_coordinates);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
+            if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            {
+
+                return;
+
+            }
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
             {
                 return;
@@ -164,6 +164,12 @@ class MovePlayer
             Object obj = world.DefiningArea(move_coordinates);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
+            if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            {
+
+                return;
+
+            }
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
             {
                 return;
@@ -181,10 +187,17 @@ class MovePlayer
             Object obj = world.DefiningArea(move_coordinates);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
+            if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            {
+
+                return;
+
+            }
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
             {
                 return;
             }
+            
 
             map[hero.coordinates[1], hero.coordinates[0]] = ' ';
             PaintGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
