@@ -64,6 +64,15 @@ namespace Rogulike_way
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
             PositionPrint(PositionX2, PositionY2+1, "2.Обычный удар");
             PositionPrint(PositionX2, PositionY2+2, "3.Блок");
+            var Key = Console.ReadKey(true);
+            char t = Key.KeyChar;
+            Console.WriteLine(t);
+            if (Key.KeyChar == '1')
+            {
+                Console.Clear();
+
+            }
+            
         }
     }
 }
