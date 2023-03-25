@@ -21,20 +21,27 @@ else if (obj is Items)   //Проверяю принадлежит ли объе
 
 World world = new World(1, 5);
 
-//Создаю текущую карту
-char[,] map = world.CreateMap();
+//Создаю мини карту
+char[,] miniMap = world.CreateMiniMap();
+
+char[,] Room = world.CreateRoomReal(0);
 
 //Создаю героя указываю координаты
 Hero gg = new Hero();
-int[] coordinates_hero = { map.GetLength(1) / 2, map.GetLength(0) / 2 };   //Делаю так, чтобы он был посередине
+int[] coordinates_hero = { Room.GetLength(1) / 2, Room.GetLength(0) / 2 };   //Делаю так, чтобы он был посередине
 gg.coordinates = coordinates_hero;
-PaintGame.PaintConsole(map);                     //Отрисовываю карту без героя
+
+
+//PaintGame.PaintConsoleRange(miniMap, 80, 0);                     //Отрисовываю карту без героя
+PaintGame.PaintConsole(Room, miniMap);
+//PaintGame.PaintConsoleRange(miniMap, 80, 0);
+
 
 System.Threading.Thread.Sleep(1000);             //Задежка
 
 //Указываю героя в центре координат
-map[gg.coordinates[1], gg.coordinates[0]] = '@';
-PaintGame.PaintConsole(map);                     //Отрисовываю карту
+Room[gg.coordinates[1], gg.coordinates[0]] = '@';
+PaintGame.PaintConsole(Room, miniMap);                     //Отрисовываю карту
 ConsoleKeyInfo keyInfo;
 
 Console.CursorVisible = false;    //Отключение курсора
@@ -42,26 +49,28 @@ do
 {
     keyInfo = Console.ReadKey(true);
     if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", map, world, gg);
+        MovePlayer.Move("Up", Room, world, gg);
    
     else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", map, world, gg);
+        MovePlayer.Move("Down", Room, world, gg);
 
     else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", map, world, gg);
+        MovePlayer.Move("Right", Room, world, gg);
 
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", map, world, gg);
+        MovePlayer.Move("Left", Room, world, gg);
 
 } while (keyInfo.KeyChar != 'q');
+
+
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
 class PaintGame
 {
-    static public int StatX = 40, StatY = 20;  //Смещение карты
+    static public int StatX = 20, StatY = 5;  //Смещение карты
 
     //Отрисовка указанной карты
-    static public void PaintConsole(char[,] map) //Рисует первую комнату по заготовке
+    static public void PaintConsole(char[,] map, char[,] miniMap) //Рисует первую комнату по заготовке
     {
         int x_len = map.GetLength(1);
         int y_len = map.GetLength(0);
@@ -70,6 +79,7 @@ class PaintGame
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)         
                 PutCurs(map[y, x], y, x);
+        PaintGame.PaintConsoleRange(miniMap, 80, 0);
     }
 
     //Добавление символа в необходимой координате
@@ -77,6 +87,22 @@ class PaintGame
     {
         Console.SetCursorPosition(StatX + x, StatY + y);
         Console.Write(ch);
+    }
+
+    static public void PutCursRange(char ch, int y, int x, int statX, int statY)
+    {
+        Console.SetCursorPosition(statX + x, statY + y);
+        Console.Write(ch);
+    }
+
+    static public void PaintConsoleRange(char[,] map, int statX, int statY) //Рисует первую комнату по заготовке
+    {
+        int x_len = map.GetLength(1);
+        int y_len = map.GetLength(0);
+
+        for (int y = 0; y < y_len; y++)
+            for (int x = 0; x < x_len; x++)
+                PutCursRange(map[y, x], y, x, statX, statY);
     }
 }
 
