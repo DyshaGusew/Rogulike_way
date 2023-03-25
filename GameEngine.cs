@@ -18,6 +18,13 @@ else if (obj is Items)   //Проверяю принадлежит ли объе
 
 //
 //Console.SetWindowSize(100, 100);
+using Rogulike_way;
+
+Console.WriteLine("GameStart");
+Hero Hero = new Wizard();
+Monsters Goblin = new Ghost(1);
+//Fight fight = new Fight(Hero, Goblin);
+
 
 World world = new World(1, 5);
 
