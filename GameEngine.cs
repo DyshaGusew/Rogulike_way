@@ -23,11 +23,11 @@ using Rogulike_way;
 Console.WriteLine("GameStart");
 Hero Hero = new Wizard();
 Monsters Goblin = new Ghost(1);
-//Fight fight = new Fight(Hero, Goblin);
+Fight fight = new Fight(Hero, Goblin);
 
 
 World world = new World(1, 5);
-
+/*
 //Создаю мини карту
 char[,] miniMap = world.CreateMiniMap();
 
@@ -195,4 +195,4 @@ class MovePlayer
     }
 }
 
-
+*/

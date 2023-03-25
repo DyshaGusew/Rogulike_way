@@ -37,34 +37,33 @@ namespace Rogulike_way
         //Начало файта
         public Fight(Hero Hero, Monsters Monster)
         {
-            //Start(Hero, Monster);
-            Console.WriteLine(Monster.damage);
+            Start(Hero, Monster);
+            //Console.WriteLine(Monster.damage);
+        }
+        //Принимает на вход х,у и текст, где х и у координаты куда надо вывести
+        public void PositionPrint(int x, int y, string str)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(str);
         }
         
-        public void Start(Hero Hero, Monsters Monster)
+        private void Start(Hero Hero, Monsters Monster)
         {
             Thread.Sleep(1000);
             Console.Clear();
             Console.SetWindowSize(300, 300);
             Console.WriteLine($"Герой\nЗдоровье: {Hero.NowHealht}\nВыносливость: {Hero.NowStamina}\nУрон: {Hero.damage}\nlevel: {Hero.level}");
             int PositionX1 = 130, PositionY1 = 0;
-            Console.SetCursorPosition(PositionX1, PositionY1);
-            Console.WriteLine($"Монстр");
-            Console.SetCursorPosition(PositionX1, PositionY1+1);
-            Console.WriteLine($"Здоровье: {Monster.NowHealht}");
-            Console.SetCursorPosition(PositionX1, PositionY1+2);
-            Console.WriteLine($"Урон: {Monster.damage}");
-            Console.SetCursorPosition(PositionX1, PositionY1+3);
-            Console.WriteLine($"level: {Monster.level}");
+            PositionPrint(PositionX1, PositionY1, $"Монстр");
+            PositionPrint(PositionX1, PositionY1+1, $"Здоровье: {Monster.StaticHealht}");
+            PositionPrint(PositionX1, PositionY1+2, $"Урон: {Monster.damage}");
+            PositionPrint(PositionX1, PositionY1 + 3, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1+4);
 
             int PositionX2 = 65, PositionY2 = 30;
-            Console.SetCursorPosition(PositionX2, PositionY2);
-            Console.WriteLine("1.Сильный удар");
-            Console.SetCursorPosition(PositionX2, PositionY2+1);
-            Console.WriteLine("2.Обычный удар");
-            Console.SetCursorPosition(PositionX2, PositionY2+2);
-            Console.WriteLine("3.Блок");
+            PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
+            PositionPrint(PositionX2, PositionY2+1, "2.Обычный удар");
+            PositionPrint(PositionX2, PositionY2+2, "3.Блок");
         }
     }
 }
