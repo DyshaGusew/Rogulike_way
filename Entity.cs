@@ -31,9 +31,9 @@ public class Wizard : Hero
     public Wizard()
     {
         StaticHealht = 60;
-        NowHealht = StaticHealht;
+        NowHealht = 60;
         StaticStamina = 100;
-        NowStamina = StaticStamina;
+        NowStamina = 100;
         damage = 20;
     }
 }
@@ -43,9 +43,9 @@ public class Barbarian : Hero
     public Barbarian()
     {
         StaticHealht = 100;
-        NowHealht = StaticHealht;
+        NowHealht = 100;
         StaticStamina = 100;
-        NowStamina = StaticStamina;
+        NowStamina = 100;
         damage = 40;
     }
 }
@@ -55,9 +55,9 @@ public class Prowler : Hero
     public Prowler()
     {
         StaticHealht = 60;
-        NowHealht = StaticHealht;
+        NowHealht = 60;
         StaticStamina = 60;
-        NowStamina = StaticStamina;
+        NowStamina = 60;
         damage = 30;
     }
 }
@@ -81,6 +81,7 @@ public class Goblins : Monsters
         StaticHealht = 50;
         damage = 20;
         experience = 30;
+        NowHealht = StaticHealht;
         this.level = level;
 
         if (level > 1)
@@ -99,6 +100,7 @@ public class Ghost : Monsters
         name = "Призрак";
         StaticHealht = 20;
         damage = 40;
+        NowHealht = StaticHealht;
         experience = 50;
         this.level = level;
 
@@ -118,6 +120,7 @@ public class Knight : Monsters
         name = "Рыцарь";
         StaticHealht = 120;
         damage = 30;
+        NowHealht = StaticHealht;
         experience = 50;
         this.level = level;
 
@@ -137,6 +140,7 @@ public class Skeleton : Monsters
         name = "Скелет";
         StaticHealht = 50;
         damage = 30;
+        NowHealht = StaticHealht;
         experience = 40;
         this.level = level;
 
@@ -156,6 +160,7 @@ public class Rat : Monsters
         name = "Крыса";
         StaticHealht = 10;
         damage = 10;
+        NowHealht = StaticHealht;
         experience = 10;
         this.level = level;
 
