@@ -28,34 +28,43 @@
 
 public class Wizard : Hero
 {
-    new public double StaticHealht = 60;
-    new public double NowHealht = 60;
-    new public double StaticStamina = 100;
-    new public double NowStamina = 100;
-    new public double damage = 20;
+    public Wizard()
+    {
+        StaticHealht = 60;
+        NowHealht = 60;
+        StaticStamina = 100;
+        NowStamina = 100;
+        damage = 20;
+    }
 }
 
 public class Barbarian : Hero
 {
-    new public double StaticHealht = 100;
-    new public double NowHealht = 100;
-    new public double StaticStamina = 100;
-    new public double NowStamina = 100;
-    new public double damage = 40;
+    public Barbarian()
+    {
+        StaticHealht = 100;
+        NowHealht = 100;
+        StaticStamina = 100;
+        NowStamina = 100;
+        damage = 40;
+    }
 }
 
 public class Prowler : Hero
 {
-    new public double StaticHealht = 60;
-    new public double NowHealht = 60;
-    new public double StaticStamina = 60;
-    new public double NowStamina = 60;
-    new public double damage = 30;
+    public Prowler()
+    {
+        StaticHealht = 60;
+        NowHealht = 60;
+        StaticStamina = 60;
+        NowStamina = 60;
+        damage = 30;
+    }
 }
 
 public class Monsters
 {
-    public string name = "Gosha";
+    public string name = "Гоша";
     public int[] coordinates = { 0, 0 };
     public double StaticHealht;
     public double NowHealht;
@@ -66,91 +75,101 @@ public class Monsters
 }
 public class Goblins : Monsters
 {
-    new public string name = "Goblin";
-    new public double StaticHealht = 50;
-    new public double damage = 20;
-    new public int experience = 30;
     public Goblins(int level)
     {
+        name = "Гоблин";
+        StaticHealht = 50;
+        damage = 20;
+        experience = 30;
+        NowHealht = StaticHealht;
         this.level = level;
-        if (this.level > 1)
+
+        if (level > 1)
         {
-            this.boost = 1.0 + 0.1 * (this.level - 1);
-            this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
-            this.damage *= this.boost;
+            boost = 1.0 + 0.1 * (this.level - 1);
+            StaticHealht *= boost;
+            NowHealht = StaticHealht;
+            damage *= boost;
         };
     }
 }
 public class Ghost : Monsters
 {
-    new public string name = "Ghost";
-    new public double StaticHealht = 20;
-    new public double damage = 40;
-    new public int experience = 50;
     public Ghost(int level)
     {
+        name = "Призрак";
+        StaticHealht = 20;
+        damage = 40;
+        NowHealht = StaticHealht;
+        experience = 50;
         this.level = level;
-        if (this.level > 1)
+
+        if (level > 1)
         {
-            this.boost = 1.0 + 0.1 * (this.level - 1);
-            this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
-            this.damage *= this.boost;
+            boost = 1.0 + 0.1 * (this.level - 1);
+            StaticHealht *= boost;
+            NowHealht = StaticHealht;
+            damage *= boost;
         }
     }
 }
 public class Knight : Monsters
 {
-    new public string name = "Knight";
-    new public double StaticHealht = 120;
-    new public double damage = 30;
-    new public int experience = 50;
     public Knight(int level)
     {
+        name = "Рыцарь";
+        StaticHealht = 120;
+        damage = 30;
+        NowHealht = StaticHealht;
+        experience = 50;
         this.level = level;
-        if (this.level > 1)
+
+        if (level > 1)
         {
-            this.boost = 1.0 + 0.1 * (this.level - 1);
-            this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
-            this.damage *= this.boost;
+            boost = 1.0 + 0.1 * (this.level - 1);
+            StaticHealht *= boost;
+            NowHealht = StaticHealht;
+            damage *= boost;
         }
     }
 }
 public class Skeleton : Monsters
 {
-    new public string name = "Skeleton";
-    new public double StaticHealht = 50;
-    new public double damage = 30;
-    new public int experience = 40;
     public Skeleton(int level)
     {
+        name = "Скелет";
+        StaticHealht = 50;
+        damage = 30;
+        NowHealht = StaticHealht;
+        experience = 40;
         this.level = level;
-        if (this.level > 1)
+
+        if (level > 1)
         {
-            this.boost = 1.0 + 0.1 * (this.level - 1);
-            this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
-            this.damage *= this.boost;
+            boost = 1.0 + 0.1 * (this.level - 1);
+            StaticHealht *= boost;
+            NowHealht = StaticHealht;
+            damage *= boost;
         }
     }
 }
 public class Rat : Monsters
 {
-    new public string name = "Klenin";
-    new public double StaticHealht = 10;
-    new public double damage = 10;
-    new public int experience = 10;
     public Rat(int level)
     {
+        name = "Крыса";
+        StaticHealht = 10;
+        damage = 10;
+        NowHealht = StaticHealht;
+        experience = 10;
         this.level = level;
-        if (this.level > 1)
+
+        if (level > 1)
         {
-            this.boost = 1.0 + 0.1 * (this.level - 1);
-            this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
-            this.damage *= this.boost;
+            boost = 1.0 + 0.1 * (this.level - 1);
+            StaticHealht *= boost;
+            NowHealht = StaticHealht;
+            damage *= boost;
         }
     }
 }
@@ -159,11 +178,11 @@ public class Bosses : Monsters
     public Bosses(double health, double damage, string name)
     {
         this.name = name;
-        this.StaticHealht = health;
-        this.NowHealht = this.StaticHealht;
+        StaticHealht = health;
+        NowHealht = this.StaticHealht;
         this.damage = damage;
-        this.level = 666;
-        this.boost = 1.0;
-        this.experience = 666;
+        level = 666;
+        boost = 1.0;
+        experience = 666;
     }
 }
