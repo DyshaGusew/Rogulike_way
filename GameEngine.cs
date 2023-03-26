@@ -39,8 +39,7 @@ hero.coordinates = coordinates_hero;
 //Отрисовываю карту без героя
 PaintGame.DraftCart(RoomMap);
 PaintGame.DraftMinyMap(Room, roomsMini, miniMap, 80, 0);
-Console.WriteLine(Room.borders_list.Count);    
-System.Threading.Thread.Sleep(1000);             //Задежка
+
 
 //Указываю героя в центре координат
 RoomMap[hero.coordinates[1], hero.coordinates[0]] = '@';
