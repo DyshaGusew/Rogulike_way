@@ -142,7 +142,6 @@ namespace Rogulike_way
                     Rendering(Hero, Monster);
                     PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
                     PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");                    
-                    
                 }
             }
         }
