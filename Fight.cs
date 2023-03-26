@@ -53,8 +53,6 @@ namespace Rogulike_way
             //Получить случайное число (в диапазоне от 0 до 10)
             int Rand = random.Next(-25, 25);
             Damage = Damage + Damage * ((double)Rand / 100);
-            
-            Console.WriteLine(Damage);
             return Damage;
         }
         private void Rendering(Hero Hero, Monsters Monster)
@@ -85,45 +83,67 @@ namespace Rogulike_way
         private void Start(Hero Hero, Monsters Monster)
         {
             Thread.Sleep(1000);
-            //Console.Clear();
             Console.CursorVisible = false;
-            //Console.SetWindowSize(300, 300);
             Rendering(Hero, Monster);
-            double NowAttack = 0;
+            double MonsterAt = 0;
+            double HeroAt = Alpha(Hero.damage);//атака героя
+            MonsterAt = Alpha(Monster.damage);//атака монстра
             while (true)
-            {    
-                var Key = Console.ReadKey(true);//Считываем
-                //char t = Key.KeyChar;//приводим к чару
-                //Проверка на дебила, если нажимать клавишу, которая не указана
-                while ((Key.KeyChar != '1') && (Key.KeyChar != '2') && (Key.KeyChar != '3'))
+            {
+                while (true)
                 {
-                    Key = Console.ReadKey(true);
+                    var Key = Console.ReadKey(true);
+                    //обычный удар
+                    if ((Key.KeyChar == '2') && (Hero.NowStamina >= 10))
+                    {
+                        Monster.NowHealht -= HeroAt;
+                        Hero.NowStamina -= 10;
+                        break;
+                    }
+                    //Cильный удар
+                    else if ((Key.KeyChar == '1') && (Hero.NowStamina >= 25))
+                    {
+                        HeroAt = HeroAt * 1.7;
+                        Monster.NowHealht -= HeroAt;
+                        Hero.NowStamina -= 25;
+                        break;
+                    }
+                    //блок
+                    else if (Key.KeyChar == '3')
+                    {
+                        Hero.NowStamina += 10;
+                        Random random = new Random();
+                        int Rand = random.Next(50, 100);
+                        MonsterAt = MonsterAt - MonsterAt * ((double)Rand / 100);
+                        break;
+                    }
                 }
+                //Момент с отрицательными числами хп и стамины
+                if (Hero.NowStamina > Hero.StaticStamina){Hero.NowStamina = Hero.StaticStamina;}
+                if (Hero.NowHealht <= 0) { Hero.NowHealht = 0; }
+                if (Monster.NowHealht <= 0) { Monster.NowHealht = 0;}
+               // Rendering(Hero, Monster);
+                string HeroAtt = HeroAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
+                                                       //PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
 
-                if ((Key.KeyChar == '2') && (Hero.NowStamina >= 10))
-                {
-                    NowAttack = Alpha(Hero.damage);
-                    Monster.NowHealht -= NowAttack;
-                    Hero.NowStamina -= 10;
-                }
-                //Cильный удар
-                if ((Key.KeyChar == '1') && (Hero.NowStamina >=25))
-                {
-                    NowAttack = Alpha(Hero.damage);
-                    Monster.NowHealht -= NowAttack*1.7;
-                    Hero.NowStamina -= 25;
-                }
-                NowAttack = Alpha(Monster.damage);
-                if (Key.KeyChar == '3')
-                {
-                    Hero.NowStamina += 10;
-                    Hero.NowHealht -= NowAttack;
-                }
-                if (Key.KeyChar != '3')
-                {
-                    Hero.NowHealht -= NowAttack;
-                }
+                //*double HeroAt = MonsterAt;
+                //Момент с отрицательными числами хп и стамины               
+                Console.CursorVisible = false;
                 Rendering(Hero, Monster);
+                PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                if (Monster.NowHealht > 0)
+                {
+                    Thread.Sleep(3000);
+                    string MonsterAtt = MonsterAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
+                    Hero.NowHealht -= MonsterAt;
+                    if (Hero.NowStamina > Hero.StaticStamina) { Hero.NowStamina = Hero.StaticStamina; }
+                    if (Hero.NowHealht <= 0) { Hero.NowHealht = 0; }
+                    if (Monster.NowHealht <= 0) { Monster.NowHealht = 0; }
+                    Rendering(Hero, Monster);
+                    PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                    PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");                    
+                    
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ using Rogulike_way;
 
 Console.WriteLine("GameStart");
 Hero Hero = new Wizard();
-Monsters Goblin = new Ghost(1);
+Monsters Goblin = new Ghost(100);
 Fight fight = new Fight(Hero, Goblin);
 
 
