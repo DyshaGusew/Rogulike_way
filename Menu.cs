@@ -93,58 +93,55 @@ public class Menu
     {
         Button start = new Button("Начать", true);
         Button exit = new Button("Выйти", false);
-        Button[] buttons = { start, exit };
-        Button current_button = start;
 
         ConsoleKeyInfo keyInfo;
-        bool a = true;
-        while (a)
+        bool continue_cycle = true;
+
+        Console.SetWindowSize(145, 36);
+        Console.SetBufferSize(145, 36);
+        Console.CursorVisible = false;
+
+        while (continue_cycle)
         {
             Console.Clear();
             DrawButtons(start, exit);
             keyInfo = Console.ReadKey(true);
             switch (keyInfo.KeyChar)
             {
-                case 'w': 
-                    if (current_button == buttons[0])
+                case 'w' or 'ц': 
+                    if (start.isSelected)
                     {
-                        current_button.isSelected = false;
-                        current_button = buttons[1];
-                        current_button.isSelected = true;
+                        start.isSelected = false;
+                        exit.isSelected = true;
                     } else
                     {
-                        current_button.isSelected = false;
-                        current_button = buttons[0];
-                        current_button.isSelected = true;
+                        exit.isSelected = false;
+                        start.isSelected = true;
                     }
                     break;
-                case 's':
-                    if (current_button == buttons[0])
+                case 's' or 'ы':
+                    if (start.isSelected)
                     {
-                        current_button.isSelected = false;
-                        current_button = buttons[1];
-                        current_button.isSelected = true;
+                        start.isSelected = false;
+                        exit.isSelected = true;
                     }
                     else
                     {
-                        current_button.isSelected = false;
-                        current_button = buttons[0];
-                        current_button.isSelected = true;
+                        exit.isSelected = false;
+                        start.isSelected = true;
                     }
                     break;
-                case 'e':
-                    if (current_button == buttons[0])
+                case 'e' or 'у':
+                    if (start.isSelected)
                     {
                         Console.Clear();
-                        Console.WriteLine("Game started");
-                        a = false;
+                        continue_cycle = false;
                     } else
                     {
                         Environment.Exit(0);
                     }
                     break;
-                default:
-                    break;
+                default: break;
             }
         }
     }
