@@ -39,16 +39,16 @@ hero.coordinates = coordinates_hero;
 //Отрисовываю карту без героя
 PaintGame.DraftCart(RoomMap);
 PaintGame.DraftMinyMap(Room, roomsMini, miniMap, 80, 0);
-Console.WriteLine(Room.borders_list.Count);    
-System.Threading.Thread.Sleep(1000);             //Задежка
+         //Задежка
 
 //Указываю героя в центре координат
 RoomMap[hero.coordinates[1], hero.coordinates[0]] = '@';
 PaintGame.DraftCart(RoomMap);                     //Отрисовываю карту уже с героем
 PaintGame.DraftMinyMap(Room, roomsMini, miniMap, 80, 0);
-ConsoleKeyInfo keyInfo;
+
 
 Console.CursorVisible = false;    //Отключение курсора
+ConsoleKeyInfo keyInfo;
 do
 {
     keyInfo = Console.ReadKey(true);
@@ -64,7 +64,7 @@ do
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
         MovePlayer.Move("Left", ref Room, world, hero, roomsReal, miniMap, roomsMini);
 
-} while (keyInfo.KeyChar != 'q');
+} while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
 
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
@@ -138,7 +138,7 @@ class PaintGame
 }
 
 
-//Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен)
+//Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
 class MovePlayer
 {
     static public void Move(string trend, ref RealRoom room, World world, Hero hero, List<RealRoom> roomsReal, char[,] miniMap, List<MiniRoom> roomsMini)
