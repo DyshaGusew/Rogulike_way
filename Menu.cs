@@ -14,8 +14,9 @@ public class Button
         isSelected = _isSelected;
     }
 
-    public void DrawBorder()
+    public void DrawBorder(int x, int y)
     {
+        Console.SetCursorPosition(x, y);
         for (int i = 0; i < 30; i++)
         {
             Console.Write("█");
@@ -23,8 +24,9 @@ public class Button
         Console.Write("\n");
     }
 
-    public void DrawSpace()
+    public void DrawSpace(int x, int y)
     {
+        Console.SetCursorPosition(x, y);
         for (int i = 0; i < 28; i++)
         {
             if (i == 0 || i == 27)
@@ -39,10 +41,11 @@ public class Button
         Console.Write("\n");
     }
 
-    public void WriteButtonName()
+    public void WriteButtonName(int x, int y)
     {
         int length = this.name.Length;
         int addition = 0;
+        Console.SetCursorPosition(x, y);
         Console.Write("██");
         if (length % 2 != 0) addition = 1;
         for (int i = 0; i < ((26 - length) / 2) + addition; i++)
@@ -58,7 +61,7 @@ public class Button
         Console.Write("\n");
     }
 
-    public void DrawButton()
+    public void DrawButton(int x, int y)
     {
         if (isSelected)
         {
@@ -68,11 +71,11 @@ public class Button
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        DrawBorder();
-        DrawSpace();
-        WriteButtonName();
-        DrawSpace();
-        DrawBorder();
+        DrawBorder(x, y);
+        DrawSpace(x, y + 1);
+        WriteButtonName(x, y + 2);
+        DrawSpace(x, y + 3);
+        DrawBorder(x, y + 4);
 
         Console.ForegroundColor = ConsoleColor.White;
     }
@@ -80,23 +83,32 @@ public class Button
 
 public class Menu
 {
-    public string hero_class;
+    public string hero_class = "";
+    public bool isHeroChosen = false;
     public Menu() {}
 
     public void DrawButtons(Button button_1,  Button button_2)
     {
-        button_1.DrawButton();
+        button_1.DrawButton(57, 5);
         Console.Write("\n\n");
-        button_2.DrawButton();
+        button_2.DrawButton(57, 12);
     }
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3)
+    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button button_4)
     {
-        button_1.DrawButton();
+        button_1.DrawButton(57, 5);
         Console.Write("\n\n");
-        button_2.DrawButton();
+        button_2.DrawButton(57, 12);
         Console.Write("\n\n");
-        button_3.DrawButton();
+        button_3.DrawButton(57, 19);
+        Console.Write("\n\n");
+        button_4.DrawButton(57, 26);
+    }
+
+    public void WriteTip()
+    {
+        Console.SetCursorPosition(56, 33);
+        Console.WriteLine("W - Вверх, S - Вниз, E - Выбрать");
     }
 
     public void Show()
@@ -115,7 +127,7 @@ public class Menu
         {
             Console.Clear();
             DrawButtons(start, exit);
-            Console.WriteLine("\n\n\n\n\nW - Вверх, S - Вниз, E - Выбрать");
+            WriteTip();
 
             keyInfo = Console.ReadKey(true);
             switch (keyInfo.KeyChar)
@@ -148,7 +160,10 @@ public class Menu
                     {
                         Console.Clear();
                         ChooseCharacter();
-                        continue_cycle = false;
+                        if (this.isHeroChosen)
+                        {
+                            continue_cycle = false;
+                        }
                     } else
                     {
                         Environment.Exit(0);
@@ -164,6 +179,7 @@ public class Menu
         Button wizard = new Button("Маг", true);
         Button barbarian = new Button("Варвар", false);
         Button prowler = new Button("Бродяга", false);
+        Button back = new Button("Назад", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -171,7 +187,10 @@ public class Menu
         while (continue_cycle)
         {
             Console.Clear();
-            DrawButtons(wizard, barbarian, prowler); Console.WriteLine("\n\n\n\n\nW - Вверх, S - Вниз, E - Выбрать");
+            Console.SetCursorPosition(62, 2);
+            Console.WriteLine("Выберите класс героя");
+            DrawButtons(wizard, barbarian, prowler, back);
+            WriteTip();
 
             keyInfo = Console.ReadKey(true);
             switch (keyInfo.KeyChar)
@@ -180,17 +199,21 @@ public class Menu
                     if (wizard.isSelected)
                     {
                         wizard.isSelected = false;
-                        prowler.isSelected = true;
+                        back.isSelected = true;
                     }
                     else if (barbarian.isSelected)
                     {
                         barbarian.isSelected = false;
                         wizard.isSelected = true;
                     }
-                    else
+                    else if (prowler.isSelected)
                     {
                         prowler.isSelected = false;
                         barbarian.isSelected = true;
+                    } else
+                    {
+                        back.isSelected = false;
+                        prowler.isSelected = true;
                     }
                     break;
                 case 's' or 'ы':
@@ -204,9 +227,14 @@ public class Menu
                         barbarian.isSelected = false;
                         prowler.isSelected = true;
                     }
-                    else
+                    else if (prowler.isSelected)
                     {
                         prowler.isSelected = false;
+                        back.isSelected = true;
+                    }
+                    else
+                    {
+                        back.isSelected = false;
                         wizard.isSelected = true;
                     }
                     break;
@@ -215,15 +243,21 @@ public class Menu
                     {
                         this.hero_class = "wizard";
                         continue_cycle = false;
+                        this.isHeroChosen = true;
                     }
                     else if (barbarian.isSelected)
                     {
                         this.hero_class = "barbarian";
                         continue_cycle = false;
+                        this.isHeroChosen = true;
                     }
-                    else
+                    else if (prowler.isSelected)
                     {
                         this.hero_class = "prowler";
+                        continue_cycle = false;
+                        this.isHeroChosen = true;
+                    } else
+                    {
                         continue_cycle = false;
                     }
                     break;
