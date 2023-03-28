@@ -3,11 +3,27 @@
 //Создется объек мира
 World world = new World();
 
+// Создается меню, идет ожидание выбора персонажа
+Menu menu = new Menu();
+menu.Show();
+
 //Отображение наччала игры
 Console.WriteLine("GameStart");
 
 //Создание героя (создается в зависимости от выбора в меню)
-Hero hero = new Wizard();
+Hero hero = new Hero();
+if (menu.hero_class == "wizard")
+{
+    hero = new Wizard();
+} 
+else if (menu.hero_class == "barbarian")
+{
+    hero = new Barbarian();
+} 
+else if (menu.hero_class == "prowler")
+{
+    hero = new Prowler();
+}
 
 //Пример создания монстра
 Monsters Goblin = new Ghost(1);
