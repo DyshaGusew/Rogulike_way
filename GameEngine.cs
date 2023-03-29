@@ -3,6 +3,7 @@
 //Создется объек мира
 World world = new World();
 
+//Console.SetWindowSize(500, 500);
 // Создается меню, идет ожидание выбора персонажа
 Menu menu = new Menu();
 menu.Show();

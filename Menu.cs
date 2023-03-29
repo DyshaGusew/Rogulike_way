@@ -107,8 +107,8 @@ public class Menu
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
 
-        Console.SetWindowSize(145, 36);
-        Console.SetBufferSize(145, 36);
+       // Console.SetWindowSize(145, 36);
+       // Console.SetBufferSize(145, 36);
         Console.CursorVisible = false;
 
         while (continue_cycle)
