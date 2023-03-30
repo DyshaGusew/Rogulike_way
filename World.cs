@@ -1,7 +1,5 @@
 ﻿//Класс который хранит все о мире
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
+
 
 //Класс Мини комнат с разными характеристиками
 public class MiniRoom
@@ -99,7 +97,13 @@ public class World
 
     public List<Monsters> monsters_list = new List<Monsters>();  //Пустая коллекция монстров
     public List<Items> items_list = new List<Items>();                  //Пустая коллекция объектов
-    
+
+    //Коллекции комнат и карты
+    public char[,] map;
+    public List<MiniRoom> roomsMini = new List<MiniRoom>();
+    public List<RealRoom> roomsReal = new List<RealRoom>();
+
+    //Стоит ли добавлять сюда игрока?
 
 
 
@@ -138,8 +142,8 @@ public class World
     public char[,] CreateMiniMap()
     {
         //Начальная комната
-        int x_pos = 3; int y_pos = 3;
-        char[,] map = new char[10, 10];
+        int x_pos = 4; int y_pos = 4;
+        char[,] map = new char[11, 11];
         map[y_pos, x_pos] = '#';
 
         Random random = new Random();
@@ -243,9 +247,9 @@ public class World
     {
            List<MiniRoom> roomsMini = new List<MiniRoom>();
        int i = 0;
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 11; x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < 11; y++)
             {
                 if (miniMap[x, y] == '#')
                 {
@@ -390,7 +394,7 @@ public class World
 
             //Удаляю стену на месте двери
             DelBorders(coordDoor, roomReal);
-            map[0, (x_len) / 2] = '╬';
+            map[coordDoor[1], coordDoor[0]] = '╬';
             Doors door = new Doors(coordDoor[0], coordDoor[1]);
             foreach (MiniRoom roomMin in roomsMini)
             {

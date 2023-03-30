@@ -1,15 +1,14 @@
-﻿//Игровой движок в котором все и происходит
-
-//Создется объек мира
+﻿//Создется объек мира
 World world = new World();
 
-//Console.SetWindowSize(500, 500);
+world.map = world.CreateMiniMap(); //Создаю мини карту(и одновремено расположение комнат относительно друг друга)
+world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
+world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
+
+Console.CursorVisible = false;    //Отключение курсора
 // Создается меню, идет ожидание выбора персонажа
 Menu menu = new Menu();
 menu.Show();
-
-//Отображение наччала игры
-Console.WriteLine("GameStart");
 
 //Создание героя (создается в зависимости от выбора в меню)
 Hero hero = new Hero();
@@ -26,105 +25,114 @@ else if (menu.hero_class == "prowler")
     hero = new Prowler();
 }
 
-//Пример создания монстра
-Monsters Goblin = new Ghost(1);
-//Fight fight = new Fight(Hero, Goblin);
 
+//Выбор начальной комнаты для отрисовки из мира
+Random rand = new Random();
+int numRoom = rand.Next(0, 9);
+RealRoom currentRoom = world.roomsReal[numRoom];
 
-//Создаю мини карту(и одновремено при пмощи нее делаю взаимодействия между комнатами)
-char[,] miniMap = world.CreateMiniMap();
-
-//Заполняю коллекцию мини комнат
-List<MiniRoom> roomsMini = world.AppArrMiniRooms(miniMap);
-
-
-
-//Создание всех комнат
-
-List<RealRoom> roomsReal = world.CreateArrRealRooms(roomsMini);
-
-RealRoom Room = roomsReal[0];
-
-//Только для первой отрисовки
-char[,] RoomMap = roomsReal[0].map;
-
-//задаю герою координаты
-int[] coordinates_hero = { RoomMap.GetLength(1) / 2, RoomMap.GetLength(0) / 2 };   //Делаю так, чтобы он был посередине
-hero.coordinates = coordinates_hero;
+//Задаю герою координаты
+hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
 
 
 //Отрисовываю карту без героя
-PaintGame.DraftCart(RoomMap);
-PaintGame.DraftMinyMap(Room, roomsMini, miniMap, 80, 0);
-         //Задежка
+DraftGame.DraftPlane(currentRoom, world.roomsMini, world.map);
 
+//Задежка
+System.Threading.Thread.Sleep(500);
 
 //Указываю героя в центре координат
-RoomMap[hero.coordinates[1], hero.coordinates[0]] = '@';
-PaintGame.DraftCart(RoomMap);                     //Отрисовываю карту уже с героем
-PaintGame.DraftMinyMap(Room, roomsMini, miniMap, 80, 0);
+currentRoom.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+DraftGame.DraftPlane(currentRoom, world.roomsMini, world.map);                     //Отрисовываю карту уже с героем
 
 
-Console.CursorVisible = false;    //Отключение курсора
+
+//Обработка нажатий
 ConsoleKeyInfo keyInfo;
 do
 {
     keyInfo = Console.ReadKey(true);
     if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", ref Room, world, hero, roomsReal, miniMap, roomsMini);
+        MovePlayer.Move("Up", ref currentRoom, world, hero);
    
     else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", ref Room, world, hero, roomsReal, miniMap, roomsMini);
+        MovePlayer.Move("Down", ref currentRoom, world, hero);
 
     else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", ref Room, world, hero, roomsReal, miniMap, roomsMini);
+        MovePlayer.Move("Right", ref currentRoom, world, hero);
 
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", ref Room, world, hero, roomsReal, miniMap, roomsMini);
+        MovePlayer.Move("Left", ref currentRoom, world, hero);
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
 
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
-class PaintGame
+class DraftGame
 {
     static public int StatX = 20, StatY = 5;  //Смещение карты
 
-    //Отрисовка указанной карты
-    static public void DraftCart(char[,] map) //Рисует первую комнату по заготовке
-    {
-        int x_len = map.GetLength(1);
-        int y_len = map.GetLength(0);
-       
-        Console.Clear();
-        for (int y = 0; y < y_len; y++)
-            for (int x = 0; x < x_len; x++)         
-                PutCurs(map[y, x], y, x);
-        
-    }
-
-    //Добавление символа в необходимой координате
+    
+    //Добавление символа в необходимой координате с дефолтным смещением
     static public void PutCurs(char ch, int y, int x)
     {
         Console.SetCursorPosition(StatX + x, StatY + y);
         Console.Write(ch);
     }
 
+    //Добавление символа в необходимой координате с указанным смещением
     static public void PutCursRange(char ch, int y, int x, int statX, int statY)
     {
         Console.SetCursorPosition(statX + x, statY + y);
         Console.Write(ch);
     }
 
-    //Для миникарты
-    static public void DraftMinyMap(RealRoom realRoom, List<MiniRoom> roomsMini, char[,] map, int statX, int statY) //Рисует первую комнату по заготовке
+
+    //Отрисовка Мини карты и комнаты
+    static public void DraftPlane(RealRoom room, List<MiniRoom> roomsMini, char[,] map)
     {
-        int x_save = 0, y_save = 0;
+        //Отрисовка комнаты
+        //Длина комнаты
+        int x_len = room.map.GetLength(1);
+        int y_len = room.map.GetLength(0);
+
+        //Рисую указанные символы
+        Console.Clear();
+        for (int y = 0; y < y_len; y++)
+            for (int x = 0; x < x_len; x++)
+                PutCurs(room.map[y, x], y, x);
+
+        //Отрисовка миникарты
+        DraftMinyMap(room, roomsMini, map);    
+    }
+
+    //Отрисовка миникарты с текущим положением героя
+    static public void DraftMinyMap(RealRoom realRoom, List<MiniRoom> roomsMini, char[,] map)
+    //Функция миникарты принимает 3 аргумента т.к ей нужно знать(где герой, текущую миникомнату, миникарту)
+    {
+        //Определение размерности
         int x_len = map.GetLength(1);
         int y_len = map.GetLength(0);
+
+        //Проверка наличия посещения в комнатае для отобрадения или убирания комнаты, в которой не было игрока
         foreach (MiniRoom roomMini in roomsMini)
         {
-            if(roomMini.number == realRoom.number) 
+            
+        }
+
+        //Когда номер миникомнаты совпадает с текущей реальной, то миникарта отображает в текущей миникомнате @
+        foreach (MiniRoom roomMini in roomsMini)
+        {
+            if (roomMini.visitings == true)
+            {
+                map[roomMini.y, roomMini.x] = '#';
+            }
+            else
+            {
+                map[roomMini.y, roomMini.x] = '.';
+            }
+
+            if (roomMini.number == realRoom.number) 
             {
                 for (int y = 0; y < y_len; y++)
                     for (int x = 0; x < x_len; x++)
@@ -135,23 +143,18 @@ class PaintGame
                         }
 
                     }
+                roomMini.visitings = true;
                 map[roomMini.y, roomMini.x] = '@'; 
             }
         }
 
 
-        
-
-        
+        //Вывожу миникарту в указанных координатах
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)
             {
-                PutCursRange(map[y, x], y, x, statX, statY);
-
+                PutCursRange(map[y, x], y, x, 80, 0);
             }
-        
-
-
     }
 }
 
@@ -159,197 +162,171 @@ class PaintGame
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
 class MovePlayer
 {
-    static public void Move(string trend, ref RealRoom room, World world, Hero hero, List<RealRoom> roomsReal, char[,] miniMap, List<MiniRoom> roomsMini)
+    static public void Move(string trend, ref RealRoom roomCurrent, World world, Hero hero)
     {
-
         if (trend == "Left")
         {
-            int[] move_coordinates = { hero.coordinates[0] - 1, hero.coordinates[1]};   //Указываю каково смещение
-            Object obj = world.DefiningArea(move_coordinates, room);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
+            //Указываю координаты смещения и сохраняю объект, который в них находится
+            int[] moveCoordinates = { hero.coordinates[0] - 1, hero.coordinates[1]};   //Указываю каково смещение
+            Object obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
-            //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
+            //Проверка на наличее в перемещаемой координате чего-либо
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
             {
                 return;
             }
 
-            else if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            else if (obj is Doors doors)   //Проверяю принадлежит ли объект классу дверей
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors) obj;
-                foreach(RealRoom room1 in roomsReal)
+                //Координаты игрока меняются
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                Doors door = doors;
+                foreach(RealRoom room1 in world.roomsReal)
                 {
-                    //Если комната из коллекции равна указываемой у текущей двери
+                    //Если комната из коллекции равна указываемой у текущей двери(то есть дверь ведет в нужную комнату, то текущая меняется на указываемую)
                     if(room1.number == door.room_num)
                     {
-                        room = room1;
+                        roomCurrent = room1;                  
                     }
                 }
 
-                hero.coordinates[0] = room.map.GetLength(1)-2; hero.coordinates[1] = room.map.GetLength(0) / 2;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                //Координаты в середине и рядом с дверью
+                hero.coordinates[0] = roomCurrent.map.GetLength(1)-2; hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
 
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
-                PaintGame.DraftCart(room.map);
-                PaintGame.DraftMinyMap(room, roomsMini, miniMap, 80, 0);
-
+                //Отрисовываем
+                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
                 return;
             }
 
+            //Если простанство пустое
             else
             {
                 //Меняю карту и соответсвенно меняю координаты героя
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                PaintGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] -= 1; hero.coordinates[1] -= 0;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
             }
 
 
             
         }
 
+        //Остальное работает подобно верхнему
         if(trend == "Right")
         {
-            int[] move_coordinates = { hero.coordinates[0] +1, hero.coordinates[1] };   //Указываю каково смещение
-            Object obj = world.DefiningArea(move_coordinates, room);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
-
-            //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
-            //Если стена, то не двигаюсь
-
+            int[] move_coordinates = { hero.coordinates[0] +1, hero.coordinates[1] };   
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
            
-            if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
+            if (obj is Borders)  
             {
                 return;
             }
 
             
-            else if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            else if (obj is Doors doors)   
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors)obj;
-                foreach (RealRoom room1 in roomsReal)
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                Doors door = doors;
+                foreach (RealRoom room1 in world.roomsReal)
                 {
-                    //Если комната из коллекции равна указываемой у текущей двери
                     if (room1.number == door.room_num)
                     {
-                        room = room1;
+                        roomCurrent = room1;
                     }
                 }
-                hero.coordinates[0] = 1; hero.coordinates[1] = room.map.GetLength(0) /2;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                hero.coordinates[0] = 1; hero.coordinates[1] = roomCurrent.map.GetLength(0) /2;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
 
-
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
-                PaintGame.DraftCart(room.map);
-                PaintGame.DraftMinyMap(room, roomsMini, miniMap, 80, 0);
-
-
+                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
                 return;
             }
 
             else
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                PaintGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 1; hero.coordinates[1] -= 0;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
             }
             
         }
 
         if(trend == "Up")
         {
-            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]-1};   //Указываю каково смещение
-            Object obj = world.DefiningArea(move_coordinates, room);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
+            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]-1};   
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
 
-            //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
-            //Если стена, то не двигаюсь
-
-
-            if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
+            if (obj is Borders)  
             {
                 return;
             }
 
-            else if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            else if (obj is Doors doors)  
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors)obj;
-                foreach (RealRoom room1 in roomsReal)
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                Doors door = doors;
+                foreach (RealRoom room1 in world.roomsReal)
                 {
-                    //Если комната из коллекции равна указываемой у текущей двери
                     if (room1.number == door.room_num)
                     {
-                        room = room1;
+                        roomCurrent = room1;
                     }
                 }
-                hero.coordinates[0] = room.map.GetLength(1) / 2; hero.coordinates[1] = room.map.GetLength(0) - 2;
-               
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                hero.coordinates[0] = roomCurrent.map.GetLength(1) / 2; hero.coordinates[1] = roomCurrent.map.GetLength(0) - 2;              
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
 
- 
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
-                PaintGame.DraftCart(room.map);
-                PaintGame.DraftMinyMap(room, roomsMini, miniMap, 80, 0);
-
+                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
                 return;
             }
 
             else
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                PaintGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 0; hero.coordinates[1] -= 1;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
             }
         }
+
         if(trend == "Down")
         {
-            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]+1};   //Указываю каково смещение
-            Object obj = world.DefiningArea(move_coordinates, room);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
+            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]+1};   
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent);  
 
-            //Проверка на наличее в перемещаемой координате чего-либо(пока только стены)
-            //Если стена, то не двигаюсь
-
-
-            if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
+            if (obj is Borders)   
             {
                 return;
             }
-            else if (obj is Doors)   //Проверяю принадлежит ли объект классу стен
+            else if (obj is Doors)   
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
                 Doors door = (Doors)obj;
-                foreach (RealRoom room1 in roomsReal)
+                foreach (RealRoom room1 in world.roomsReal)
                 {
-                    //Если комната из коллекции равна указываемой у текущей двери
                     if (room1.number == door.room_num)
                     {
-                        room = room1;
+                        roomCurrent = room1;
                     }
                 }
-                hero.coordinates[0] = (room.map.GetLength(1) / 2); hero.coordinates[1] = 1;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                hero.coordinates[0] = (roomCurrent.map.GetLength(1) / 2); hero.coordinates[1] = 1;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
 
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
-                PaintGame.DraftCart(room.map);
-                PaintGame.DraftMinyMap(room, roomsMini, miniMap, 80, 0);
-
-
+                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
                 return;
             }
 
             else
             {
-                room.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                PaintGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 0; hero.coordinates[1] += 1;
-                room.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                PaintGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
             }
         }
     }
