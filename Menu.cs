@@ -16,6 +16,8 @@ public class Button
 
     public void DrawBorder(int x, int y)
     {
+
+        Console.CursorVisible = false;
         Console.SetCursorPosition(x, y);
         for (int i = 0; i < 30; i++)
         {
@@ -26,6 +28,8 @@ public class Button
 
     public void DrawSpace(int x, int y)
     {
+
+        Console.CursorVisible = false;
         Console.SetCursorPosition(x, y);
         for (int i = 0; i < 28; i++)
         {
@@ -43,6 +47,8 @@ public class Button
 
     public void WriteButtonName(int x, int y)
     {
+
+        Console.CursorVisible = false;
         int length = this.name.Length;
         int addition = 0;
         Console.SetCursorPosition(x, y);
@@ -63,6 +69,8 @@ public class Button
 
     public void DrawButton(int x, int y)
     {
+
+        Console.CursorVisible = false;
         if (isSelected)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -83,12 +91,15 @@ public class Button
 
 public class Menu
 {
+
     public string hero_class = "";
     public bool isHeroChosen = false;
     public Menu() {}
 
     public void DrawButtons(Button button_1,  Button button_2)
     {
+
+        Console.CursorVisible = false;
         button_1.DrawButton(57, 5);
         Console.Write("\n\n");
         button_2.DrawButton(57, 12);
@@ -96,6 +107,8 @@ public class Menu
 
     public void DrawButtons(Button button_1, Button button_2, Button button_3, Button button_4)
     {
+
+        Console.CursorVisible = false;
         button_1.DrawButton(57, 5);
         Console.Write("\n\n");
         button_2.DrawButton(57, 12);
@@ -107,12 +120,16 @@ public class Menu
 
     public void WriteTip()
     {
+
+        Console.CursorVisible = false;
         Console.SetCursorPosition(56, 33);
         Console.WriteLine("W - Вверх, S - Вниз, E - Выбрать");
     }
 
     public void Show()
     {
+
+        Console.CursorVisible = false;
         Button start = new Button("Начать", true);
         Button exit = new Button("Выйти", false);
 
@@ -176,6 +193,8 @@ public class Menu
 
     public void ChooseCharacter()
     {
+
+        Console.CursorVisible = false;
         Button wizard = new Button("Маг", true);
         Button barbarian = new Button("Варвар", false);
         Button prowler = new Button("Бродяга", false);

@@ -90,6 +90,17 @@ public class Doors
 //Класс, где создается игровой мир
 public class World
 {
+    public char charRoomBordVert = '║';
+    public char charRoomBordHor = '═';
+    public char charDoors = '╬';
+
+    public char charMiniRoomBordVert = '│';
+    public char charMiniRoomBordHor = '─';
+    public char charMiniRoom = '#';
+    public char charMiniEmpty = ' ';
+
+    public char charHero = '@';
+
 
     //Работа с монстрами и объектами, добавление их в коллекции
     public Monsters monster;
@@ -128,10 +139,19 @@ public class World
 
     
 
-    public void DelBorders(int[] coordDoor, RealRoom room)  //Заполняю/удаляю, если должна быть дверь
+    public void DelBorders(int[] coordDoor, ref RealRoom room)  //Заполняю/удаляю, если должна быть дверь
     {
-        Borders border = (Borders)DefiningArea(coordDoor, room);
-        room.borders_list.Remove(border);
+        foreach (Borders borders in room.borders_list)
+        {
+            if (borders.coordinates[0] == coordDoor[0] && borders.coordinates[1] == coordDoor[1])
+            {
+                room.borders_list.Remove(borders);
+                room.borders_list.Remove(borders);
+                room.borders_list.Remove(borders);
+                return;
+            }
+        }
+        
     }
 
 
@@ -141,24 +161,32 @@ public class World
     //Создание рандомной мини карты
     public char[,] CreateMiniMap()
     {
+        //Массив миникарты
+        int xLen = 12;
+        int yLen = 12;
+        char[,] map = new char[yLen, xLen];
+
         //Начальная комната
-        int x_pos = 4; int y_pos = 4;
-        char[,] map = new char[11, 11];
-        map[y_pos, x_pos] = '#';
+        int x_pos = 4; int y_pos = 4;   //Позиция первой комнаты
+        map[y_pos, x_pos] = charMiniRoom;
 
+        //Количесвто комнат колеблится от 8 до 10
         Random random = new Random();
-        int c_room = random.Next(7, 10); //Количесвто комнат колеблится от 7 до 10
+        int c_room = random.Next(8, 10); 
 
+        //Создаем окружение у комнаты с указанными координатами
         map = CreateOkrujMini(map, x_pos, y_pos);
+
+
 
         //Выбирают ту комнату, которой не было и создаю ее окружение, пока количество комнат не сравняется с указанным
         while (CounterRoomsMini(map) <= c_room)
         {
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < xLen; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < yLen; y++)
                 {
-                    if (map[x, y] == '#')
+                    if (map[x, y] == charMiniRoom)
                     {
                         x_pos = x; y_pos = y;
 
@@ -168,17 +196,50 @@ public class World
             map = CreateOkrujMini(map, x_pos, y_pos);
         }
 
-        //Заполняет мини карту пустотой
-        for (int x = 0; x < 10; x++)
+        //Заполняет мини карту пустотой (по сути не нужно, но если вдруг вид пустоты изменится, то поменять его будет проще)
+        for (int x = 0; x < xLen-1; x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < yLen-1; y++)
             {
-                if(map[x,y] != '#')
+                if(map[x,y] != charMiniRoom)
                 {
-                    map[x, y] = '.';
+                    map[x, y] = charMiniEmpty;
                 }
             }
         }
+
+
+
+        //Границы
+
+        map[0, 0] = '┌';
+        map[0, xLen - 1] = '┐';
+
+        map[yLen - 1, 0] = '└';
+        map[yLen - 1, xLen - 1] = '┘';
+        //Первая строка
+        for (int x = 1; x < xLen-1; x++)
+        {
+            map[0, x] = charMiniRoomBordHor;
+        }
+
+        //Остальные строки
+        for (int y = 1; y < yLen-1; y++)
+        {
+            map[y, 0] = charMiniRoomBordVert;
+
+            for (int x = 1; x < xLen; x++)
+            {
+                
+            }
+            map[y, xLen - 1] = charMiniRoomBordVert;
+        }
+        //Последняя строка
+        for (int x = 1; x < xLen-1; x++)
+        {
+            map[yLen - 1, x] = charMiniRoomBordHor;
+        }
+
         
         return map;
     }
@@ -188,9 +249,9 @@ public class World
     {
 
         Random random = new Random();
-        int c_door = random.Next(1, 3);
+        int c_door = random.Next(1, 4);
 
-        int[] storons = new int[4] { 1, 2, 3, 4 }; //1-up 2 right 3 down 4 left
+        int[] storons = new int[4] { 2, 1, 3, 4 }; //1-up 2 right 3 down 4 left
 
         //Путаю очередность создания сторон
         for (int i = storons.Length - 1; i >= 0; i--)
@@ -205,19 +266,17 @@ public class World
         for (int i = 0; i < c_door; i++)
         {
             if (storons[i] == 1)
-                miniMap[y_pos - 1, x_pos] = '#';
-
-
+                miniMap[y_pos - 1, x_pos] = charMiniRoom;
 
             if (storons[i] == 2)
-                miniMap[y_pos, x_pos + 1] = '#';
+                miniMap[y_pos, x_pos + 1] = charMiniRoom;
 
 
             if (storons[i] == 3)
-                miniMap[y_pos + 1, x_pos] = '#';
+                miniMap[y_pos + 1, x_pos] = charMiniRoom;
 
             if (storons[i] == 4)
-                miniMap[y_pos, x_pos - 1] = '#';
+                miniMap[y_pos, x_pos - 1] = charMiniRoom;
         }
         return miniMap;
     }
@@ -230,7 +289,7 @@ public class World
         {
             for (int y = 0; y < 10; y++)
             {
-                if (miniMap[x, y] == '#')
+                if (miniMap[x, y] == charMiniRoom)
                 {
                     n++;
                 }
@@ -247,27 +306,27 @@ public class World
     {
            List<MiniRoom> roomsMini = new List<MiniRoom>();
        int i = 0;
-        for (int x = 0; x < 11; x++)
+        for (int x = 0; x < 12; x++)
         {
-            for (int y = 0; y < 11; y++)
+            for (int y = 0; y < 12; y++)
             {
-                if (miniMap[x, y] == '#')
+                if (miniMap[x, y] == charMiniRoom)
                 {
                     //Создаю объек мини комнаты и ставлю для него значения дверей и номер
                     MiniRoom miniRoom = new MiniRoom(i);
-                    if (miniMap[x, y + 1] == '#')
+                    if (miniMap[x, y + 1] == charMiniRoom)
                     {
                         miniRoom.rightDoor = true;
                     }
-                    if (miniMap[x, y - 1] == '#')
+                    if (miniMap[x, y - 1] == charMiniRoom)
                     {
                         miniRoom.leftDoor = true;
                     }
-                    if (miniMap[x - 1, y] == '#')
+                    if (miniMap[x - 1, y] == charMiniRoom)
                     {
                         miniRoom.upDoor = true;
                     }
-                    if (miniMap[x + 1, y] == '#')
+                    if (miniMap[x + 1, y] == charMiniRoom)
                     {
                         miniRoom.downDoor = true;
                     }
@@ -329,7 +388,7 @@ public class World
         //Первая строка
         for (int x = 1; x < x_len-1; x++)
         {
-            map[0, x] = '═';
+            map[0, x] = charRoomBordHor;
             border = new Borders(x, 0);
             roomReal.borders_list.Add(border);
         }
@@ -337,14 +396,14 @@ public class World
         //Остальные строки
         for (int y = 1; y < y_len-1; y++)
         {
-            map[y, 0] = '║';
+            map[y, 0] = charRoomBordVert;
             border = new Borders(0, y);
             roomReal.borders_list.Add(border);
             for (int x = 1; x < x_len - 2; x++)
             {
                 map[y, x] = ' ';
             }
-            map[y, x_len-1] = '║';
+            map[y, x_len-1] = charRoomBordVert;
 
             border = new Borders(x_len - 1, y);
             roomReal.borders_list.Add(border);
@@ -354,7 +413,7 @@ public class World
         //Последняя строка
         for (int x = 1; x < x_len-1; x++)
         {
-            map[y_len-1, x] = '═';
+            map[y_len-1, x] = charRoomBordHor;
             border = new Borders(x, y_len - 1);
             roomReal.borders_list.Add(border);
         }
@@ -368,9 +427,9 @@ public class World
             int[] coordDoor = new int[] { x_len - 1, y_len / 2 };
 
             //Удаляю стену на месте двери
-            DelBorders(coordDoor, roomReal);
+            DelBorders(coordDoor, ref roomReal);
 
-            map[y_len / 2, x_len - 1] = '╬';
+            map[y_len / 2, x_len - 1] = charDoors;
             Doors door = new Doors(coordDoor[0], coordDoor[1]);
             foreach(MiniRoom roomMin in roomsMini)
             {
@@ -390,14 +449,18 @@ public class World
            // Console.WriteLine("ww");
 
             //Указываю серединчатые координаты дверей
-            int[] coordDoor = new int[] { (x_len) / 2, 0 };
+            int[] coordDoor = new int[] { ((x_len) / 2), 0 };
 
             //Удаляю стену на месте двери
-            DelBorders(coordDoor, roomReal);
-            map[coordDoor[1], coordDoor[0]] = '╬';
+            DelBorders(coordDoor, ref roomReal);
+
+            map[0, (x_len) / 2] = charDoors;
             Doors door = new Doors(coordDoor[0], coordDoor[1]);
+            roomReal.doors_list.Add(door);
+            DelBorders(coordDoor, ref roomReal);
             foreach (MiniRoom roomMin in roomsMini)
             {
+               
                 if (roomMin.x == miniRoom.x && roomMin.y == miniRoom.y-1)
                 {
                     door.room_num = roomMin.number;
@@ -408,16 +471,13 @@ public class World
         }
         if (miniRoom.downDoor == true)
         {
-            //Console.WriteLine("ss");
-
-
             //Указываю серединчатые координаты дверей
             int[] coordDoor = new int[] { ((x_len) / 2), y_len - 1 };
 
             //Удаляю стену на месте двери
-            DelBorders(coordDoor, roomReal);
+            DelBorders(coordDoor, ref roomReal);
 
-            map[coordDoor[1], coordDoor[0]] = '╬';
+            map[coordDoor[1], coordDoor[0]] = charDoors;
             Doors door = new Doors(coordDoor[0], coordDoor[1]);
             foreach (MiniRoom roomMin in roomsMini)
             {
@@ -437,9 +497,9 @@ public class World
             int[] coordDoor = new int[] { 0 , y_len / 2 };
 
             //Удаляю стену на месте двери
-            DelBorders(coordDoor, roomReal);
+            DelBorders(coordDoor, ref roomReal);
 
-            map[y_len / 2, 0] = '╬';
+            map[y_len / 2, 0] = charDoors;
             Doors door = new Doors(coordDoor[0], coordDoor[1]);
             foreach (MiniRoom roomMin in roomsMini)
             {
@@ -515,7 +575,6 @@ public class World
         return 0;
 
         
-    }
-        
-    }
+    }       
+}
 

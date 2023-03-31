@@ -36,14 +36,14 @@ hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.ma
 
 
 //Отрисовываю карту без героя
-DraftGame.DraftPlane(currentRoom, world.roomsMini, world.map);
+DraftGame.DraftPlane(currentRoom, world);
 
 //Задежка
-System.Threading.Thread.Sleep(500);
+System.Threading.Thread.Sleep(1000);
 
 //Указываю героя в центре координат
-currentRoom.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-DraftGame.DraftPlane(currentRoom, world.roomsMini, world.map);                     //Отрисовываю карту уже с героем
+currentRoom.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+DraftGame.DraftPlane(currentRoom, world);                     //Отрисовываю карту уже с героем
 
 
 
@@ -64,6 +64,24 @@ do
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
         MovePlayer.Move("Left", ref currentRoom, world, hero);
 
+    else if (keyInfo.KeyChar == 'p' || keyInfo.KeyChar == 'з')
+    {
+       // Console.WriteLine(currentRoom.number);
+        //Console.WriteLine(currentRoom.doors_list.Count());
+       // Console.WriteLine(world.roomsMini[currentRoom.number].upDoor);
+
+        int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1] - 1 };
+       // Console.Write(world.DefiningArea(move_coordinates, currentRoom));
+        if(world.DefiningArea(move_coordinates, currentRoom) is Borders)
+        {
+            foreach(Doors door in currentRoom.doors_list)
+            {
+                Console.WriteLine($"{door.coordinates[0]}   {door.coordinates[1]}");
+            }
+        }
+
+    }    
+
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
 
 
@@ -77,19 +95,53 @@ class DraftGame
     static public void PutCurs(char ch, int y, int x)
     {
         Console.SetCursorPosition(StatX + x, StatY + y);
+        if (ch == '╬')
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;    
+        }
+
+        else if (ch == '@')
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+        }
+
+        else if (ch == '═' || ch == '║' || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+
         Console.Write(ch);
+        Console.ResetColor();
+
     }
 
     //Добавление символа в необходимой координате с указанным смещением
     static public void PutCursRange(char ch, int y, int x, int statX, int statY)
     {
         Console.SetCursorPosition(statX + x, statY + y);
+        if (ch == '#')
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+        }
+
+        else if (ch == '@')
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+        }
+
+        else if (ch == '│' || ch == '─' || ch == '┌' || ch == '┐' || ch == '└' || ch == '┘')
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         Console.Write(ch);
+        Console.ResetColor();
     }
 
 
     //Отрисовка Мини карты и комнаты
-    static public void DraftPlane(RealRoom room, List<MiniRoom> roomsMini, char[,] map)
+    static public void DraftPlane(RealRoom room, World world)
     {
         //Отрисовка комнаты
         //Длина комнаты
@@ -103,33 +155,28 @@ class DraftGame
                 PutCurs(room.map[y, x], y, x);
 
         //Отрисовка миникарты
-        DraftMinyMap(room, roomsMini, map);    
+        DraftMinyMap(room, world);    
     }
 
     //Отрисовка миникарты с текущим положением героя
-    static public void DraftMinyMap(RealRoom realRoom, List<MiniRoom> roomsMini, char[,] map)
+    static public void DraftMinyMap(RealRoom realRoom, World world)
     //Функция миникарты принимает 3 аргумента т.к ей нужно знать(где герой, текущую миникомнату, миникарту)
     {
         //Определение размерности
-        int x_len = map.GetLength(1);
-        int y_len = map.GetLength(0);
-
-        //Проверка наличия посещения в комнатае для отобрадения или убирания комнаты, в которой не было игрока
-        foreach (MiniRoom roomMini in roomsMini)
-        {
-            
-        }
+        int x_len = world.map.GetLength(1);
+        int y_len = world.map.GetLength(0);
 
         //Когда номер миникомнаты совпадает с текущей реальной, то миникарта отображает в текущей миникомнате @
-        foreach (MiniRoom roomMini in roomsMini)
+        foreach (MiniRoom roomMini in world.roomsMini)
         {
+            //Проверка на наличие посещения комнаты
             if (roomMini.visitings == true)
             {
-                map[roomMini.y, roomMini.x] = '#';
+                world.map[roomMini.y, roomMini.x] = world.charMiniRoom;
             }
             else
             {
-                map[roomMini.y, roomMini.x] = '.';
+                world.map[roomMini.y, roomMini.x] = world.charMiniEmpty;
             }
 
             if (roomMini.number == realRoom.number) 
@@ -137,23 +184,25 @@ class DraftGame
                 for (int y = 0; y < y_len; y++)
                     for (int x = 0; x < x_len; x++)
                     {
-                        if (map[y, x] == '@')
+                        if (world.map[y, x] == world.charHero)
                         {
-                            map[y, x] = '#';
+                            world.map[y, x] = world.charMiniRoom;
                         }
 
                     }
                 roomMini.visitings = true;
-                map[roomMini.y, roomMini.x] = '@'; 
+                world.map[roomMini.y, roomMini.x] = world.charHero;
             }
         }
 
 
         //Вывожу миникарту в указанных координатах
+        Console.SetCursorPosition(80 + x_len/2-5, 0);
+        Console.WriteLine("Миникарта");
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)
             {
-                PutCursRange(map[y, x], y, x, 80, 0);
+                PutCursRange(world.map[y, x], y, x, 80, 1);
             }
     }
 }
@@ -192,10 +241,10 @@ class MovePlayer
 
                 //Координаты в середине и рядом с дверью
                 hero.coordinates[0] = roomCurrent.map.GetLength(1)-2; hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
 
                 //Отрисовываем
-                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
+                DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
 
@@ -206,8 +255,8 @@ class MovePlayer
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
                 DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] -= 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
             }
 
 
@@ -238,9 +287,9 @@ class MovePlayer
                     }
                 }
                 hero.coordinates[0] = 1; hero.coordinates[1] = roomCurrent.map.GetLength(0) /2;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-
-                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                    
+                DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
 
@@ -249,8 +298,8 @@ class MovePlayer
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
                 DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
             }
             
         }
@@ -261,9 +310,8 @@ class MovePlayer
             Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
 
             if (obj is Borders)  
-            {
                 return;
-            }
+
 
             else if (obj is Doors doors)  
             {
@@ -277,9 +325,9 @@ class MovePlayer
                     }
                 }
                 hero.coordinates[0] = roomCurrent.map.GetLength(1) / 2; hero.coordinates[1] = roomCurrent.map.GetLength(0) - 2;              
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
 
-                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
+                DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
 
@@ -288,8 +336,8 @@ class MovePlayer
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
                 DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 0; hero.coordinates[1] -= 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
             }
         }
 
@@ -314,9 +362,9 @@ class MovePlayer
                     }
                 }
                 hero.coordinates[0] = (roomCurrent.map.GetLength(1) / 2); hero.coordinates[1] = 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
 
-                DraftGame.DraftPlane(roomCurrent, world.roomsMini, world.map);
+                DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
 
@@ -325,8 +373,8 @@ class MovePlayer
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
                 DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
                 hero.coordinates[0] += 0; hero.coordinates[1] += 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = '@';
-                DraftGame.PutCurs('@', hero.coordinates[1], hero.coordinates[0]);
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
             }
         }
     }
