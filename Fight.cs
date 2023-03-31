@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections;
 
 namespace Rogulike_way
 {/*public class Hero
@@ -78,11 +79,11 @@ namespace Rogulike_way
             PositionPrint(PositionX2, PositionY2 + 2, "3.Блок");
             Console.SetCursorPosition(PositionX2, PositionY2 + 5);
         }
-
+        
 
         private void Start(Hero Hero, Monsters Monster)
         {
-            Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
             Console.CursorVisible = false;
             Rendering(Hero, Monster);
             double MonsterAt = 0;

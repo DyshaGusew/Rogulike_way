@@ -2,6 +2,8 @@
 
 
 //Класс Мини комнат с разными характеристиками
+using System;
+
 public class MiniRoom
 {
     public int x;
@@ -33,6 +35,9 @@ public class RealRoom
     public bool visitings;
     public List<Borders> borders_list = new List<Borders>();
     public List<Doors> doors_list = new List<Doors>();
+
+    public List<Monsters> monsters_list = new List<Monsters>();  //Пустая коллекция монстров
+    public List<Items> items_list = new List<Items>();           //Пустая коллекция объектов
 
     public RealRoom()
     {
@@ -102,12 +107,7 @@ public class World
     public char charHero = '@';
 
 
-    //Работа с монстрами и объектами, добавление их в коллекции
-    public Monsters monster;
-    public Items item;
-
-    public List<Monsters> monsters_list = new List<Monsters>();  //Пустая коллекция монстров
-    public List<Items> items_list = new List<Items>();                  //Пустая коллекция объектов
+    public Monsters nullMonster = new Monsters();
 
     //Коллекции комнат и карты
     public char[,] map;
@@ -119,23 +119,6 @@ public class World
 
 
 
-    public void AppMonsters(Monsters monster, bool life)  //Заполняю/удаляю, если передали монстра
-    {
-        if (life == true)
-        {
-            monsters_list.Add(monster);
-        }
-        else { monsters_list.Remove(monster); }
-    }
-
-    public void AppItems(Items item, bool exist)    //Заполняю/удаляю, если передали предмет
-    {
-        if (exist == true)
-        {
-            items_list.Add(item);
-        }
-        else { items_list.Remove(item); }
-    }
 
     
 
@@ -356,9 +339,7 @@ public class World
         //Объект комнаты с номером идентичной маленькой комнаты
         RealRoom roomReal = new RealRoom(miniRoom.number);
 
-
         Random random = new Random();
-
         int x_len = random.Next(30, 50);
         int y_len = random.Next(10, 22);
 
@@ -384,7 +365,7 @@ public class World
         border = new Borders(y_len - 1, x_len - 1);
         roomReal.borders_list.Add(border);
 
-
+        //Создание границ
         //Первая строка
         for (int x = 1; x < x_len-1; x++)
         {
@@ -419,7 +400,7 @@ public class World
         }
 
         
-        //Добовляю двери
+        //Добавляю двери
         if(miniRoom.rightDoor == true)
         {
 
@@ -442,8 +423,7 @@ public class World
             
           
         }
-       
-        
+          
         if (miniRoom.upDoor == true)
         {
            // Console.WriteLine("ww");
@@ -469,6 +449,7 @@ public class World
             }
            
         }
+
         if (miniRoom.downDoor == true)
         {
             //Указываю серединчатые координаты дверей
@@ -511,7 +492,8 @@ public class World
             }
             
         }
-        
+
+
         roomReal.map = map;
         return roomReal;
         
@@ -533,11 +515,12 @@ public class World
         return roomsReal;
     }
 
+    
 
     public Object DefiningArea(int[] coordinates_move, RealRoom room)      //Проверка объекта в координатах(изучение области) куда надо пойти
    {
 
-        foreach(Items item in items_list)
+        foreach(Items item in room.items_list)
         {
             if (item.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
               {                       
@@ -546,8 +529,9 @@ public class World
             
         }
 
-        foreach (Monsters monster in monsters_list)
+        foreach (Monsters monster in room.monsters_list)
         {
+           
             if (monster.coordinates.SequenceEqual(coordinates_move))
             {
                 return monster;                 //Возыращает монстра на указанных координатах

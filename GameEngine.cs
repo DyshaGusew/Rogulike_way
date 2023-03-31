@@ -1,4 +1,6 @@
 ﻿//Создется объек мира
+using Rogulike_way;
+
 World world = new World();
 
 world.map = world.CreateMiniMap(); //Создаю мини карту(и одновремено расположение комнат относительно друг друга)
@@ -30,6 +32,7 @@ else if (menu.hero_class == "prowler")
 Random rand = new Random();
 int numRoom = rand.Next(0, 9);
 RealRoom currentRoom = world.roomsReal[numRoom];
+Monsters.CreateMonsters(currentRoom, hero);
 
 //Задаю герою координаты
 hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
@@ -63,24 +66,7 @@ do
 
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
         MovePlayer.Move("Left", ref currentRoom, world, hero);
-
-    else if (keyInfo.KeyChar == 'p' || keyInfo.KeyChar == 'з')
-    {
-       // Console.WriteLine(currentRoom.number);
-        //Console.WriteLine(currentRoom.doors_list.Count());
-       // Console.WriteLine(world.roomsMini[currentRoom.number].upDoor);
-
-        int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1] - 1 };
-       // Console.Write(world.DefiningArea(move_coordinates, currentRoom));
-        if(world.DefiningArea(move_coordinates, currentRoom) is Borders)
-        {
-            foreach(Doors door in currentRoom.doors_list)
-            {
-                Console.WriteLine($"{door.coordinates[0]}   {door.coordinates[1]}");
-            }
-        }
-
-    }    
+ 
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
 
@@ -191,6 +177,7 @@ class DraftGame
 
                     }
                 roomMini.visitings = true;
+                realRoom.visitings = true;
                 world.map[roomMini.y, roomMini.x] = world.charHero;
             }
         }
@@ -225,22 +212,27 @@ class MovePlayer
                 return;
             }
 
-            else if (obj is Doors doors)   //Проверяю принадлежит ли объект классу дверей
+            else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
             {
                 //Координаты игрока меняются
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = doors;
-                foreach(RealRoom room1 in world.roomsReal)
+                Doors door = (Doors)obj;
+                foreach (RealRoom room1 in world.roomsReal)
                 {
                     //Если комната из коллекции равна указываемой у текущей двери(то есть дверь ведет в нужную комнату, то текущая меняется на указываемую)
-                    if(room1.number == door.room_num)
+                    if (room1.number == door.room_num)
                     {
-                        roomCurrent = room1;                  
+                        if (room1.visitings == false)
+                        {
+                            Monsters.CreateMonsters(room1, hero);
+                        }
+                        roomCurrent = room1;
+
                     }
                 }
 
                 //Координаты в середине и рядом с дверью
-                hero.coordinates[0] = roomCurrent.map.GetLength(1)-2; hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
+                hero.coordinates[0] = roomCurrent.map.GetLength(1) - 2; hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
 
                 //Отрисовываем
@@ -248,6 +240,16 @@ class MovePlayer
                 return;
             }
 
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+            {
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                hero.coordinates[0] -= 1; hero.coordinates[1] -= 0;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                Fight gg = new Fight(hero, (Monsters)obj);
+
+            }
             //Если простанство пустое
             else
             {
@@ -275,14 +277,18 @@ class MovePlayer
             }
 
             
-            else if (obj is Doors doors)   
+            else if (obj is Doors)   
             {
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = doors;
+                Doors door = (Doors)obj;
                 foreach (RealRoom room1 in world.roomsReal)
                 {
                     if (room1.number == door.room_num)
                     {
+                        if (room1.visitings == false)
+                        {
+                            Monsters.CreateMonsters(room1, hero);
+                        }
                         roomCurrent = room1;
                     }
                 }
@@ -292,7 +298,16 @@ class MovePlayer
                 DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+            {
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                hero.coordinates[0] += 1; hero.coordinates[1] -= 0;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                Fight gg = new Fight(hero, (Monsters)obj);
 
+            }
             else
             {
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
@@ -313,14 +328,18 @@ class MovePlayer
                 return;
 
 
-            else if (obj is Doors doors)  
+            else if (obj is Doors)  
             {
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = doors;
+                Doors door = (Doors) obj;
                 foreach (RealRoom room1 in world.roomsReal)
                 {
                     if (room1.number == door.room_num)
                     {
+                        if (room1.visitings == false)
+                        {
+                            Monsters.CreateMonsters(room1, hero);
+                        }
                         roomCurrent = room1;
                     }
                 }
@@ -330,7 +349,16 @@ class MovePlayer
                 DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+            {
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                hero.coordinates[0] += 0; hero.coordinates[1] -= 1;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                Fight gg = new Fight(hero, (Monsters)obj);
 
+            }
             else
             {
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
@@ -358,6 +386,10 @@ class MovePlayer
                 {
                     if (room1.number == door.room_num)
                     {
+                        if (room1.visitings == false)
+                        {
+                            Monsters.CreateMonsters(room1, hero);
+                        }
                         roomCurrent = room1;
                     }
                 }
@@ -367,7 +399,16 @@ class MovePlayer
                 DraftGame.DraftPlane(roomCurrent, world);
                 return;
             }
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+            {
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
+                hero.coordinates[0] += 0; hero.coordinates[1] += 1;
+                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                Fight gg = new Fight(hero, (Monsters)obj);
 
+            }
             else
             {
                 roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';

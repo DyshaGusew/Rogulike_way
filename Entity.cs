@@ -64,6 +64,7 @@ public class Prowler : Hero
 
 public class Monsters
 {
+    public char designation;
     public string name = "Гоша";
     public int[] coordinates = { 0, 0 };
     public double StaticHealht;
@@ -72,12 +73,59 @@ public class Monsters
     public int level;
     public int experience; // При смерти моба можно передавать его опыт герою
     public double boost;
-}
-public class Goblins : Monsters
-{
-    public Goblins(int level)
+
+    public Monsters() { }
+
+    public static void CreateMonsters(RealRoom room, Hero hero)
     {
-        name = "Гоблин";
+        Random random = new Random();
+        int count_monsters = random.Next(2, 3);
+
+        for (int i = 0; i < count_monsters; i++)
+        {
+            Monsters monster = new Monsters();
+            switch (random.Next(1, 6))
+            {
+                case 1:
+                    {
+                        monster = new Ghost(hero.level);
+                        break;
+                    }
+                case 2:
+                    {
+                        monster = new Ork(hero.level);
+                        break;
+                    }
+                case 3:
+                    {
+                        monster = new Rat(hero.level);
+                        break;
+                    }
+                case 4:
+                    {
+                        monster = new Knight(hero.level);
+                        break;
+                    }
+                case 5:
+                    {
+                        monster = new Skeleton(hero.level);
+                        break;
+                    }
+
+            }
+            monster.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
+            room.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+            room.monsters_list.Add(monster);
+           
+        }
+    }
+}
+public class Ork : Monsters
+{
+    public Ork(int level)
+    {
+        designation = 'O';
+        name = "Орк";
         StaticHealht = 50;
         damage = 20;
         experience = 30;
@@ -97,6 +145,7 @@ public class Ghost : Monsters
 {
     public Ghost(int level)
     {
+        designation = 'G';
         name = "Призрак";
         StaticHealht = 20;
         damage = 40;
@@ -117,6 +166,7 @@ public class Knight : Monsters
 {
     public Knight(int level)
     {
+        designation = 'K';
         name = "Рыцарь";
         StaticHealht = 120;
         damage = 30;
@@ -137,6 +187,7 @@ public class Skeleton : Monsters
 {
     public Skeleton(int level)
     {
+        designation = 'S';
         name = "Скелет";
         StaticHealht = 50;
         damage = 30;
@@ -157,6 +208,7 @@ public class Rat : Monsters
 {
     public Rat(int level)
     {
+        designation = 'R';
         name = "Крыса";
         StaticHealht = 10;
         damage = 10;
