@@ -7,33 +7,13 @@ using System.Threading;
 using System.Collections;
 
 namespace Rogulike_way
-{/*public class Hero
 {
-    public int[] coordinates = { 0, 0 };
-    public double StaticHealht = 100;
-    public double NowHealht = 100;
-    public double StaticStamina = 100;
-    public double NowStamina = 100;
-    public double damage = 40;
-    public int level = 1;
-    public int experience = 0;
-    public double boost = 1.0;
-*/
-
-    /*public class Monsters
-   {
-       public string name = "Gosha";
-       public int[] coordinates = { 0, 0 };
-       public double StaticHealht;
-       public double NowHealht;
-       public double damage;
-       public int level;
-       public int experience; // При смерти моба можно передавать его опыт герою
-       public double boost;
-   }
-    */
     public class Fight
     {
+        public Fight()
+        {
+
+        }
         //передаем сюда Героя и монстра,которые будут сражаться
         public Fight(Hero Hero, Monsters Monster)
         {
@@ -62,14 +42,16 @@ namespace Rogulike_way
             Console.CursorVisible = false;
             string HeroHealht = Hero.NowHealht.ToString("F1");
             string HeroST = Hero.NowStamina.ToString("F1");
-            Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {Hero.damage}\nlevel: {Hero.level}");
+            string HeroAT = Hero.damage.ToString("F1");
+            Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
             int PositionX1 = 130, PositionY1 = 0;
             string MonsterHealht = Monster.NowHealht.ToString("F1");
+            string MonsterDA = Monster.damage.ToString("F1");
             //string MonsterST = Monster.NowStamina.ToString("F1");
             PositionPrint(PositionX1, PositionY1, $"Монстр");
             PositionPrint(PositionX1, PositionY1 + 1, $"{Monster.name}");
             PositionPrint(PositionX1, PositionY1 + 2, $"Здоровье: {MonsterHealht}");
-            PositionPrint(PositionX1, PositionY1 + 3, $"Урон: {Monster.damage}");
+            PositionPrint(PositionX1, PositionY1 + 3, $"Урон: {MonsterDA}");
             PositionPrint(PositionX1, PositionY1 + 4, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1 + 5);
 
@@ -81,7 +63,7 @@ namespace Rogulike_way
         }
         
 
-        private void Start(Hero Hero, Monsters Monster)
+        public int Start(Hero Hero, Monsters Monster)
         {
             System.Threading.Thread.Sleep(1000);
             Console.CursorVisible = false;
@@ -127,22 +109,30 @@ namespace Rogulike_way
                 string HeroAtt = HeroAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
                                                        //PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
 
-                //*double HeroAt = MonsterAt;
                 //Момент с отрицательными числами хп и стамины               
                 Console.CursorVisible = false;
                 Rendering(Hero, Monster);
                 PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
+                {
+                    return 1;
+                }               
                 if (Monster.NowHealht > 0)
                 {
-                    Thread.Sleep(3000);
+                    Thread.Sleep(1500);
                     string MonsterAtt = MonsterAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
                     Hero.NowHealht -= MonsterAt;
+                    //Момент с отрицательными числами хп
                     if (Hero.NowStamina > Hero.StaticStamina) { Hero.NowStamina = Hero.StaticStamina; }
                     if (Hero.NowHealht <= 0) { Hero.NowHealht = 0; }
                     if (Monster.NowHealht <= 0) { Monster.NowHealht = 0; }
                     Rendering(Hero, Monster);
                     PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
                     PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");                    
+                }
+                if ((Monster.NowHealht >= 0) && (Hero.NowHealht <= 0))
+                {
+                    return 0;
                 }
             }
         }
