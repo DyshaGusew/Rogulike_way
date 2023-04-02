@@ -1,8 +1,10 @@
-﻿// Желательно сделать специальный список, где будут значения для определенных предметов (а может даже отдельный
+﻿
+
+// Желательно сделать специальный список, где будут значения для определенных предметов (а может даже отдельный
 // файл) и подгружать их при создании экземпляров предметов
 
 
-
+// Общий класс для всех предметов
 public class Items
 {
     public int[] coordinates;
@@ -19,7 +21,7 @@ public class Items
     }
 }
 
-
+// Оружие
 public class Weapon : Items
 {
     public int level;
@@ -29,7 +31,6 @@ public class Weapon : Items
 
     public Weapon(int x, int y, string _name, int _damage, int _stamina) : base(x, y, _name)
     {
-        name = _name;
         level = 1;
         damage = _damage;
         stamina = _stamina;
@@ -43,6 +44,7 @@ public class Weapon : Items
     }
 }
 
+// Броня
 public class Armor : Items
 {
     public int level;
@@ -60,5 +62,26 @@ public class Armor : Items
     {
         this.level++;
         this.armor += 10; // либо определенная прибавка, либо умножение на коэфициент
+    }
+}
+
+// Зелье восстановления ХП
+public class HealingPotion: Items {
+    public int heal;
+
+    public HealingPotion(int x, int y, string _name, int _heal) : base(x, y, _name)
+    {
+        heal = _heal;
+    }
+}
+
+// Зелье восстановления выносливости
+public class StaminaPotion : Items
+{
+    public int stamina;
+
+    public StaminaPotion(int x, int y, string _name, int _stamina) : base(x, y, _name)
+    {
+        stamina = _stamina;
     }
 }
