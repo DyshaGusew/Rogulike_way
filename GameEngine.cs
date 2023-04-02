@@ -26,8 +26,13 @@ else if (menu.hero_class == "prowler")
 {
     hero = new Prowler();
 }
-
-
+Monsters Monster = new Ork(10);
+Fight fight = new Fight();
+int a = fight.Start(hero, Monster);
+Thread.Sleep(3000);
+Console.Clear();
+Console.WriteLine(a);
+/*
 //Выбор начальной комнаты для отрисовки из мира
 Random rand = new Random();
 int numRoom = rand.Next(0, 9);
@@ -464,4 +469,4 @@ class MovePlayer
     }
 }
 
-
+*/
