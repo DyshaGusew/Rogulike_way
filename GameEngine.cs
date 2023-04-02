@@ -69,58 +69,82 @@ do
  
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
+menu.Show();
 
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
 class DraftGame
 {
     static public int StatX = 20, StatY = 5;  //Смещение карты
-
     
     //Добавление символа в необходимой координате с дефолтным смещением
     static public void PutCurs(char ch, int y, int x)
     {
         Console.SetCursorPosition(StatX + x, StatY + y);
-        if (ch == '╬')
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;    
-        }
-
-        else if (ch == '@')
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-        }
-
-        else if (ch == '═' || ch == '║' || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
-        {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-        }
+        PutColor(ch);
 
         Console.Write(ch);
         Console.ResetColor();
 
     }
 
-    //Добавление символа в необходимой координате с указанным смещением
-    static public void PutCursRange(char ch, int y, int x, int statX, int statY)
+    //Отрисовка цветов
+    static public void PutColor(char ch)
     {
-        Console.SetCursorPosition(statX + x, statY + y);
-        if (ch == '#')
+        World wr = new World();
+        if (ch == wr.charDoors)
         {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
-
-        else if (ch == '@')
+        
+        else if (ch == wr.charHero)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
         }
 
-        else if (ch == '│' || ch == '─' || ch == '┌' || ch == '┐' || ch == '└' || ch == '┘')
+        else if (ch == wr.charRoomBordHor || ch == wr.charRoomBordVert || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+
+        else if (ch == wr.charMiniRoom)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+
+        else if (ch == wr.charMiniRoomBordVert || ch == wr.charMiniRoomBordHor || ch == '┌' || ch == '┐' || ch == '└' || ch == '┘')
         {
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        else if (ch == wr.skeleton)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        else if (ch == wr.rat)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+        else if (ch == wr.ork)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        }
+        else if (ch == wr.knight)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+        }
+        else if (ch == wr.ghost)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+        }
+    }
+
+
+    //Добавление символа в необходимой координате с указанным смещением
+    static public void PutCursRange(char ch, int y, int x, int statX, int statY)
+    {
+        Console.SetCursorPosition(statX + x, statY + y);
+        PutColor(ch);
         Console.Write(ch);
         Console.ResetColor();
     }
@@ -142,6 +166,25 @@ class DraftGame
 
         //Отрисовка миникарты
         DraftMinyMap(room, world);    
+    }
+
+    //Отрисовка состояния героя
+    static public void DraftHeroParametrs(RealRoom room, World world)
+    {
+        //Отрисовка комнаты
+        //Длина комнаты
+       // PutCurs(0, 5);
+        int x_len = room.map.GetLength(1);
+        int y_len = room.map.GetLength(0);
+
+        //Рисую указанные символы
+        Console.Clear();
+        for (int y = 0; y < y_len; y++)
+            for (int x = 0; x < x_len; x++)
+                PutCurs(room.map[y, x], y, x);
+
+        //Отрисовка миникарты
+        DraftMinyMap(room, world);
     }
 
     //Отрисовка миникарты с текущим положением героя

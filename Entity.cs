@@ -1,5 +1,6 @@
 ﻿public class Hero
 {
+    public string name;
     public int[] coordinates = { 0, 0 };
     public double StaticHealht = 100;
     public double NowHealht = 100;
@@ -30,6 +31,7 @@ public class Wizard : Hero
 {
     public Wizard()
     {
+        name = "Wizard";
         StaticHealht = 60;
         NowHealht = 60;
         StaticStamina = 100;
@@ -42,6 +44,7 @@ public class Barbarian : Hero
 {
     public Barbarian()
     {
+        name = "Barbarian";
         StaticHealht = 100;
         NowHealht = 100;
         StaticStamina = 100;
@@ -54,6 +57,7 @@ public class Prowler : Hero
 {
     public Prowler()
     {
+        name = "Prowler";
         StaticHealht = 60;
         NowHealht = 60;
         StaticStamina = 60;
@@ -79,7 +83,20 @@ public class Monsters
     public static void CreateMonsters(RealRoom room, Hero hero)
     {
         Random random = new Random();
-        int count_monsters = random.Next(2, 3);
+        int count_monsters;
+        if (room.map.GetLength(1) <= 38)
+        {
+            count_monsters = random.Next(1, 3);
+        }
+        else if(room.map.GetLength(1) > 38) 
+        { 
+            count_monsters = random.Next(2, 4);
+        }
+        else
+        {
+            count_monsters = random.Next(1, 5);
+        }
+        
 
         for (int i = 0; i < count_monsters; i++)
         {

@@ -106,6 +106,12 @@ public class World
 
     public char charHero = '@';
 
+    public char ork = 'O';
+    public char ghost = 'G';
+    public char knight = 'K';
+    public char rat = 'R';
+    public char skeleton = 'S';
+
 
     public Monsters nullMonster = new Monsters();
 
@@ -115,12 +121,6 @@ public class World
     public List<RealRoom> roomsReal = new List<RealRoom>();
 
     //Стоит ли добавлять сюда игрока?
-
-
-
-
-
-    
 
     public void DelBorders(int[] coordDoor, ref RealRoom room)  //Заполняю/удаляю, если должна быть дверь
     {
@@ -330,8 +330,6 @@ public class World
 
 
     }
-
-
 
 
     //Создание рандомной комнаты в реальном размере
