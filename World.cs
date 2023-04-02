@@ -30,6 +30,7 @@ public class MiniRoom
 //Класс обычной комнатф
 public class RealRoom
 {
+
     public char[,] map;
     public int number;
     public bool visitings;
@@ -112,7 +113,7 @@ public class World
     public char rat = 'R';
     public char skeleton = 'S';
 
-
+    public Hero hero = new Hero();
     public Monsters nullMonster = new Monsters();
 
     //Коллекции комнат и карты

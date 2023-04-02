@@ -1,5 +1,6 @@
 ﻿//Создется объек мира
 using Rogulike_way;
+using System.Threading;
 
 World world = new World();
 
@@ -13,34 +14,33 @@ Menu menu = new Menu();
 menu.Show();
 
 //Создание героя (создается в зависимости от выбора в меню)
-Hero hero = new Hero();
 if (menu.hero_class == "wizard")
 {
-    hero = new Wizard();
+    world.hero = new Wizard();
 } 
 else if (menu.hero_class == "barbarian")
 {
-    hero = new Barbarian();
+    world.hero = new Barbarian();
 } 
 else if (menu.hero_class == "prowler")
 {
-    hero = new Prowler();
+    world.hero = new Prowler();
 }
-Monsters Monster = new Ork(10);
-Fight fight = new Fight();
-int a = fight.Start(hero, Monster);
-Thread.Sleep(3000);
-Console.Clear();
-Console.WriteLine(a);
-/*
+//Monsters Monster = new Ork(10);
+//Fight fight = new Fight();
+//int a = fight.Start(hero, Monster);
+//Thread.Sleep(3000);
+//Console.Clear();
+//Console.WriteLine(a);
+
 //Выбор начальной комнаты для отрисовки из мира
 Random rand = new Random();
 int numRoom = rand.Next(0, 9);
 RealRoom currentRoom = world.roomsReal[numRoom];
-Monsters.CreateMonsters(currentRoom, hero);
+Monsters.CreateMonsters(currentRoom, world.hero);
 
 //Задаю герою координаты
-hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
+world.hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
 
 
 //Отрисовываю карту без героя
@@ -50,7 +50,7 @@ DraftGame.DraftPlane(currentRoom, world);
 System.Threading.Thread.Sleep(1000);
 
 //Указываю героя в центре координат
-currentRoom.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
+currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
 DraftGame.DraftPlane(currentRoom, world);                     //Отрисовываю карту уже с героем
 
 
@@ -61,16 +61,16 @@ do
 {
     keyInfo = Console.ReadKey(true);
     if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", ref currentRoom, world, hero);
+        MovePlayer.Move("Up", ref currentRoom, world);
    
     else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", ref currentRoom, world, hero);
+        MovePlayer.Move("Down", ref currentRoom, world);
 
     else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", ref currentRoom, world, hero);
+        MovePlayer.Move("Right", ref currentRoom, world);
 
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", ref currentRoom, world, hero);
+        MovePlayer.Move("Left", ref currentRoom, world);
  
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
@@ -80,7 +80,7 @@ menu.Show();
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
 class DraftGame
 {
-    static public int StatX = 20, StatY = 5;  //Смещение карты
+    static public int StatX = 25, StatY = 5;  //Смещение карты
     
     //Добавление символа в необходимой координате с дефолтным смещением
     static public void PutCurs(char ch, int y, int x)
@@ -145,7 +145,7 @@ class DraftGame
     }
 
 
-    //Добавление символа в необходимой координате с указанным смещением
+    //Добавление символа в необходимой координате с указанным смещением и цветом
     static public void PutCursRange(char ch, int y, int x, int statX, int statY)
     {
         Console.SetCursorPosition(statX + x, statY + y);
@@ -170,26 +170,15 @@ class DraftGame
                 PutCurs(room.map[y, x], y, x);
 
         //Отрисовка миникарты
-        DraftMinyMap(room, world);    
+        DraftMinyMap(room, world);
+        DraftHeroParametrs(room, world);
     }
 
     //Отрисовка состояния героя
     static public void DraftHeroParametrs(RealRoom room, World world)
     {
-        //Отрисовка комнаты
-        //Длина комнаты
-       // PutCurs(0, 5);
-        int x_len = room.map.GetLength(1);
-        int y_len = room.map.GetLength(0);
-
-        //Рисую указанные символы
-        Console.Clear();
-        for (int y = 0; y < y_len; y++)
-            for (int x = 0; x < x_len; x++)
-                PutCurs(room.map[y, x], y, x);
-
-        //Отрисовка миникарты
-        DraftMinyMap(room, world);
+        Console.SetCursorPosition(0, StatY);
+        Console.Write($"Герой {world.hero.name}\nЗдоровье: {world.hero.NowHealht.ToString("F1")}\nВыносливость: {world.hero.NowStamina.ToString("F1")}\nУровень: {world.hero.level}\nОпыт: {world.hero.experience}");
     }
 
     //Отрисовка миникарты с текущим положением героя
@@ -232,12 +221,12 @@ class DraftGame
 
 
         //Вывожу миникарту в указанных координатах
-        Console.SetCursorPosition(80 + x_len/2-5, 0);
+        Console.SetCursorPosition(82 + x_len/2-5, 0);
         Console.WriteLine("Миникарта");
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)
             {
-                PutCursRange(world.map[y, x], y, x, 80, 1);
+                PutCursRange(world.map[y, x], y, x, 82, 1);
             }
     }
 }
@@ -246,12 +235,12 @@ class DraftGame
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
 class MovePlayer
 {
-    static public void Move(string trend, ref RealRoom roomCurrent, World world, Hero hero)
+    static public void Move(string trend, ref RealRoom roomCurrent, World world)
     {
         if (trend == "Left")
         {
             //Указываю координаты смещения и сохраняю объект, который в них находится
-            int[] moveCoordinates = { hero.coordinates[0] - 1, hero.coordinates[1]};   //Указываю каково смещение
+            int[] moveCoordinates = { world.hero.coordinates[0] - 1, world.hero.coordinates[1]};   //Указываю каково смещение
             Object obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо
@@ -262,61 +251,26 @@ class MovePlayer
 
             else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
             {
-                //Координаты игрока меняются
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors)obj;
-                foreach (RealRoom room1 in world.roomsReal)
-                {
-                    //Если комната из коллекции равна указываемой у текущей двери(то есть дверь ведет в нужную комнату, то текущая меняется на указываемую)
-                    if (room1.number == door.room_num)
-                    {
-                        if (room1.visitings == false)
-                        {
-                            Monsters.CreateMonsters(room1, hero);
-                        }
-                        roomCurrent = room1;
-
-                    }
-                }
-
-                //Координаты в середине и рядом с дверью
-                hero.coordinates[0] = roomCurrent.map.GetLength(1) - 2; hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-
-                //Отрисовываем
-                DraftGame.DraftPlane(roomCurrent, world);
-                return;
+                DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
 
-            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] -= 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
-                Fight gg = new Fight(hero, (Monsters)obj);
-
+                ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
+
             //Если простанство пустое
             else
             {
                 //Меняю карту и соответсвенно меняю координаты героя
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] -= 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
-            }
-
-
-            
+                EmptyDef(roomCurrent, world, trend);
+            }    
         }
 
         //Остальное работает подобно верхнему
         if(trend == "Right")
         {
-            int[] move_coordinates = { hero.coordinates[0] +1, hero.coordinates[1] };   
+            int[] move_coordinates = { world.hero.coordinates[0] +1, world.hero.coordinates[1] };   
             Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
            
             if (obj is Borders)  
@@ -327,49 +281,24 @@ class MovePlayer
             
             else if (obj is Doors)   
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors)obj;
-                foreach (RealRoom room1 in world.roomsReal)
-                {
-                    if (room1.number == door.room_num)
-                    {
-                        if (room1.visitings == false)
-                        {
-                            Monsters.CreateMonsters(room1, hero);
-                        }
-                        roomCurrent = room1;
-                    }
-                }
-                hero.coordinates[0] = 1; hero.coordinates[1] = roomCurrent.map.GetLength(0) /2;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                    
-                DraftGame.DraftPlane(roomCurrent, world);
-                return;
+                DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
-            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
-            {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
-                Fight gg = new Fight(hero, (Monsters)obj);
 
+            else if (obj is Monsters)
+            {
+                ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
+
             else
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 1; hero.coordinates[1] -= 0;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                EmptyDef(roomCurrent, world, trend);
             }
             
         }
 
         if(trend == "Up")
         {
-            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]-1};   
+            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1]-1};   
             Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
 
             if (obj is Borders)  
@@ -378,95 +307,156 @@ class MovePlayer
 
             else if (obj is Doors)  
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors) obj;
-                foreach (RealRoom room1 in world.roomsReal)
-                {
-                    if (room1.number == door.room_num)
-                    {
-                        if (room1.visitings == false)
-                        {
-                            Monsters.CreateMonsters(room1, hero);
-                        }
-                        roomCurrent = room1;
-                    }
-                }
-                hero.coordinates[0] = roomCurrent.map.GetLength(1) / 2; hero.coordinates[1] = roomCurrent.map.GetLength(0) - 2;              
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-
-                DraftGame.DraftPlane(roomCurrent, world);
-                return;
+                DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
-            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+
+            else if (obj is Monsters) 
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 0; hero.coordinates[1] -= 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
-                Fight gg = new Fight(hero, (Monsters)obj);
-
+                ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
+
             else
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 0; hero.coordinates[1] -= 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                EmptyDef(roomCurrent, world, trend);
             }
         }
 
         if(trend == "Down")
         {
-            int[] move_coordinates = { hero.coordinates[0], hero.coordinates[1]+1};   
+            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1]+1};   
             Object obj = world.DefiningArea(move_coordinates, roomCurrent);  
 
             if (obj is Borders)   
             {
                 return;
             }
+
             else if (obj is Doors)   
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                Doors door = (Doors)obj;
-                foreach (RealRoom room1 in world.roomsReal)
-                {
-                    if (room1.number == door.room_num)
-                    {
-                        if (room1.visitings == false)
-                        {
-                            Monsters.CreateMonsters(room1, hero);
-                        }
-                        roomCurrent = room1;
-                    }
-                }
-                hero.coordinates[0] = (roomCurrent.map.GetLength(1) / 2); hero.coordinates[1] = 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-
-                DraftGame.DraftPlane(roomCurrent, world);
-                return;
+                DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
-            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу дверей
+
+            else if (obj is Monsters) 
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 0; hero.coordinates[1] += 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
-                Fight gg = new Fight(hero, (Monsters)obj);
-
+                ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
+
             else
             {
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', hero.coordinates[1], hero.coordinates[0]);
-                hero.coordinates[0] += 0; hero.coordinates[1] += 1;
-                roomCurrent.map[hero.coordinates[1], hero.coordinates[0]] = world.charHero;
-                DraftGame.PutCurs(world.charHero, hero.coordinates[1], hero.coordinates[0]);
+                EmptyDef(roomCurrent, world, trend);
             }
         }
     }
-}
 
-*/
+    //При обнаружении монстра
+    static public void ModsterDef(Monsters monster, RealRoom roomCurrent, World world, string move)
+    {
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
+        DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
+        if(move == "Up")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] -= 1;
+        }
+        else if (move == "Down")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] += 1;
+        }
+        else if (move == "Left")
+        {
+            world.hero.coordinates[0] -= 1; world.hero.coordinates[1] -= 0;
+        }
+        else if (move == "Right")
+        {
+            world.hero.coordinates[0] += 1; world.hero.coordinates[1] -= 0;
+        }
+
+
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
+        DraftGame.PutCurs(world.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
+        Fight gg = new();
+        if (gg.Start(world.hero, monster) == 1)
+        {
+            roomCurrent.monsters_list.Remove(monster);
+            world.hero.experience += monster.experience;
+            DraftGame.DraftPlane(roomCurrent, world);
+        }
+        else
+        {
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
+            Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+        }
+        
+    }
+
+    static public void DoorDef(Doors door, ref RealRoom roomCurrent, World world, string move)
+    {
+        //Координаты игрока меняются
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
+
+        foreach (RealRoom room1 in world.roomsReal)
+        {
+            //Если комната из коллекции равна указываемой у текущей двери(то есть дверь ведет в нужную комнату, то текущая меняется на указываемую)
+            if (room1.number == door.room_num)
+            {
+                if (room1.visitings == false)
+                {
+                    Monsters.CreateMonsters(room1, world.hero);
+                }
+                roomCurrent = room1;
+
+            }
+        }
+
+        //Координаты в середине и рядом с дверью
+        if (move == "Up")
+        {
+            world.hero.coordinates[0] = roomCurrent.map.GetLength(1) / 2; world.hero.coordinates[1] = roomCurrent.map.GetLength(0) - 2;
+        }
+        else if (move == "Down")
+        {
+            world.hero.coordinates[0] = (roomCurrent.map.GetLength(1) / 2); world.hero.coordinates[1] = 1;
+        }
+        else if (move == "Left")
+        {
+            world.hero.coordinates[0] = roomCurrent.map.GetLength(1) - 2; world.hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
+        }
+        else if (move == "Right")
+        {
+            world.hero.coordinates[0] = 1; world.hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
+        }
+
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
+
+        //Отрисовываем
+        DraftGame.DraftPlane(roomCurrent, world);
+    }
+
+    static public void EmptyDef(RealRoom roomCurrent, World world, string move)
+    {
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
+        DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
+        
+        //Координаты в середине и рядом с дверью
+        if (move == "Up")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] -= 1;
+        }
+        else if (move == "Down")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] += 1;
+        }
+        else if (move == "Left")
+        {
+            world.hero.coordinates[0] -= 1; world.hero.coordinates[1] -= 0;
+        }
+        else if (move == "Right")
+        {
+            world.hero.coordinates[0] += 1; world.hero.coordinates[1] -= 0;
+        }
+
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
+        DraftGame.PutCurs(world.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
+    }
+}
