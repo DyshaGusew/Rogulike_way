@@ -3,10 +3,13 @@ using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
 
-//Вызываю меню и создаю мир(комнаты, героя и тд)
-Menu menu = new();
-menu.Show();
-World world = StartGame.CreateWorld(menu);
+//Console.CursorVisible = false;    //Отключение курсора
+// Создается меню, идет ожидание выбора персонажа
+//Invenary inventory = new Invenary();
+//inventory.ChooseAmmunition();
+
+
+World world = new World();
 
 //Обработка нажатий
 ConsoleKeyInfo keyInfo;
@@ -54,19 +57,30 @@ class StartGame
         world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
         world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
 
-        //Создание героя (создается в зависимости от выбора в меню)
-        if (menu.hero_class == "wizard")
-        {
-            world.hero = new Wizard();
-        }
-        else if (menu.hero_class == "barbarian")
-        {
-            world.hero = new Barbarian();
-        }
-        else if (menu.hero_class == "prowler")
-        {
-            world.hero = new Prowler();
-        }
+Console.CursorVisible = false;    //Отключение курсора
+// Создается меню, идет ожидание выбора персонажа
+Menu menu = new Menu();
+menu.Show();
+
+//Создание героя (создается в зависимости от выбора в меню)
+if (menu.hero_class == "wizard")
+{
+    world.hero = new Wizard();
+} 
+else if (menu.hero_class == "barbarian")
+{
+    world.hero = new Barbarian();
+} 
+else if (menu.hero_class == "prowler")
+{
+    world.hero = new Prowler();
+}
+//Monsters Monster = new Ork(10);
+//Fight fight = new Fight();
+//int a = fight.Start(hero, Monster);
+//Thread.Sleep(3000);
+//Console.Clear();
+//Console.WriteLine(a);
 
         //Выбор начальной комнаты для отрисовки из мира
         Random rand = new Random();
@@ -88,8 +102,39 @@ class StartGame
         world.currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
         DraftGame.DraftPlane(world.currentRoom, world);                     //Отрисовываю карту уже с героем
 
-        return world;
+
+
+//Обработка нажатий
+ConsoleKeyInfo keyInfo;
+do
+{
+    keyInfo = Console.ReadKey(true);
+    if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
+        MovePlayer.Move("Up", ref currentRoom, world);
+   
+    else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
+        MovePlayer.Move("Down", ref currentRoom, world);
+
+    else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
+        MovePlayer.Move("Right", ref currentRoom, world);
+
+    else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
+        MovePlayer.Move("Left", ref currentRoom, world);
+
+   /* else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
+    {
+        Invenary invenary = new Invenary();
+        invenary.ChooseAmmunition();
     }
+   /*
+
+
+} while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
+menu.Show();
+while (keyInfo.KeyChar != 'e' || keyInfo.KeyChar != 'у')
+{
+    Invenary invenary = new Invenary();
+    invenary.ChooseAmmunition();
 }
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
