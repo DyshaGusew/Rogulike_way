@@ -85,11 +85,6 @@ public class Button
         Console.ForegroundColor = ConsoleColor.White;
     }
 }
-public class Cell
-{
-   public char[,] paint = new char[7, 7];
-}
-
 
 public class Invenary
 {
@@ -366,6 +361,10 @@ public class Invenary
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
+                        if (this.isHeroChosen)
+                        {
+                            continue_cycle = false;
+                        }
                     }
 
                     break;
