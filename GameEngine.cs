@@ -74,17 +74,14 @@ do
 
     else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
     {
-        Invenary menu = new Invenary();
-        Invenary.ChooseAmmunition();
+        Invenary invenary = new Invenary();
+        invenary.ChooseAmmunition();
     }
 
 
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
-{
-    Invenary menu = new Invenary();
-    Invenary.ChooseAmmunition();
-}
+menu.Show();
 
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
