@@ -146,15 +146,15 @@ public class Invenary
     {
 
         Console.CursorVisible = false;
-        Button Cell1 = new Button("Маг", true);
-        Button Cell2 = new Button("Варвар", false);
-        Button Cell3 = new Button("Бродяга", false);
-        Button Cell4 = new Button("Назад", false);
-        Button Cell5 = new Button("Назад", false);
-        Button Cell6 = new Button("Назад", false);
-        Button Cell7 = new Button("Назад", false);
-        Button Cell8 = new Button("Назад", false);
-        Button Cell9 = new Button("Назад", false);
+        Button Cell1 = new Button("Посох", true);
+        Button Cell2 = new Button("Оружие", false);
+        Button Cell3 = new Button("Броня", false);
+        Button Cell4 = new Button("Зелье", false);
+        Button Cell5 = new Button("Пусто", false);
+        Button Cell6 = new Button("Пусто", false);
+        Button Cell7 = new Button("Пусто", false);
+        Button Cell8 = new Button("Пусто", false);
+        Button Cell9 = new Button("Пусто", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
