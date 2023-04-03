@@ -74,8 +74,8 @@ do
 
     else if (keyInfo.KeyChar == 'r' || keyInfo.KeyChar == 'к')
     {
-        Inventory menu = new Inventory();
-        Inventory.ChooseAmmunition();
+        Invenary menu = new Invenary();
+        Invenary.ChooseAmmunition();
     }
 
 

@@ -90,12 +90,12 @@ public class Cell
 }
 
 
-public class Inventory
+public class Invenary
 {
 
     public string hero_class = "";
     public bool isHeroChosen = false;
-    public Inventory() { }
+    public Invenary() { }
 
     public void DrawButtons(Button button_1, Button button_2, Button button_3, Button 4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
     {
