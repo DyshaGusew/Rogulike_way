@@ -81,7 +81,10 @@ do
 
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
-menu.Show();
+{
+    Invenary menu = new Invenary();
+    Invenary.ChooseAmmunition();
+}
 
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
