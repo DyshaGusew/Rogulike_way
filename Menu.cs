@@ -229,7 +229,7 @@ public class Menu
                     {
                         prowler.isSelected = false;
                         barbarian.isSelected = true;
-                    } else
+                    } else 
                     {
                         back.isSelected = false;
                         prowler.isSelected = true;
