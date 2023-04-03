@@ -72,7 +72,7 @@ do
     else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
         MovePlayer.Move("Left", ref currentRoom, world);
 
-    else if (keyInfo.KeyChar == 'r' || keyInfo.KeyChar == 'к')
+    else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
     {
         Invenary menu = new Invenary();
         Invenary.ChooseAmmunition();
