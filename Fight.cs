@@ -70,7 +70,6 @@ namespace Rogulike_way
             Rendering(Hero, Monster);
             double MonsterAt = 0;
             double HeroAt = Alpha(Hero.damage);//атака героя
-            MonsterAt = Alpha(Monster.damage);//атака монстра
             while (true)
             {
                 MonsterAt = Alpha(Monster.damage);//атака монстра
