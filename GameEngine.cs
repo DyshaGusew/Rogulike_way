@@ -5,10 +5,10 @@ Console.CursorVisible = false;    //Отключение курсора
 
 //Console.CursorVisible = false;    //Отключение курсора
 // Создается меню, идет ожидание выбора персонажа
-Invenary inventory = new Invenary();
-inventory.ChooseAmmunition();
+//Invenary inventory = new Invenary();
+//inventory.ChooseAmmunition();
 
-/*
+
 World world = new World();
 
 //Обработка нажатий
@@ -59,8 +59,8 @@ class StartGame
 
 Console.CursorVisible = false;    //Отключение курсора
 // Создается меню, идет ожидание выбора персонажа
-//Menu menu = new Menu();
-//menu.Show();
+Menu menu = new Menu();
+menu.Show();
 
 //Создание героя (создается в зависимости от выбора в меню)
 if (menu.hero_class == "wizard")
@@ -126,7 +126,7 @@ do
         Invenary invenary = new Invenary();
         invenary.ChooseAmmunition();
     }
-   
+   /*
 
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
@@ -526,4 +526,3 @@ class MovePlayer
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }
-*/
