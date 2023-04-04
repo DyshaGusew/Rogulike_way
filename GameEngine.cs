@@ -59,8 +59,6 @@ class StartGame
 
 Console.CursorVisible = false;    //Отключение курсора
 // Создается меню, идет ожидание выбора персонажа
-Invenary invenary = new Invenary();
-invenary.ChooseAmmunition();
 //Menu menu = new Menu();
 //menu.Show();
 
