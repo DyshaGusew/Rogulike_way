@@ -101,8 +101,39 @@ else if (menu.hero_class == "prowler")
         world.currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
         DraftGame.DraftPlane(world.currentRoom, world);                     //Отрисовываю карту уже с героем
 
-        return world;
+
+
+//Обработка нажатий
+ConsoleKeyInfo keyInfo;
+do
+{
+    keyInfo = Console.ReadKey(true);
+    if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
+        MovePlayer.Move("Up", ref currentRoom, world);
+   
+    else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
+        MovePlayer.Move("Down", ref currentRoom, world);
+
+    else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
+        MovePlayer.Move("Right", ref currentRoom, world);
+
+    else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
+        MovePlayer.Move("Left", ref currentRoom, world);
+
+   /* else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
+    {
+        Invenary invenary = new Invenary();
+        invenary.ChooseAmmunition();
     }
+   */
+
+
+} while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
+menu.Show();
+while (keyInfo.KeyChar != 'e' || keyInfo.KeyChar != 'у')
+{
+    Invenary invenary = new Invenary();
+    invenary.ChooseAmmunition();
 }
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
