@@ -460,12 +460,12 @@ public class Invenary
 }
 */
 
-public class Inventory
+public class Button
 {
     public string name;
     public bool isSelected;
 
-    public Inventory(string _name, bool _isSelected)
+    public Button(string _name, bool _isSelected)
     {
         name = _name;
         isSelected = _isSelected;
@@ -552,12 +552,12 @@ public class Cell
 }
 
 
-public class Invenary
+public class Inventory
 {
 
     public string hero_class = "";
     public bool isHeroChosen = false;
-    public Invenary() { }
+    public Inventory() { }
 
     public void DrawButtons(Button button_1, Button button_2, Button button_3, Button button_4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
     {
