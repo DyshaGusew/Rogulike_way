@@ -1,4 +1,4 @@
-﻿/*
+﻿
 public class Button
 {
     public string name;
@@ -86,12 +86,12 @@ public class Button
     }
 }
 
-public class Invenary
+public class Inventory
 {
 
     public string ammunition = "";
    // public bool isHeroChosen = false;
-    public Invenary() {}
+    public Inventory() {}
 
     public void DrawButtons(Button button_1, Button button_2, Button button_3, Button 4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
     {
@@ -356,7 +356,7 @@ public class Invenary
                     break;
 
                 case 'e' or 'у':
-                    if (Cell9.isSelected)
+                    while (Cell1.isSelected, Cell2.isSelected, Cell3.isSelected, Cell4.isSelected, Cell5.isSelected, Cell6.isSelected, Cell7.isSelected, Cell8.isSelected, Cell9.isSelected)
                     {
                         Console.Clear();
                         SelectAction();
@@ -458,7 +458,7 @@ public class Invenary
         }
     }
 }
-*/
+
 /*
 public class Button
 {
