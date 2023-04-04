@@ -1,4 +1,4 @@
-﻿/*  Ничего не работает
+﻿
 public class Button
 {
     public string name;
@@ -460,4 +460,3 @@ public class Invenary
 }
 
 
-*/

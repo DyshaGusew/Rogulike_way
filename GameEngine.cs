@@ -126,7 +126,7 @@ do
         Invenary invenary = new Invenary();
         invenary.ChooseAmmunition();
     }
-   */
+   
 
 
 } while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
@@ -526,3 +526,4 @@ class MovePlayer
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }
+*/
