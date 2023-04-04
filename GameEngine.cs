@@ -3,10 +3,10 @@ using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
 
-Console.CursorVisible = false;    //Отключение курсора
+//Console.CursorVisible = false;    //Отключение курсора
 // Создается меню, идет ожидание выбора персонажа
-Invenary invenary = new Invenary();
-invenary.ChooseAmmunition();
+Invenary inventory = new Invenary();
+inventory.ChooseAmmunition();
 
 /*
 World world = new World();
