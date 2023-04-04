@@ -50,7 +50,7 @@ DraftGame.DraftPlane(currentRoom, world);
 System.Threading.Thread.Sleep(1000);
 
 //Указываю героя в центре координат
-currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
+currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
 DraftGame.DraftPlane(currentRoom, world);                     //Отрисовываю карту уже с героем
 
 
@@ -97,48 +97,48 @@ class DraftGame
     static public void PutColor(char ch)
     {
         World wr = new World();
-        if (ch == wr.charDoors)
+        if (ch == World.charDoors)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
         
-        else if (ch == wr.charHero)
+        else if (ch ==  World.charHero)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
         }
 
-        else if (ch == wr.charRoomBordHor || ch == wr.charRoomBordVert || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
+        else if (ch ==  World.charRoomBordHor || ch == World.charRoomBordVert || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
         }
 
-        else if (ch == wr.charMiniRoom)
+        else if (ch == World.charMiniRoom)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
         }
 
-        else if (ch == wr.charMiniRoomBordVert || ch == wr.charMiniRoomBordHor || ch == '┌' || ch == '┐' || ch == '└' || ch == '┘')
+        else if (ch == World.charMiniRoomBordVert || ch == World.charMiniRoomBordHor || ch == '┌' || ch == '┐' || ch == '└' || ch == '┘')
         {
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        else if (ch == wr.skeleton)
+        else if (ch == World.skeleton)
         {
             Console.ForegroundColor = ConsoleColor.White;
         }
-        else if (ch == wr.rat)
+        else if (ch == World.rat)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
         }
-        else if (ch == wr.ork)
+        else if (ch == World.ork)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
         }
-        else if (ch == wr.knight)
+        else if (ch == World.knight)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
         }
-        else if (ch == wr.ghost)
+        else if (ch == World.ghost)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
         }
@@ -195,11 +195,11 @@ class DraftGame
             //Проверка на наличие посещения комнаты
             if (roomMini.visitings == true)
             {
-                world.map[roomMini.y, roomMini.x] = world.charMiniRoom;
+                world.map[roomMini.y, roomMini.x] = World.charMiniRoom;
             }
             else
             {
-                world.map[roomMini.y, roomMini.x] = world.charMiniEmpty;
+                world.map[roomMini.y, roomMini.x] = World.charMiniEmpty;
             }
 
             if (roomMini.number == realRoom.number) 
@@ -207,15 +207,15 @@ class DraftGame
                 for (int y = 0; y < y_len; y++)
                     for (int x = 0; x < x_len; x++)
                     {
-                        if (world.map[y, x] == world.charHero)
+                        if (world.map[y, x] == World.charHero)
                         {
-                            world.map[y, x] = world.charMiniRoom;
+                            world.map[y, x] = World.charMiniRoom;
                         }
 
                     }
                 roomMini.visitings = true;
                 realRoom.visitings = true;
-                world.map[roomMini.y, roomMini.x] = world.charHero;
+                world.map[roomMini.y, roomMini.x] = World.charHero;
             }
         }
 
@@ -371,8 +371,8 @@ class MovePlayer
         }
 
 
-        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
-        DraftGame.PutCurs(world.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
+        DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
         Fight gg = new();
         if (gg.Start(world.hero, monster) == 1)
         {
@@ -427,7 +427,7 @@ class MovePlayer
             world.hero.coordinates[0] = 1; world.hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
         }
 
-        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] =     World.charHero;
 
         //Отрисовываем
         DraftGame.DraftPlane(roomCurrent, world);
@@ -456,7 +456,7 @@ class MovePlayer
             world.hero.coordinates[0] += 1; world.hero.coordinates[1] -= 0;
         }
 
-        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = world.charHero;
-        DraftGame.PutCurs(world.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] =     World.charHero;
+        DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }

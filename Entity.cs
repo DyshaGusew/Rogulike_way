@@ -101,17 +101,17 @@ public class Monsters
     {
         Random random = new Random();
         int count_monsters;
-        if (room.map.GetLength(1) * room.map.GetLength(0) < 500)
+        if (room.map.GetLength(1) * room.map.GetLength(0) < 450)
         {
             count_monsters = random.Next(1, 3);
         }
-        else if(room.map.GetLength(1) * room.map.GetLength(0) <= 800 && room.map.GetLength(1) * room.map.GetLength(0) >= 500) 
+        else if(room.map.GetLength(1) * room.map.GetLength(0) <= 700 && room.map.GetLength(1) * room.map.GetLength(0) >= 450) 
         { 
             count_monsters = random.Next(2, 3);
         }
-        else if (room.map.GetLength(1) * room.map.GetLength(0) > 800)
+        else if (room.map.GetLength(1) * room.map.GetLength(0) > 700)
         {
-            count_monsters = random.Next(2, 4);
+            count_monsters = random.Next(3, 4);
         }
         else
         {

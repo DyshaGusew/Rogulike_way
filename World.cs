@@ -96,22 +96,23 @@ public class Doors
 //Класс, где создается игровой мир
 public class World
 {
-    public char charRoomBordVert = '║';
-    public char charRoomBordHor = '═';
-    public char charDoors = '╬';
+    //Сделать все статичным
+    static public char charRoomBordVert = '║';
+    static public char charRoomBordHor = '═';
+    static public char charDoors = '╬';
 
-    public char charMiniRoomBordVert = '│';
-    public char charMiniRoomBordHor = '─';
-    public char charMiniRoom = '#';
-    public char charMiniEmpty = ' ';
+    static public char charMiniRoomBordVert = '│';
+    static public char charMiniRoomBordHor = '─';
+    static public char charMiniRoom = '#';
+    static public char charMiniEmpty = ' ';
 
-    public char charHero = '@';
+    static public char charHero = '@';
 
-    public char ork = 'O';
-    public char ghost = 'G';
-    public char knight = 'K';
-    public char rat = 'R';
-    public char skeleton = 'S';
+    static public char ork = 'O';
+    static public char ghost = 'G';
+    static public char knight = 'K';
+    static public char rat = 'R';
+    static public char skeleton = 'S';
 
     public Hero hero = new Hero();
     public Monsters nullMonster = new Monsters();
