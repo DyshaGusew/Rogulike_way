@@ -99,21 +99,21 @@ public class Invenary
         Console.CursorVisible = false;
         button_1.DrawButton(10, 5);
         Console.Write("  ");
-        button_2.DrawButton(42, 5);
+        button_2.DrawButton(27, 5);
         Console.Write("  ");
-        button_3.DrawButton(74, 5);
+        button_3.DrawButton(44, 5);
         Console.Write("\n\n");
         button_3.DrawButton(10, 12);
         Console.Write("  ");
-        button_5.DrawButton(42, 12);
+        button_5.DrawButton(27, 12);
         Console.Write("  ");
-        button_6.DrawButton(74, 12);
+        button_6.DrawButton(44, 12);
         Console.Write("\n\n");
         button_7.DrawButton(10, 19);
         Console.Write("  ");
-        button_8.DrawButton(42, 19);
+        button_8.DrawButton(27, 19);
         Console.Write("  ");
-        button_9.DrawButton(74, 19);
+        button_9.DrawButton(44, 19);
     }
 
     public void DrawButtons(Button button_1, Button button_2, Button button_3,)

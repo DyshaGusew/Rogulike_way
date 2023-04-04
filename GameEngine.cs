@@ -54,19 +54,32 @@ class StartGame
         world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
         world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
 
-        //Создание героя (создается в зависимости от выбора в меню)
-        if (menu.hero_class == "wizard")
-        {
-            world.hero = new Wizard();
-        }
-        else if (menu.hero_class == "barbarian")
-        {
-            world.hero = new Barbarian();
-        }
-        else if (menu.hero_class == "prowler")
-        {
-            world.hero = new Prowler();
-        }
+Console.CursorVisible = false;    //Отключение курсора
+// Создается меню, идет ожидание выбора персонажа
+Invenary invenary = new Invenary();
+invenary.ChooseAmmunition();
+//Menu menu = new Menu();
+//menu.Show();
+
+//Создание героя (создается в зависимости от выбора в меню)
+if (menu.hero_class == "wizard")
+{
+    world.hero = new Wizard();
+} 
+else if (menu.hero_class == "barbarian")
+{
+    world.hero = new Barbarian();
+} 
+else if (menu.hero_class == "prowler")
+{
+    world.hero = new Prowler();
+}
+//Monsters Monster = new Ork(10);
+//Fight fight = new Fight();
+//int a = fight.Start(hero, Monster);
+//Thread.Sleep(3000);
+//Console.Clear();
+//Console.WriteLine(a);
 
         //Выбор начальной комнаты для отрисовки из мира
         Random rand = new Random();
