@@ -68,10 +68,10 @@ namespace Rogulike_way
             System.Threading.Thread.Sleep(1000);
             Console.CursorVisible = false;
             Rendering(Hero, Monster);
-            double MonsterAt = 0;
             double HeroAt = Alpha(Hero.damage);//атака героя
             while (true)
             {
+                double MonsterAt = Alpha(Monster.damage);
                 while (true)
                 {
                     var Key = Console.ReadKey(true);
