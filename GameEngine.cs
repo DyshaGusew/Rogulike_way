@@ -3,13 +3,10 @@ using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
 
-//Console.CursorVisible = false;    //Отключение курсора
-// Создается меню, идет ожидание выбора персонажа
-//Invenary inventory = new Invenary();
-//inventory.ChooseAmmunition();
-
-
-World world = new World();
+//Вызываю меню и создаю мир(комнаты, героя и тд)
+Menu menu = new();
+menu.Show();
+World world = StartGame.CreateWorld(menu);
 
 //Обработка нажатий
 ConsoleKeyInfo keyInfo;
@@ -57,30 +54,19 @@ class StartGame
         world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
         world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
 
-Console.CursorVisible = false;    //Отключение курсора
-// Создается меню, идет ожидание выбора персонажа
-Menu menu = new Menu();
-menu.Show();
-
-//Создание героя (создается в зависимости от выбора в меню)
-if (menu.hero_class == "wizard")
-{
-    world.hero = new Wizard();
-} 
-else if (menu.hero_class == "barbarian")
-{
-    world.hero = new Barbarian();
-} 
-else if (menu.hero_class == "prowler")
-{
-    world.hero = new Prowler();
-}
-//Monsters Monster = new Ork(10);
-//Fight fight = new Fight();
-//int a = fight.Start(hero, Monster);
-//Thread.Sleep(3000);
-//Console.Clear();
-//Console.WriteLine(a);
+        //Создание героя (создается в зависимости от выбора в меню)
+        if (menu.hero_class == "wizard")
+        {
+            world.hero = new Wizard();
+        }
+        else if (menu.hero_class == "barbarian")
+        {
+            world.hero = new Barbarian();
+        }
+        else if (menu.hero_class == "prowler")
+        {
+            world.hero = new Prowler();
+        }
 
         //Выбор начальной комнаты для отрисовки из мира
         Random rand = new Random();
@@ -102,46 +88,15 @@ else if (menu.hero_class == "prowler")
         world.currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
         DraftGame.DraftPlane(world.currentRoom, world);                     //Отрисовываю карту уже с героем
 
-
-
-//Обработка нажатий
-ConsoleKeyInfo keyInfo;
-do
-{
-    keyInfo = Console.ReadKey(true);
-    if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", ref currentRoom, world);
-   
-    else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", ref currentRoom, world);
-
-    else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", ref currentRoom, world);
-
-    else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", ref currentRoom, world);
-
-   /* else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
-    {
-        Invenary invenary = new Invenary();
-        invenary.ChooseAmmunition();
+        return world;
     }
-   /*
-
-
-} while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
-menu.Show();
-while (keyInfo.KeyChar != 'e' || keyInfo.KeyChar != 'у')
-{
-    Invenary invenary = new Invenary();
-    invenary.ChooseAmmunition();
 }
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
 class DraftGame
 {
     static public int StatX = 25, StatY = 5;  //Смещение карты
-    
+
     //Добавление символа в необходимой координате с дефолтным смещением
     static public void PutCurs(char ch, int y, int x)
     {
@@ -161,13 +116,13 @@ class DraftGame
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
-        
-        else if (ch ==  World.charHero)
+
+        else if (ch == World.charHero)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
         }
 
-        else if (ch ==  World.charRoomBordHor || ch == World.charRoomBordVert || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
+        else if (ch == World.charRoomBordHor || ch == World.charRoomBordVert || ch == '╔' || ch == '╗' || ch == '╚' || ch == '╝')
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
         }
@@ -262,7 +217,7 @@ class DraftGame
                 world.map[roomMini.y, roomMini.x] = World.charMiniEmpty;
             }
 
-            if (roomMini.number == realRoom.number) 
+            if (roomMini.number == realRoom.number)
             {
                 for (int y = 0; y < y_len; y++)
                     for (int x = 0; x < x_len; x++)
@@ -281,7 +236,7 @@ class DraftGame
 
 
         //Вывожу миникарту в указанных координатах
-        Console.SetCursorPosition(82 + x_len/2-5, 0);
+        Console.SetCursorPosition(82 + x_len / 2 - 5, 0);
         Console.WriteLine("Миникарта");
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)
@@ -299,7 +254,7 @@ class MovePlayer
         if (trend == "Left")
         {
             //Указываю координаты смещения и сохраняю объект, который в них находится
-            int[] moveCoordinates = { world.hero.coordinates[0] - 1, world.hero.coordinates[1]};   //Указываю каково смещение
+            int[] moveCoordinates = { world.hero.coordinates[0] - 1, world.hero.coordinates[1] };   //Указываю каково смещение
             Object obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо
@@ -323,22 +278,22 @@ class MovePlayer
             {
                 //Меняю карту и соответсвенно меняю координаты героя
                 EmptyDef(roomCurrent, world, trend);
-            }    
+            }
         }
 
         //Остальное работает подобно верхнему
-        if(trend == "Right")
+        if (trend == "Right")
         {
-            int[] move_coordinates = { world.hero.coordinates[0] +1, world.hero.coordinates[1] };   
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
-           
-            if (obj is Borders)  
+            int[] move_coordinates = { world.hero.coordinates[0] + 1, world.hero.coordinates[1] };
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
+
+            if (obj is Borders)
             {
                 return;
             }
 
-            
-            else if (obj is Doors)   
+
+            else if (obj is Doors)
             {
                 DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
@@ -352,24 +307,24 @@ class MovePlayer
             {
                 EmptyDef(roomCurrent, world, trend);
             }
-            
+
         }
 
-        if(trend == "Up")
+        if (trend == "Up")
         {
-            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1]-1};   
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent); 
+            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1] - 1 };
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
 
-            if (obj is Borders)  
+            if (obj is Borders)
                 return;
 
 
-            else if (obj is Doors)  
+            else if (obj is Doors)
             {
                 DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
 
-            else if (obj is Monsters) 
+            else if (obj is Monsters)
             {
                 ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
@@ -380,22 +335,22 @@ class MovePlayer
             }
         }
 
-        if(trend == "Down")
+        if (trend == "Down")
         {
-            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1]+1};   
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent);  
+            int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1] + 1 };
+            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
 
-            if (obj is Borders)   
+            if (obj is Borders)
             {
                 return;
             }
 
-            else if (obj is Doors)   
+            else if (obj is Doors)
             {
                 DoorDef((Doors)obj, ref roomCurrent, world, trend);
             }
 
-            else if (obj is Monsters) 
+            else if (obj is Monsters)
             {
                 ModsterDef((Monsters)obj, roomCurrent, world, trend);
             }
@@ -412,7 +367,7 @@ class MovePlayer
     {
         roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
         DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
-        if(move == "Up")
+        if (move == "Up")
         {
             world.hero.coordinates[0] += 0; world.hero.coordinates[1] -= 1;
         }
@@ -446,14 +401,14 @@ class MovePlayer
             Thread.Sleep(1000);
             Console.Clear();
             Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
-            if(world.hero.level > 1)
+            if (world.hero.level > 1)
             {
                 Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience + world.hero.level * world.hero.experience}");
             }
             Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
             Environment.Exit(0);
         }
-        
+
     }
 
     static public void DoorDef(Doors door, ref RealRoom roomCurrent, World world, string move)
@@ -493,7 +448,7 @@ class MovePlayer
             world.hero.coordinates[0] = 1; world.hero.coordinates[1] = roomCurrent.map.GetLength(0) / 2;
         }
 
-        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] =     World.charHero;
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
 
         //Отрисовываем
         DraftGame.DraftPlane(roomCurrent, world);
@@ -503,7 +458,7 @@ class MovePlayer
     {
         roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
         DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
-        
+
         //Координаты в середине и рядом с дверью
         if (move == "Up")
         {
@@ -522,7 +477,7 @@ class MovePlayer
             world.hero.coordinates[0] += 1; world.hero.coordinates[1] -= 0;
         }
 
-        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] =     World.charHero;
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }
