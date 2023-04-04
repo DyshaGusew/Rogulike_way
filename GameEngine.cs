@@ -3,10 +3,13 @@ using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
 
-//Вызываю меню и создаю мир(комнаты, героя и тд)
-Menu menu = new();
-menu.Show();
-World world = StartGame.CreateWorld(menu);
+Console.CursorVisible = false;    //Отключение курсора
+// Создается меню, идет ожидание выбора персонажа
+Invenary invenary = new Invenary();
+invenary.ChooseAmmunition();
+
+/*
+World world = new World();
 
 //Обработка нажатий
 ConsoleKeyInfo keyInfo;
