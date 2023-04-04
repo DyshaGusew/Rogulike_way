@@ -69,6 +69,7 @@ namespace Rogulike_way
             Console.CursorVisible = false;
             Rendering(Hero, Monster);
             double HeroAt = Alpha(Hero.damage);//атака героя
+            char Keys = ' ';//не получается присвоить Keys значение KeyChar
             while (true)
             {
                 double MonsterAt = Alpha(Monster.damage);
@@ -80,6 +81,7 @@ namespace Rogulike_way
                     {
                         Monster.NowHealht -= HeroAt;
                         Hero.NowStamina -= 10;
+                        Keys = '2'; 
                         break;
                     }
                     //Cильный удар
@@ -88,34 +90,46 @@ namespace Rogulike_way
                         HeroAt = HeroAt * 1.7;
                         Monster.NowHealht -= HeroAt;
                         Hero.NowStamina -= 25;
+                        Keys = '1';
                         break;
                     }
                     //блок
                     else if (Key.KeyChar == '3')
                     {
+                        Keys = '3';
                         Hero.NowStamina += 10;
                         Random random = new Random();
                         int Rand = random.Next(50, 100);
-                        MonsterAt = MonsterAt - MonsterAt * ((double)Rand / 100);
+                        MonsterAt = MonsterAt - MonsterAt * ((double)Rand / 100);  
                         break;
                     }
                 }
+                //Броня, которая срезает часть урона
+                MonsterAt = MonsterAt - MonsterAt * Hero.armor / 100;
+
+
                 //Момент с отрицательными числами хп и стамины
                 if (Hero.NowStamina > Hero.StaticStamina){Hero.NowStamina = Hero.StaticStamina;}
                 if (Hero.NowHealht <= 0) { Hero.NowHealht = 0; }
                 if (Monster.NowHealht <= 0) { Monster.NowHealht = 0;}
                // Rendering(Hero, Monster);
                 string HeroAtt = HeroAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
-                                                       //PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
-
                 //Момент с отрицательными числами хп и стамины               
                 Console.CursorVisible = false;
                 Rendering(Hero, Monster);
-                PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                if (Keys != '3')
+                {
+                    PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                }
+
                 if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                 {
                     return 1;
-                }               
+                }
+                
+
+
+
                 if (Monster.NowHealht > 0)
                 {
                     Thread.Sleep(1500);
@@ -126,8 +140,12 @@ namespace Rogulike_way
                     if (Hero.NowHealht <= 0) { Hero.NowHealht = 0; }
                     if (Monster.NowHealht <= 0) { Monster.NowHealht = 0; }
                     Rendering(Hero, Monster);
-                    PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
-                    PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");                    
+                    if (Keys != '3')
+                    {
+                        PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
+                        PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");
+                    }                   
+                    else { PositionPrint(63, 35, $"Вам нанесли: {MonsterAtt}");}
                 }
                 if ((Monster.NowHealht >= 0) && (Hero.NowHealht <= 0))
                 {
