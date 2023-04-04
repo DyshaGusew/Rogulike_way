@@ -44,6 +44,109 @@ namespace Rogulike_way
             string HeroST = Hero.NowStamina.ToString("F1");
             string HeroAT = Hero.damage.ToString("F1");
             Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
+            if (Hero.name == "Маг")
+            {
+                PositionPrint(0, 5, "" +
+                    "                                                            \r\n" +
+                    "            @@@@@++++++,                                    \r\n" +
+                    "              ?@@@@@@@@@@@@@%+                              \r\n" +
+                    "                   ?@@@@@@@@@@@@@#+                         \r\n" +
+                    "               .%@@@@@@@@@@@@@@@@@@@@,                      \r\n" +
+                    "              @@@@@@@@@@@@@@@@@@@@@@@@+    ???:             \r\n" +
+                    "                     @   ?@@   ?         +@@@@@?            \r\n" +
+                    "                     @@@@@@@@@@S         +@@@@@%            \r\n" +
+                    "                      +@@@@@@S+,          ++++,             \r\n" +
+                    "                       .@@@@.             ?##+             \r\n" +
+                    "                   ,@@@@@@@@@@@?         @@@@@             \r\n" +
+                    "                 ,@@@@@@@@@@@@@@S.        @@@@              \r\n" +
+                    "                .+@@@@@@@@@@@@@@@@+       @@@               \r\n" +
+                    "                ,@@@@@@@@@@@@@@@@@@,      @@%               \r\n" +
+                    "                S@@@@@@@@@@@@@@@@@@@?:    @@%               \r\n" +
+                    "                @@@@@@@@@@@@@@@@%.@@@@@@@@@@                \r\n" +
+                    "                @@@@@@@@@@@@@@@@%         @+                \r\n" +
+                    "               ,@@@@@@@@@@@@@@@@@         @+               \r\n" +
+                    "               +@@@@@@@@@@@@@@@@@?        @+               \r\n" +
+                    "              *@@@@@@@@@@@@@@@@@%         @+                \r\n" +
+                    "             ?@@@@@@@@@@@@@@@@@@@         @%                \r\n" +
+                    "             @@@@@@@@@@@@@@@@@@@@#        @@                \r\n" +
+                    "            @@@@@@@@@@@@@@@@@@@@@@+       @@                \r\n" +
+                    "           +@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
+                    "           @@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
+                    "          @@@@@@@@@@@@@@@@@@@@@@@@@%      @@                \r\n" +
+                    "         @@@@@S@@@@@@@@@@@?@@@@@@@@@      @@                \r\n" +
+                    "         @@@@+  @@@   @@@  @@@@+ @@@     +@+                \r\n" +
+                    "                 S@@   :%  +@    +%%                        \r\n");
+            }
+            if(Hero.name == "Варвар")
+            {
+                PositionPrint(0, 5, "" +
+                    "                    +@             +@+                      \r\n" +
+                    "                   @*                S@                     \r\n" +
+                    "                   @+    ?????+       +@                    \r\n" +
+                    "                   ?@#?%        @@+  @%                     \r\n" +
+                    "                      ?%.@+..++@.@S%                        \r\n" +
+                    "                      @%        %@,                         \r\n" +
+                    "                       @@      @%                           \r\n" +
+                    "                         %S@@@                              \r\n" +
+                    "                       ?@@@@@@@@@?                        \r\n" +
+                    "                 ##@@@@@@@@@@@@@@@@@@@@#                +@@@\r\n" +
+                    "@@             +@@@@@@@@@@@@@@@@@@@@@@@@@              ,@@@#\r\n" +
+                    "@@%           %@@@@@@@@@@@@@@@@@@@@@@@@@@@            ?@@@? \r\n" +
+                    "@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@@@@           #@@@@  \r\n" +
+                    "@@@@+         +@@@@@@ @@@@@@@@@@@@@%%@@@@%          %@@@%   \r\n" +
+                    "@@@@@          @@@@@: @@@@@@@@@@@@@% ?@@@@@@%     %@@@@?    \r\n" +
+                    " @@@@@      #@@@@@@+  @@@@@@@@@@@@@%  @@@@@@@@   ?@@@@@     \r\n" +
+                    " ?@@@@@    *@@@@@@@   ?@@@@@@@@@@@@    @@@@@@@  @@@@@       \r\n" +
+                    "  @@@@@%  ?@@@@@@%    @@@@@@@@@@@@@%    %@@@@@ %@@@@,       \r\n" +
+                    "  +@@@@@%.@@@@@@+     ?@@@@@@@@@@@@%     +@@@@+@@@%         \r\n" +
+                    "    ?@@@@@@@@@#       @@@@@@@@@@@@@       S@@@@@+           \r\n" +
+                    "     @@@@@?:         @@@@@@@@@@@@@@S       %@@++            \r\n" +
+                    "       @@@@         @@@@@@+    @@@@@@      ?@              \r\n" +
+                    "          S@       @@@@@@+     @@@@@@@                    \r\n" +
+                    "                  @@@@@@+      +@@@@@@                     \r\n" +
+                    "                  @@@@@%         @@@@@                      \r\n" +
+                    "                  @@@@@*         @@@@@%                     \r\n" +
+                    "                 @@@@@@          @@@@@%                     \r\n" +
+                    "                 @@@@@+           @@@@%                     \r\n" +
+                    "                @@@@@@            @@@@@@                      \r\n" +
+                    "             ?@@@@@@@@+           @@@@@@@@");
+
+            }
+            if (Hero.name == "Бродяга")
+            {
+                PositionPrint(0, 5, "" +
+                    "                                                            \r\n" +
+                    "                          :******:                          \r\n" +
+                    "                        ?####@@####%                        \r\n" +
+                    "                      ,S####????####S,                      \r\n" +
+                    "                      S###%,    ,%###S                      \r\n" +
+                    "                     %@@S+        +S@@%                     \r\n" +
+                    "                    +###+          +###+                    \r\n" +
+                    "                   *####SSSSSSSSSSSS####*.                  \r\n" +
+                    "                ,%######@@@@@@@@@@@@######%,                \r\n" +
+                    "               *########@@@@@@@@@@@@########*               \r\n" +
+                    "              ?#####@@@@@@@@@@@@@@@@@@@@#####?              \r\n" +
+                    "             ,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,             \r\n" +
+                    "             ,#@@@@@####@@@@@@@@@@@@####@@@@@#,             \r\n" +
+                    "             *#@@@@#? ##@@@@@@@@@@@@##+?#@@@@#*             \r\n" +
+                    "            *##@@##?  ?#@@@@@@@@@@@@#?  ?##@@##*            \r\n" +
+                    "          :%###@@#:   ,#@@@@@@@@@@@@#    :#@@###%:          \r\n" +
+                    "   :?    +######%:     *#@@@@@@@@@@@*     :%######+    ?:   \r\n" +
+                    "    ?S%SS####%+        ,#@@@@@@@@@@#         +%####SS%S?    \r\n" +
+                    "     +#####%:           #@@@@@@@@@@#           :%#####+     \r\n" +
+                    "    ,S####*             #@@@####@@@#             +####S     \r\n" +
+                    "        ?S#?,          +#@@@#%%#@@@#+          ,?#S?        \r\n" +
+                    "          :S#%*       ,#@@@@?  ?@@@@#,       *%#S+          \r\n" +
+                    "             ,++*,    ,#@@@#    #@@@#,    ,*++,             \r\n" +
+                    "                      ,#@@@#    #@@@#,                      \r\n" +
+                    "                      *####S    %####*                      \r\n" +
+                    "                      %####+    +####%                      \r\n" +
+                    "                     :#####,    ,#####+                     \r\n" +
+                    "                     *####*      *####*                     \r\n" +
+                    "                   +S#####*      +#####S+                   \r\n" +
+                    "                 :?#@@@@#%       %#@@@@#?:                     ");
+
+            }
             int PositionX1 = 130, PositionY1 = 0;
             string MonsterHealht = Monster.NowHealht.ToString("F1");
             string MonsterDA = Monster.damage.ToString("F1");
@@ -54,7 +157,41 @@ namespace Rogulike_way
             PositionPrint(PositionX1, PositionY1 + 3, $"Урон: {MonsterDA}");
             PositionPrint(PositionX1, PositionY1 + 4, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1 + 5);
-
+            if(Monster.name == "Рыцарь")
+            {
+                PositionX1 = 90;
+                PositionPrint(PositionX1, PositionY1 + 5, "");
+                PositionPrint(PositionX1, PositionY1 + 6, "                                                             ");
+                PositionPrint(PositionX1, PositionY1 + 7, "                                                             ");
+                PositionPrint(PositionX1, PositionY1 + 8 , "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 9 , "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 10 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 11 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 12 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 13, "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 14, "                     @?+++++++++++++++?@@@@:                ");
+                PositionPrint(PositionX1, PositionY1 + 15, "       SSSSSSSSSSSSSSSSSS:              @%.@%               ");
+                PositionPrint(PositionX1, PositionY1 + 16, "       SSSSSSSSSSSSSSSSSS:              S@  +@+             ");
+                PositionPrint(PositionX1, PositionY1 + 17, "       SSSSSSSSSSSSSSSSSS:              @%    %S            ");
+                PositionPrint(PositionX1, PositionY1 + 18, "       SSSSSSSSSSSSSSSSSS:              @%#    @@+          ");
+                PositionPrint(PositionX1, PositionY1 + 19, "       SSSSSSSSSSSSSSSSSS:              @:@?    @@,         ");
+                PositionPrint(PositionX1, PositionY1 + 20, "       SSSSSSSSSSSSSSSSSS:              @  %+    %@         ");
+                PositionPrint(PositionX1, PositionY1 + 21, "       SSSSSSSSSSSSSSSSSS:              @   +     +.        ");
+                PositionPrint(PositionX1, PositionY1 + 22, "       +SSSSSSSSSSSSSSSS?               @     @   @@@+@:    ");
+                PositionPrint(PositionX1, PositionY1 + 23, "         :SSSSSSSSSSSS#                 @      ?.?.@@@      ");
+                PositionPrint(PositionX1, PositionY1 + 24, "           :SSSSSSSS?.@                 @+       ?@@@%      ");
+                PositionPrint(PositionX1, PositionY1 + 25, "             +SSSS?   ?@+          +++@@@+       .@@@?      ");
+                PositionPrint(PositionX1, PositionY1 + 26, "               :*      @++@@@@++++%S++?@%       @@@@+S      ");
+                PositionPrint(PositionX1, PositionY1 + 27, "                      ?%    @%     @@+  ??     #@@@         ");
+                PositionPrint(PositionX1, PositionY1 + 28, "                     +@    @+      @.*  ?%    @@@@*         ");
+                PositionPrint(PositionX1, PositionY1 + 29, "                     @@   @        @.?  ?%  ,@@@@+          ");
+                PositionPrint(PositionX1, PositionY1 + 30, "                    +@   @%        @@   ?%  #@@@            ");
+                PositionPrint(PositionX1, PositionY1 + 31, "                    +@   @          @,   @  S@@*            ");
+                PositionPrint(PositionX1, PositionY1 + 32, "                    @@   @          @+.  +@                 ");
+                PositionPrint(PositionX1, PositionY1 + 33, "                   ?%    ?%         @@   +@                 ");
+                PositionPrint(PositionX1, PositionY1 + 34, "                 ++S     ?@         @@%   %@++,             ");
+                PositionPrint(PositionX1, PositionY1 + 35, "             +@@@@@%?????S@         @@??????%@@@?");
+            }
             int PositionX2 = 65, PositionY2 = 30;
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
             PositionPrint(PositionX2, PositionY2 + 1, "2.Обычный удар");
@@ -207,7 +344,7 @@ namespace Rogulike_way
                         "      П::::::П               П::::::П      OO:::::::::::::OO      M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
                         "      П::::::П               П::::::П        OO:::::::::OO        M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
                         "      ПППППППП               ПППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRR          ");
-                    System.Threading.Thread.Sleep(20000);
+                    System.Threading.Thread.Sleep(2000);
                     return 0;
                 }
             }
