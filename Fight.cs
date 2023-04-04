@@ -72,7 +72,6 @@ namespace Rogulike_way
             double HeroAt = Alpha(Hero.damage);//атака героя
             while (true)
             {
-                MonsterAt = Alpha(Monster.damage);//атака монстра
                 while (true)
                 {
                     var Key = Console.ReadKey(true);
