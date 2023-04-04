@@ -61,12 +61,27 @@ namespace Rogulike_way
             PositionPrint(PositionX2, PositionY2 + 2, "3.Блок");
             Console.SetCursorPosition(PositionX2, PositionY2 + 5);
         }
-        
-
-        public int Start(Hero Hero, Monsters Monster)
+        private void Blinking()
         {
             System.Threading.Thread.Sleep(1000);
             Console.CursorVisible = false;
+            //Моргание
+            //i меньше чего-то - количество interval - время
+            for (int i = 0; i < 3; i++)
+            {
+                int interval = 500;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Clear();
+                System.Threading.Thread.Sleep(interval);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Clear();
+                System.Threading.Thread.Sleep(interval);
+            }
+        }
+
+        public int Start(Hero Hero, Monsters Monster)
+        {
+            Blinking();
             Rendering(Hero, Monster);
             double HeroAt = Alpha(Hero.damage);//атака героя
             char Keys = ' ';//не получается присвоить Keys значение KeyChar
@@ -124,6 +139,30 @@ namespace Rogulike_way
 
                 if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                 {
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+                    Console.WriteLine("         " +
+                        "" +
+                        "  \r\nYYYYYYY       YYYYYYY     OOOOOOOOO     UUUUUUUU     UUUUUUUU     WWWWWWWW" +
+                        "                           WWWWWWWWIIIIIIIIIINNNNNNNN        NNNNNNNN      !!! \r\n" +
+                        "Y:::::Y       Y:::::Y   OO:::::::::OO   U::::::U     U::::::U     W::::::W                           " +
+                        "" +
+                        "W::::::WI::::::::IN:::::::N       N::::::N     !!:!!\r\n" +
+                        "Y:::::Y       Y:::::Y OO:::::::::::::OO U::::::U     U::::::U     W::::::W                           W::::::WI::::::::IN::::::::N      N::::::N     !:::!\r\n" +
+                        "Y::::::Y     Y::::::YO:::::::OOO:::::::OUU:::::U     U:::::UU     W::::::W                           W::::::WII::::::IIN:::::::::N     N::::::N     !:::!\r\n" +
+                        "YYY:::::Y   Y:::::YYYO::::::O   O::::::O U:::::U     U:::::U       W:::::W           WWWWW           W:::::W   I::::I  N::::::::::N    N::::::N     !:::!\r\n" +
+                        "   Y:::::Y Y:::::Y   O:::::O     O:::::O U:::::D     D:::::U        W:::::W         W:::::W         W:::::W    I::::I  N:::::::::::N   N::::::N     !:::!\r\n" +
+                        "    Y:::::Y:::::Y    O:::::O     O:::::O U:::::D     D:::::U         W:::::W       W:::::::W       W:::::W     I::::I  N:::::::N::::N  N::::::N     !:::!\r\n " +
+                        "    Y:::::::::Y     O:::::O     O:::::O U:::::D     D:::::U          W:::::W     W:::::::::W     W:::::W      I::::I  N::::::N N::::N N::::::N     !:::!\r\n" +
+                        "      Y:::::::Y      O:::::O     O:::::O U:::::D     D:::::U           W:::::W   W:::::W:::::W   W:::::W       I::::I  N::::::N  N::::N:::::::N     !:::!\r\n " +
+                        "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U            W:::::W W:::::W W:::::W W:::::W        I::::I  N::::::N   N:::::::::::N     !:::!\r\n " +
+                        "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U             W:::::W:::::W   W:::::W:::::W         I::::I  N::::::N    N::::::::::N     !!:!!\r\n " +
+                        "      Y:::::Y       O::::::O   O::::::O U::::::U   U::::::U              W:::::::::W     W:::::::::W          I::::I  N::::::N     N:::::::::N      !!! \r\n" +
+                        "       Y:::::Y       O:::::::OOO:::::::O U:::::::UUU:::::::U               W:::::::W       W:::::::W         II::::::IIN::::::N      N::::::::N          \r\n" +
+                        "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU                 W:::::W         W:::::W          I::::::::IN::::::N       N:::::::N      !!! \r\n" +
+                        "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W           I::::::::IN::::::N        N::::::N     !!:!!\r\n" +
+                        "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW            IIIIIIIIIINNNNNNNN         NNNNNNN      !!! ");
+                    System.Threading.Thread.Sleep(2000);
                     return 1;
                 }
                 
@@ -149,6 +188,26 @@ namespace Rogulike_way
                 }
                 if ((Monster.NowHealht >= 0) && (Hero.NowHealht <= 0))
                 {
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+                    Console.WriteLine(
+                        "\n\n\n\n      ППППППППППППППППППППППППППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRRRRRRRRRRR   \r\n" +
+                        "      П:::::::::::::::::::::::::::::П        OO:::::::::OO        M:::::::M             M:::::::M     E::::::::::::::::::::E     R::::::::::::::::R  \r\n" +
+                        "      П:::::::::::::::::::::::::::::П      OO:::::::::::::OO      M::::::::M           M::::::::M     E::::::::::::::::::::E     R::::::RRRRRR:::::R \r\n" +
+                        "      П::::::ППППППППППППППППП::::::П     O:::::::OOO:::::::O     M:::::::::M         M:::::::::M     EE::::::EEEEEEEEE::::E     RR:::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::::::M       M::::::::::M       E:::::E       EEEEEE       R::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::::::M     M:::::::::::M       E:::::E                    R::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::M::::M   M::::M:::::::M       E::::::EEEEEEEEEE          R::::RRRRRR:::::R \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M M::::M M::::M M::::::M       E:::::::::::::::E          R:::::::::::::RR  \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M  M::::M::::M  M::::::M       E:::::::::::::::E          R::::RRRRRR::R \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M   M:::::::M   M::::::M       E::::::EEEEEEEEEE          R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M    M:::::M    M::::::M       E:::::E                    R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::M     MMMMM     M::::::M       E:::::E       EEEEEE       R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O:::::::OOO:::::::O     M::::::M               M::::::M     EE::::::EEEEEEEE:::::E     RR:::::R            \r\n" +
+                        "      П::::::П               П::::::П      OO:::::::::::::OO      M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
+                        "      П::::::П               П::::::П        OO:::::::::OO        M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
+                        "      ПППППППП               ПППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRR          ");
+                    System.Threading.Thread.Sleep(20000);
                     return 0;
                 }
             }
