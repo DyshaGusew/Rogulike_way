@@ -34,11 +34,11 @@ public class RealRoom
     public char[,] map;
     public int number;
     public bool visitings;
-    public List<Borders> borders_list = new List<Borders>();
-    public List<Doors> doors_list = new List<Doors>();
+    public List<Borders> borders_list = new();
+    public List<Doors> doors_list = new();
 
-    public List<Monsters> monsters_list = new List<Monsters>();  //Пустая коллекция монстров
-    public List<Items> items_list = new List<Items>();           //Пустая коллекция объектов
+    public List<Monsters> monsters_list = new();  //Пустая коллекция монстров
+    public List<Items> items_list = new();           //Пустая коллекция объектов
 
     public RealRoom()
     {
@@ -119,6 +119,7 @@ public class World
 
     //Коллекции комнат и карты
     public char[,] map;
+    public RealRoom currentRoom;
     public List<MiniRoom> roomsMini = new List<MiniRoom>();
     public List<RealRoom> roomsReal = new List<RealRoom>();
 

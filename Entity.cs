@@ -1,6 +1,6 @@
 ﻿public class Hero
 {
-    public string name;
+    public string? name;
     public int[] coordinates = { 0, 0 };
     public double StaticHealht = 100;
     public double NowHealht = 100;

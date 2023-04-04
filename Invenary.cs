@@ -1,4 +1,5 @@
-﻿public class Button
+﻿/*  Ничего не работает
+public class Button
 {
     public string name;
     public bool isSelected;
@@ -460,4 +461,4 @@ public class Invenary
 }
 
 
-
+*/

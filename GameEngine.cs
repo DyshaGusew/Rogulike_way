@@ -1,88 +1,96 @@
 ﻿//Создется объек мира
 using Rogulike_way;
 using System.Threading;
-
-World world = new World();
-
-world.map = world.CreateMiniMap(); //Создаю мини карту(и одновремено расположение комнат относительно друг друга)
-world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
-world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
-
 Console.CursorVisible = false;    //Отключение курсора
-// Создается меню, идет ожидание выбора персонажа
-Menu menu = new Menu();
+
+//Вызываю меню и создаю мир(комнаты, героя и тд)
+Menu menu = new();
 menu.Show();
-
-//Создание героя (создается в зависимости от выбора в меню)
-if (menu.hero_class == "wizard")
-{
-    world.hero = new Wizard();
-} 
-else if (menu.hero_class == "barbarian")
-{
-    world.hero = new Barbarian();
-} 
-else if (menu.hero_class == "prowler")
-{
-    world.hero = new Prowler();
-}
-//Monsters Monster = new Ork(10);
-//Fight fight = new Fight();
-//int a = fight.Start(hero, Monster);
-//Thread.Sleep(3000);
-//Console.Clear();
-//Console.WriteLine(a);
-
-//Выбор начальной комнаты для отрисовки из мира
-Random rand = new Random();
-int numRoom = rand.Next(0, 9);
-RealRoom currentRoom = world.roomsReal[numRoom];
-Monsters.CreateMonsters(currentRoom, world.hero);
-
-//Задаю герою координаты
-world.hero.coordinates = new int[2] { currentRoom.map.GetLength(1) / 2, currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
-
-
-//Отрисовываю карту без героя
-DraftGame.DraftPlane(currentRoom, world);
-
-//Задежка
-System.Threading.Thread.Sleep(1000);
-
-//Указываю героя в центре координат
-currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
-DraftGame.DraftPlane(currentRoom, world);                     //Отрисовываю карту уже с героем
-
-
+World world = StartGame.CreateWorld(menu);
 
 //Обработка нажатий
 ConsoleKeyInfo keyInfo;
-do
+while (true)
 {
     keyInfo = Console.ReadKey(true);
-    if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'ц')
-        MovePlayer.Move("Up", ref currentRoom, world);
-   
-    else if(keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'ы')
-        MovePlayer.Move("Down", ref currentRoom, world);
-
-    else if (keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'в')
-        MovePlayer.Move("Right", ref currentRoom, world);
-
-    else if (keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'ф')
-        MovePlayer.Move("Left", ref currentRoom, world);
-
-    else if (keyInfo.KeyChar == 'e' || keyInfo.KeyChar == 'у')
+    switch (keyInfo.KeyChar)
     {
-        Invenary invenary = new Invenary();
-        invenary.ChooseAmmunition();
+        case 'w' or 'ц':
+            MovePlayer.Move("Up", ref world.currentRoom, world);
+            break;
+
+        case 's' or 'ы':
+            MovePlayer.Move("Down", ref world.currentRoom, world);
+            break;
+
+        case 'd' or 'в':
+            MovePlayer.Move("Right", ref world.currentRoom, world);
+            break;
+
+        case 'a' or 'ф':
+            MovePlayer.Move("Left", ref world.currentRoom, world);
+            break;
+
+        case 'e' or 'у':
+            //Invenary invenary = new Invenary();
+            // invenary.ChooseAmmunition();
+            break;
+
+        case 'q' or 'й':
+            Menu menu_ = new();
+            menu_.Show();
+            world = StartGame.CreateWorld(menu_);
+            break;
     }
+}
+
+//Создание игры и начальное выставление и отображение героя
+class StartGame
+{
+    static public World CreateWorld(Menu menu)
+    {
+        World world = new World();
+        world.map = world.CreateMiniMap(); //Создаю мини карту(и одновремено расположение комнат относительно друг друга)
+        world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
+        world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
+
+        //Создание героя (создается в зависимости от выбора в меню)
+        if (menu.hero_class == "wizard")
+        {
+            world.hero = new Wizard();
+        }
+        else if (menu.hero_class == "barbarian")
+        {
+            world.hero = new Barbarian();
+        }
+        else if (menu.hero_class == "prowler")
+        {
+            world.hero = new Prowler();
+        }
+
+        //Выбор начальной комнаты для отрисовки из мира
+        Random rand = new Random();
+        int numRoom = rand.Next(0, 9);
+        world.currentRoom = world.roomsReal[numRoom];
+        Monsters.CreateMonsters(world.currentRoom, world.hero);
+
+        //Задаю герою координаты
+        world.hero.coordinates = new int[2] { world.currentRoom.map.GetLength(1) / 2, world.currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
 
 
+        //Отрисовываю карту без героя
+        DraftGame.DraftPlane(world.currentRoom, world);
 
-} while (keyInfo.KeyChar != 'q' && keyInfo.KeyChar != 'й');
-menu.Show();
+        //Задежка
+        System.Threading.Thread.Sleep(1000);
 
+        //Указываю героя в центре координат
+        world.currentRoom.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
+        DraftGame.DraftPlane(world.currentRoom, world);                     //Отрисовываю карту уже с героем
+
+        return world;
+    }
+}
 
 //Отрисовка игры(необходимо добавить отрисовку статистики персонажа и игровых событий)
 class DraftGame
@@ -238,7 +246,6 @@ class DraftGame
     }
 }
 
-
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
 class MovePlayer
 {
@@ -385,6 +392,8 @@ class MovePlayer
         {
             roomCurrent.monsters_list.Remove(monster);
             world.hero.experience += monster.experience;
+            //Проверка уровня
+            world.hero.CheckAndLevelUp();
             DraftGame.DraftPlane(roomCurrent, world);
         }
         else
@@ -392,7 +401,12 @@ class MovePlayer
             Thread.Sleep(1000);
             Console.Clear();
             Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
+            if(world.hero.level > 1)
+            {
+                Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience + world.hero.level * world.hero.experience}");
+            }
             Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+            Environment.Exit(0);
         }
         
     }
