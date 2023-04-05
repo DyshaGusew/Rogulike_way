@@ -53,7 +53,7 @@ class StartGame
     {
         World world = new World();
         world.map = world.CreateMiniMap(); //Создаю мини карту(и одновремено расположение комнат относительно друг друга)
-        world.roomsMini = world.AppArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
+        world.roomsMini = world.CreateArrMiniRooms(world.map); //Заполняю коллекцию мини комнат
         world.roomsReal = world.CreateArrRealRooms(world.roomsMini); //Создание коллекции реальных комнат 
 
         //Создание героя (создается в зависимости от выбора в меню)
@@ -158,6 +158,11 @@ class DraftGame
         else if (ch == World.ghost)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
+        }
+
+        else if (ch == World.charChest)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
     }
 

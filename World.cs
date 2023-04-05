@@ -4,6 +4,13 @@
 //Класс Мини комнат с разными характеристиками
 
 using System;
+using System.Threading;
+
+public class Chests{
+    public Items item;
+    public int[] coordinates = { 0, 0 };
+    public char designation = World.charChest;
+}
 
 public class MiniRoom
 {
@@ -37,6 +44,7 @@ public class RealRoom
     public bool visitings;
     public List<Borders> borders_list = new();
     public List<Doors> doors_list = new();
+    public Chests chest = new();
 
     public List<Monsters> monsters_list = new();  //Пустая коллекция монстров
     public List<Items> items_list = new();           //Пустая коллекция объектов
@@ -97,7 +105,6 @@ public class Doors
 //Класс, где создается игровой мир
 public class World
 {
-    //Сделать все статичным
     static public char charRoomBordVert = '║';
     static public char charRoomBordHor = '═';
     static public char charDoors = '╬';
@@ -106,6 +113,8 @@ public class World
     static public char charMiniRoomBordHor = '─';
     static public char charMiniRoom = '#';
     static public char charMiniEmpty = ' ';
+
+    static public char charChest = '$';
 
     static public char charHero = '@';
 
@@ -116,7 +125,6 @@ public class World
     static public char skeleton = 'S';
 
     public Hero hero = new Hero();
-    //public Monsters nullMonster = new Monsters();
 
     //Коллекции комнат и карты
     public char[,] map;
@@ -124,9 +132,9 @@ public class World
     public List<MiniRoom> roomsMini = new List<MiniRoom>();
     public List<RealRoom> roomsReal = new List<RealRoom>();
 
-    //Стоит ли добавлять сюда игрока?
 
-    public void DelBorders(int[] coordDoor, ref RealRoom room)  //Заполняю/удаляю, если должна быть дверь
+    //Заполняю/удаляю, если должна быть дверь
+    public void DelBorders(int[] coordDoor, ref RealRoom room)  
     {
         foreach (Borders borders in room.borders_list)
         {
@@ -140,9 +148,6 @@ public class World
         }
         
     }
-
-
-
 
     ///Просто создание char[,] массива в виде карты
     //Создание рандомной мини карты
@@ -159,7 +164,7 @@ public class World
 
         //Количесвто комнат колеблится от 8 до 10
         Random random = new Random();
-        int c_room = random.Next(8, 10); 
+        int c_room = random.Next(9, 11); 
 
         //Создаем окружение у комнаты с указанными координатами
         map = CreateOkrujMini(map, x_pos, y_pos);
@@ -234,7 +239,6 @@ public class World
     //Создание комнат вокруг комнаты мини
     public char[,] CreateOkrujMini(char[,] miniMap, int y_pos, int x_pos)
     {
-
         Random random = new Random();
         int c_door = random.Next(1, 4);
 
@@ -272,9 +276,9 @@ public class World
     public int CounterRoomsMini(char[,] miniMap)
     {
         int n = 0;
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 12; x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < 12; y++)
             {
                 if (miniMap[x, y] == charMiniRoom)
                 {
@@ -289,7 +293,7 @@ public class World
  
     ///Создание коллекции мини комнат
     //Заполняю коллекцию мини комнат объектами мини комнат
-    public List<MiniRoom> AppArrMiniRooms(char[,] miniMap)       
+    public List<MiniRoom> CreateArrMiniRooms(char[,] miniMap)       
     {
            List<MiniRoom> roomsMini = new List<MiniRoom>();
        int i = 0;
@@ -501,6 +505,26 @@ public class World
         
     }
 
+    //Создание сундука в комнате
+    public void RoomAppendChest(RealRoom room)
+    { 
+        Random random = new Random();
+        int ChanceChest = random.Next(1, 6);
+        if(ChanceChest == 1 || ChanceChest == 4 || ChanceChest == 2)
+        {
+            Chests chest = new Chests();
+            chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
+
+            //Проверка на наличие чего-либо
+            while (DefiningArea(chest.coordinates, room) != null)
+            {
+                chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
+            }
+
+            room.map[chest.coordinates[1], chest.coordinates[0]] = chest.designation;
+            room.chest = chest; 
+        }
+    }
 
     //Заполнение коллекции комнат
     public List<RealRoom> CreateArrRealRooms(List<MiniRoom> roomsMini_)
@@ -512,17 +536,23 @@ public class World
         foreach(MiniRoom miniRoom in roomsMini_)
         {
             RealRoom room = CreateRoomReal(miniRoom.number, miniRoom, roomsMini_);
+            RoomAppendChest(room);
             roomsReal.Add(room);
         }
+        
         return roomsReal;
     }
 
-    
 
-    public Object DefiningArea(int[] coordinates_move, RealRoom room)      //Проверка объекта в координатах(изучение области) куда надо пойти
+    //Проверка объекта в координатах(изучение области) куда надо пойти
+    public Object DefiningArea(int[] coordinates_move, RealRoom room)      
    {
+        if (hero.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
+        {
+            return hero;                 //Возыращает предмет на указанных координатах
+        }
 
-        foreach(Items item in room.items_list)
+        foreach (Items item in room.items_list)
         {
             if (item.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
               {                       
@@ -558,7 +588,7 @@ public class World
             }
 
         }
-        return 0;
+        return null;
 
         
     }       

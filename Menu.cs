@@ -194,7 +194,7 @@ public class Menu
         Console.CursorVisible = false;
         MenuButton wizard = new("Маг", true);
         MenuButton barbarian = new("Варвар", false);
-        MenuButton prowler = new("Бродяга", false);
+        MenuButton prowler = new("Ассасин", false);
         MenuButton back = new("Назад", false);
 
         ConsoleKeyInfo keyInfo;

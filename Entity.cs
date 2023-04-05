@@ -75,7 +75,7 @@ public class Prowler : Hero
 {
     public Prowler()
     {
-        name = "Убийца";
+        name = "Ассасин";
         StaticHealht = 60;
         NowHealht = 60;
         StaticStamina = 60;
@@ -153,6 +153,7 @@ public class Monsters
                     }
 
             }
+
             monster.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
             room.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
             room.monsters_list.Add(monster);

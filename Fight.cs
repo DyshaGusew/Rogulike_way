@@ -113,7 +113,7 @@ namespace Rogulike_way
                     "             ?@@@@@@@@+           @@@@@@@@");
 
             }
-            if (Hero.name == "Убийца")
+            if (Hero.name == "Ассасин")
             {
                 PositionPrint(0, 5, "" +
                     "                                                            \r\n" +
