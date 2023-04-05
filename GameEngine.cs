@@ -2,8 +2,7 @@
 using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
-//Inventory inventory = new();
-//inventory.ChooseAmmunition();
+
 
 //Вызываю меню и создаю мир(комнаты, героя и тд)
 Menu menu = new();
@@ -45,6 +44,7 @@ while (true)
             break;
     }
 }
+
 
 //Создание игры и начальное выставление и отображение героя
 class StartGame
