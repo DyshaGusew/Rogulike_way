@@ -38,6 +38,7 @@ namespace Rogulike_way
         }
         private void Rendering(Hero Hero, Monsters Monster)
         {
+            
             Console.Clear();
             Console.CursorVisible = false;
             string HeroHealht = Hero.NowHealht.ToString("F1");
@@ -227,21 +228,21 @@ namespace Rogulike_way
 
 
 
-            int PositionX2 = 65, PositionY2 = 30;
+            int PositionX2 = 65, PositionY2 = 35;
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
             PositionPrint(PositionX2, PositionY2 + 1, "2.Обычный удар");
             PositionPrint(PositionX2, PositionY2 + 2, "3.Блок");
-            Console.SetCursorPosition(PositionX2, PositionY2 + 5);
+            //Console.SetCursorPosition(PositionX2, PositionY2 + 5);
         }
         private void Blinking()
         {
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(300);
             Console.CursorVisible = false;
             //Моргание
             //i меньше чего-то - количество interval - время
             for (int i = 0; i < 3; i++)
             {
-                int interval = 500;
+                int interval = 100;
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.Clear();
                 System.Threading.Thread.Sleep(interval);
@@ -257,6 +258,7 @@ namespace Rogulike_way
             Rendering(Hero, Monster);
             double HeroAt = Alpha(Hero.damage);//атака героя
             char Keys = ' ';//не получается присвоить Keys значение KeyChar
+            Console.SetCursorPosition(0, 0);
             while (true)
             {
                 double MonsterAt = Alpha(Monster.damage);
@@ -286,8 +288,8 @@ namespace Rogulike_way
                         Keys = '3';
                         Hero.NowStamina += 10;
                         Random random = new Random();
-                        int Rand = random.Next(50, 100);
-                        MonsterAt = MonsterAt - MonsterAt * ((double)Rand / 100);  
+                        int Rand = random.Next(40, 61);
+                        MonsterAt = MonsterAt - (MonsterAt * ((double)Rand / 100));  
                         break;
                     }
                 }
@@ -304,13 +306,15 @@ namespace Rogulike_way
                 //Момент с отрицательными числами хп и стамины               
                 Console.CursorVisible = false;
                 Rendering(Hero, Monster);
-                if (Keys != '3')
-                {
-                    PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
-                }
+                Console.SetCursorPosition(0, 0);
+               // if (Keys != '3')
+               // {
+                 //   PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
+               // }
 
                 if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                 {
+                    PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
                     System.Threading.Thread.Sleep(1500);
                     Console.Clear();
                     Console.WriteLine("         " +
@@ -334,7 +338,7 @@ namespace Rogulike_way
                         "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU                 W:::::W         W:::::W          I::::::::IN::::::N       N:::::::N      !!! \r\n" +
                         "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W           I::::::::IN::::::N        N::::::N     !!:!!\r\n" +
                         "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW            IIIIIIIIIINNNNNNNN         NNNNNNN      !!! ");
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1500);
                     return 1;
                 }
                 
@@ -343,7 +347,7 @@ namespace Rogulike_way
 
                 if (Monster.NowHealht > 0)
                 {
-                    Thread.Sleep(1500);
+                    Thread.Sleep(200);
                     string MonsterAtt = MonsterAt.ToString("F1");//Чтобы выводилось до одной цифры после запятой
                     Hero.NowHealht -= MonsterAt;
                     //Момент с отрицательными числами хп
@@ -353,13 +357,17 @@ namespace Rogulike_way
                     Rendering(Hero, Monster);
                     if (Keys != '3')
                     {
-                        PositionPrint(63, 35, $"Вы нанесли: {HeroAtt}");
-                        PositionPrint(63, 36, $"Вам нанесли: {MonsterAtt}");
+                        PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
+                        PositionPrint(63, 1, $"Вам нанесли: {MonsterAtt}");
+                        Console.SetCursorPosition(0, 0);
                     }                   
-                    else { PositionPrint(63, 35, $"Вам нанесли: {MonsterAtt}");}
+                    else { 
+                        PositionPrint(63, 0, $"Вам нанесли: {MonsterAtt}");                      
+                    }
                 }
                 if ((Monster.NowHealht >= 0) && (Hero.NowHealht <= 0))
                 {
+                    Console.SetCursorPosition(0, 0);
                     System.Threading.Thread.Sleep(1500);
                     Console.Clear();
                     Console.WriteLine(

@@ -20,24 +20,26 @@
             this.level++;
             this.boost += 0.1;
             this.StaticHealht *= this.boost;
-            this.NowHealht = this.StaticHealht;
+            this.NowHealht = HealHp((int)this.StaticHealht/2);
             this.StaticStamina *= this.boost;
-            this.NowStamina = this.StaticStamina;
+            this.NowStamina = HealSp((int)this.StaticStamina / 2);
             this.damage *= this.boost;
             this.experience = 0;
         }
     }
 
-    public void HealHp(int HowMany)
+    public double HealHp(int HowMany)
     {
         NowHealht += HowMany;
         if (NowHealht > StaticHealht) { NowHealht = StaticHealht; }
+        return NowHealht;
     }
 
-    public void HealSp(int HowMany)
+    public double HealSp(int HowMany)
     {
         NowStamina += HowMany;
         if (NowStamina > StaticStamina) { NowStamina = StaticStamina; }
+        return NowHealht;
     }
 }
 
@@ -46,12 +48,12 @@ public class Wizard : Hero
     public Wizard()
     {
         name = "Маг";
-        StaticHealht = 60;
-        NowHealht = 60;
-        StaticStamina = 100;
-        NowStamina = 100;
-        armor = 20;
-        damage = 20;
+        StaticHealht = 50;
+        NowHealht = 50;
+        StaticStamina = 80;
+        NowStamina = 80;
+        armor = 10;
+        damage = 40;
     }
 }
 
@@ -62,10 +64,10 @@ public class Barbarian : Hero
         name = "Варвар";
         StaticHealht = 100;
         NowHealht = 100;
-        StaticStamina = 100;
-        NowStamina = 100;
-        armor = 40;
-        damage = 40;
+        StaticStamina = 35;
+        NowStamina = 35;
+        armor = 35;
+        damage = 25;
     }
 }
 
@@ -73,13 +75,13 @@ public class Prowler : Hero
 {
     public Prowler()
     {
-        name = "Бродяга";
+        name = "Убийца";
         StaticHealht = 60;
         NowHealht = 60;
         StaticStamina = 60;
         NowStamina = 60;
-        armor = 30;
-        damage = 30;
+        armor = 25;
+        damage = 35;
     }
 }
 
