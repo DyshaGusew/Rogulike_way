@@ -85,7 +85,7 @@ public class Cell
         Console.ForegroundColor = ConsoleColor.White;
     }
 }
-*/
+
 public class Inventory
 {
 
@@ -142,15 +142,15 @@ public class Inventory
     {
 
         Console.CursorVisible = false;
-        Button Cell1 = new Button("Посох", true);
-        Button Cell2 = new Button("Оружие", false);
-        Button Cell3 = new Button("Броня", false);
-        Button Cell4 = new Button("Зелье", false);
-        Button Cell5 = new Button("Пусто", false);
-        Button Cell6 = new Button("Пусто", false);
-        Button Cell7 = new Button("Пусто", false);
-        Button Cell8 = new Button("Пусто", false);
-        Button Cell9 = new Button("Пусто", false);
+        Cell Cell1 = new Cell("Посох", true);
+        Cell Cell2 = new Cell("Оружие", false);
+        Cell Cell3 = new Cell("Броня", false);
+        Cell Cell4 = new Cell("Зелье", false);
+        Cell Cell5 = new Cell("Пусто", false);
+        Cell Cell6 = new Cell("Пусто", false);
+        Cell Cell7 = new Cell("Пусто", false);
+        Cell Cell8 = new Cell("Пусто", false);
+        Cell Cell9 = new Cell("Пусто", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -376,9 +376,9 @@ public class Inventory
     {
 
         Console.CursorVisible = false;
-        Button choice = new Button("Взять", true);
-        Button blowoutn = new Button("Выбросить", false);
-        Button cancellation = new Button("Отмена", false);
+        Cell choice = new Cell("Взять", true);
+        Cell blowoutn = new Cell("Выбросить", false);
+        Cell cancellation = new Cell("Отмена", false);
 
 
         ConsoleKeyInfo keyInfo;
