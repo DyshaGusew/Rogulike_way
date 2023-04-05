@@ -1,10 +1,10 @@
-﻿/*
-public class Button
+﻿
+public class Cell
 {
     public string name;
     public bool isSelected;
 
-    public Button(string _name, bool _isSelected)
+    public Cell(string _name, bool _isSelected)
     {
         name = _name;
         isSelected = _isSelected;
@@ -93,38 +93,38 @@ public class Inventory
     public bool isHeroChosen = false;
     public Inventory() {}
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button Button_4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
+    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
 
-       // Console.CursorVisible = false;
-        button_1.DrawButton(10, 5);
+        // Console.CursorVisible = false;
+        Cell_1.DrawButton(10, 5);
         //Console.Write("  ");
-        button_2.DrawButton(42, 5);
+        Cell_2.DrawButton(42, 5);
         //Console.Write("  ");
-        button_3.DrawButton(74, 5);
+        Cell_3.DrawButton(74, 5);
         //Console.Write("\n\n");
-        Button_4.DrawButton(10, 12);
+        Cell_4.DrawButton(10, 12);
         //Console.Write("  ");
-        button_5.DrawButton(42, 12);
+        Cell_5.DrawButton(42, 12);
         //Console.Write("  ");
-        button_6.DrawButton(74, 12);
+        Cell_6.DrawButton(74, 12);
         //Console.Write("\n\n");
-        button_7.DrawButton(10, 19);
-       //Console.Write("  ");
-        button_8.DrawButton(42, 19);
+        Cell_7.DrawButton(10, 19);
         //Console.Write("  ");
-        button_9.DrawButton(74, 19);
+        Cell_8.DrawButton(42, 19);
+        //Console.Write("  ");
+        Cell_9.DrawButton(74, 19);
     }
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3)
+    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3)
     {
 
         Console.CursorVisible = false;
-        button_1.DrawButton(57, 5);
-        Console.Write("\n\n");
-        button_2.DrawButton(57, 12);
-        Console.Write("\n\n");
-        button_3.DrawButton(57, 19);
+        Cell_1.DrawButton(57, 5);
+        //Console.Write("\n\n");
+        Cell_2.DrawButton(57, 12);
+        //Console.Write("\n\n");
+        Cell_3.DrawButton(57, 19);
         
     }
 
