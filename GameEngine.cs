@@ -37,9 +37,8 @@ while (true)
             break;
 
         case 'q' or 'й':
-            Menu menu_ = new();
-            menu_.Show();
-            world = StartGame.CreateWorld(menu_);
+            menu.Show();
+            world = StartGame.CreateWorld(menu);
             break;
     }
 }
@@ -403,10 +402,17 @@ class MovePlayer
             Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
             if (world.hero.level > 1)
             {
-                Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience + world.hero.level * world.hero.experience}");
+                Console.SetCursorPosition(70, 16); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
             }
-            Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
-            Environment.Exit(0);
+            else
+            {
+                Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+            }
+           
+            Thread.Sleep(2000);
+            Menu menu = new();
+            menu.Show();
+            world = StartGame.CreateWorld(menu);
         }
 
     }

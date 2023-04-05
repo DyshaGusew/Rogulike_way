@@ -115,7 +115,7 @@ public class World
     static public char skeleton = 'S';
 
     public Hero hero = new Hero();
-    public Monsters nullMonster = new Monsters();
+    //public Monsters nullMonster = new Monsters();
 
     //Коллекции комнат и карты
     public char[,] map;
