@@ -41,7 +41,7 @@ public class Cell
         Console.Write("\n");
     }
 
-    public void WriteButtonName(int x, int y)
+    public void WriteCellName(int x, int y)
     {
 
         Console.CursorVisible = false;
@@ -63,7 +63,7 @@ public class Cell
         Console.Write("\n");
     }
 
-    public void DrawButton(int x, int y)
+    public void DrawCell(int x, int y)
     {
 
         Console.CursorVisible = false;
@@ -78,7 +78,7 @@ public class Cell
 
         DrawBorder(x, y);
         DrawSpace(x, y + 1);
-        WriteButtonName(x, y + 2);
+        WriteCellName(x, y + 2);
         DrawSpace(x, y + 3);
         DrawBorder(x, y + 4);
 
@@ -97,34 +97,24 @@ public class Inventory
     {
 
         // Console.CursorVisible = false;
-        Cell_1.DrawButton(10, 5);
-        //Console.Write("  ");
-        Cell_2.DrawButton(42, 5);
-        //Console.Write("  ");
-        Cell_3.DrawButton(74, 5);
-        //Console.Write("\n\n");
-        Cell_4.DrawButton(10, 12);
-        //Console.Write("  ");
-        Cell_5.DrawButton(42, 12);
-        //Console.Write("  ");
-        Cell_6.DrawButton(74, 12);
-        //Console.Write("\n\n");
-        Cell_7.DrawButton(10, 19);
-        //Console.Write("  ");
-        Cell_8.DrawButton(42, 19);
-        //Console.Write("  ");
-        Cell_9.DrawButton(74, 19);
+        Cell_1.DrawCell(10, 5);
+        Cell_2.DrawCell(42, 5);
+        Cell_3.DrawCell(74, 5);
+        Cell_4.DrawCell(10, 12);
+        Cell_5.DrawCell(42, 12);
+        Cell_6.DrawCell(74, 12);
+        Cell_7.DrawCell(10, 19);
+        Cell_8.DrawCell(42, 19);
+        Cell_9.DrawCell(74, 19);
     }
 
     public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3)
     {
 
         Console.CursorVisible = false;
-        Cell_1.DrawButton(57, 5);
-        //Console.Write("\n\n");
-        Cell_2.DrawButton(57, 12);
-        //Console.Write("\n\n");
-        Cell_3.DrawButton(57, 19);
+        Cell_1.DrawCell(57, 5);
+        Cell_2.DrawCell(57, 12);
+        Cell_3.DrawCell(57, 19);
         
     }
 

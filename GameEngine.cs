@@ -2,10 +2,9 @@
 using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
-Inventory inventory = new();
-inventory.ChooseAmmunition();
+//Inventory inventory = new();
+//inventory.ChooseAmmunition();
 
-/*
 //Вызываю меню и создаю мир(комнаты, героя и тд)
 Menu menu = new();
 menu.Show();
@@ -484,4 +483,3 @@ class MovePlayer
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }
-*/
