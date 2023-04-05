@@ -35,6 +35,7 @@ while (true)
         case 'e' or 'у':
             Inventory inventory = new Inventory();
              inventory.ChooseAmmunition();
+            DraftGame.DraftPlane(world.currentRoom, world);
             break;
 
         case 'q' or 'й':
