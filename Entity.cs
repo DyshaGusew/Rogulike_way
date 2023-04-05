@@ -186,7 +186,7 @@ public class Ghost : Monsters
     {
         designation = 'G';
         name = "Призрак";
-        StaticHealht = 20;
+        StaticHealht = 35;
         damage = 40;
         experience = 50;
         this.level = level;
@@ -206,7 +206,7 @@ public class Knight : Monsters
     {
         designation = 'K';
         name = "Рыцарь";
-        StaticHealht = 120;
+        StaticHealht = 100;
         damage = 30;
         experience = 50;
         this.level = level;
@@ -247,8 +247,8 @@ public class Rat : Monsters
         designation = 'R';
         name = "Крыса";
         StaticHealht = 10;
-        damage = 10;
-        experience = 10;
+        damage = 15;
+        experience = 15;
         this.level = level;
 
         if (level > 0)
