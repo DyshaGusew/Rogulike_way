@@ -1,4 +1,4 @@
-﻿
+﻿/*
 public class Button
 {
     public string name;
@@ -85,15 +85,15 @@ public class Button
         Console.ForegroundColor = ConsoleColor.White;
     }
 }
-
+*/
 public class Inventory
 {
 
     public string ammunition = "";
-   // public bool isHeroChosen = false;
+    public bool isHeroChosen = false;
     public Inventory() {}
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button 4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
+    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button Button_4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
     {
 
        // Console.CursorVisible = false;
@@ -103,7 +103,7 @@ public class Inventory
         //Console.Write("  ");
         button_3.DrawButton(74, 5);
         //Console.Write("\n\n");
-        button_3.DrawButton(10, 12);
+        Button_4.DrawButton(10, 12);
         //Console.Write("  ");
         button_5.DrawButton(42, 12);
         //Console.Write("  ");
@@ -116,7 +116,7 @@ public class Inventory
         button_9.DrawButton(74, 19);
     }
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3,)
+    public void DrawButtons(Button button_1, Button button_2, Button button_3)
     {
 
         Console.CursorVisible = false;
@@ -356,7 +356,7 @@ public class Inventory
                     break;
 
                 case 'e' or 'у':
-                    while (Cell1.isSelected, Cell2.isSelected, Cell3.isSelected, Cell4.isSelected, Cell5.isSelected, Cell6.isSelected, Cell7.isSelected, Cell8.isSelected, Cell9.isSelected)
+                    if (Cell1.isSelected)
                     {
                         Console.Clear();
                         SelectAction();
@@ -388,7 +388,7 @@ public class Inventory
         {
             Console.Clear();
             Console.SetCursorPosition(62, 2);
-            DrawButtons(wizard, barbarian, prowler, back);
+            DrawButtons(choice, blowoutn, cancellation);
             WriteTip();
 
             keyInfo = Console.ReadKey(true);
@@ -422,7 +422,7 @@ public class Inventory
                         blowoutn.isSelected = false;
                         cancellation.isSelected = true;
                     }
-                    else if (prowler.isSelected)
+                    else if (cancellation.isSelected)
                     {
                         cancellation.isSelected = false;
                         choice.isSelected = true;
@@ -430,7 +430,7 @@ public class Inventory
 
                     break;
                 case 'e' or 'у':
-                    if (wizard.isSelected)
+                    /*if (wizard.isSelected)
                     {
                         this.hero_class = "wizard";
                         continue_cycle = false;
@@ -447,8 +447,8 @@ public class Inventory
                         this.hero_class = "prowler";
                         continue_cycle = false;
                         this.isHeroChosen = true;
-                    }
-                    else
+                    }*/
+                    if (cancellation.isSelected)
                     {
                         continue_cycle = false;
                     }
