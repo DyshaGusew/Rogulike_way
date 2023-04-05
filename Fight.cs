@@ -147,6 +147,8 @@ namespace Rogulike_way
                     "                 :?#@@@@#%       %#@@@@#?:                     ");
 
             }
+
+
             int PositionX1 = 130, PositionY1 = 0;
             string MonsterHealht = Monster.NowHealht.ToString("F1");
             string MonsterDA = Monster.damage.ToString("F1");
@@ -157,41 +159,74 @@ namespace Rogulike_way
             PositionPrint(PositionX1, PositionY1 + 3, $"Урон: {MonsterDA}");
             PositionPrint(PositionX1, PositionY1 + 4, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1 + 5);
-            if(Monster.name == "Рыцарь")
+
+            FileStream fileStream = new FileStream("Knight.txt", FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
+            int i = 0; ;
+            // считываем строки из файла
+            string line;
+            PositionX1 = 100;
+
+            // закрываем StreamReader и файловый поток
+            streamReader.Close();
+            fileStream.Close();
+
+            if (Monster.name == "Рыцарь")
             {
-                PositionX1 = 90;
-                PositionPrint(PositionX1, PositionY1 + 5, "");
-                PositionPrint(PositionX1, PositionY1 + 6, "                                                             ");
-                PositionPrint(PositionX1, PositionY1 + 7, "                                                             ");
-                PositionPrint(PositionX1, PositionY1 + 8 , "                                                            ");
-                PositionPrint(PositionX1, PositionY1 + 9 , "                                                            ");
-                PositionPrint(PositionX1, PositionY1 + 10 , "                                                           ");
-                PositionPrint(PositionX1, PositionY1 + 11 , "                                                           ");
-                PositionPrint(PositionX1, PositionY1 + 12 , "                                                           ");
-                PositionPrint(PositionX1, PositionY1 + 13, "                                                            ");
-                PositionPrint(PositionX1, PositionY1 + 14, "                     @?+++++++++++++++?@@@@:                ");
-                PositionPrint(PositionX1, PositionY1 + 15, "       SSSSSSSSSSSSSSSSSS:              @%.@%               ");
-                PositionPrint(PositionX1, PositionY1 + 16, "       SSSSSSSSSSSSSSSSSS:              S@  +@+             ");
-                PositionPrint(PositionX1, PositionY1 + 17, "       SSSSSSSSSSSSSSSSSS:              @%    %S            ");
-                PositionPrint(PositionX1, PositionY1 + 18, "       SSSSSSSSSSSSSSSSSS:              @%#    @@+          ");
-                PositionPrint(PositionX1, PositionY1 + 19, "       SSSSSSSSSSSSSSSSSS:              @:@?    @@,         ");
-                PositionPrint(PositionX1, PositionY1 + 20, "       SSSSSSSSSSSSSSSSSS:              @  %+    %@         ");
-                PositionPrint(PositionX1, PositionY1 + 21, "       SSSSSSSSSSSSSSSSSS:              @   +     +.        ");
-                PositionPrint(PositionX1, PositionY1 + 22, "       +SSSSSSSSSSSSSSSS?               @     @   @@@+@:    ");
-                PositionPrint(PositionX1, PositionY1 + 23, "         :SSSSSSSSSSSS#                 @      ?.?.@@@      ");
-                PositionPrint(PositionX1, PositionY1 + 24, "           :SSSSSSSS?.@                 @+       ?@@@%      ");
-                PositionPrint(PositionX1, PositionY1 + 25, "             +SSSS?   ?@+          +++@@@+       .@@@?      ");
-                PositionPrint(PositionX1, PositionY1 + 26, "               :*      @++@@@@++++%S++?@%       @@@@+S      ");
-                PositionPrint(PositionX1, PositionY1 + 27, "                      ?%    @%     @@+  ??     #@@@         ");
-                PositionPrint(PositionX1, PositionY1 + 28, "                     +@    @+      @.*  ?%    @@@@*         ");
-                PositionPrint(PositionX1, PositionY1 + 29, "                     @@   @        @.?  ?%  ,@@@@+          ");
-                PositionPrint(PositionX1, PositionY1 + 30, "                    +@   @%        @@   ?%  #@@@            ");
-                PositionPrint(PositionX1, PositionY1 + 31, "                    +@   @          @,   @  S@@*            ");
-                PositionPrint(PositionX1, PositionY1 + 32, "                    @@   @          @+.  +@                 ");
-                PositionPrint(PositionX1, PositionY1 + 33, "                   ?%    ?%         @@   +@                 ");
-                PositionPrint(PositionX1, PositionY1 + 34, "                 ++S     ?@         @@%   %@++,             ");
-                PositionPrint(PositionX1, PositionY1 + 35, "             +@@@@@%?????S@         @@??????%@@@?");
+                fileStream = new FileStream("Knight.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+                i = 10;
+                // считываем строки из файла
+                PositionX1 = 100; 
             }
+            if (Monster.name == "Скелет")
+            {
+                fileStream = new FileStream("Skeleton.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+                i = 5;
+                // считываем строки из файла
+                PositionX1 = 95;
+            }
+            if (Monster.name == "Орк")
+            {
+                fileStream = new FileStream("Ork.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+                i = 5;
+                // считываем строки из файла
+                PositionX1 = 95;
+            }
+            if (Monster.name == "Крыса")
+            {
+                fileStream = new FileStream("Rat.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+                i = 15;
+                // считываем строки из файла
+                PositionX1 = 95;
+            }
+            if (Monster.name == "Призрак")
+            {
+                fileStream = new FileStream("Ghost.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+                i = 10;
+                // считываем строки из файла
+                PositionX1 = 95;
+            }
+
+
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                PositionPrint(PositionX1, PositionY1 + i, line);
+                i++;
+            }
+
+            // закрываем StreamReader и файловый поток
+            streamReader.Close();
+            fileStream.Close();
+
+
+
+
+
             int PositionX2 = 65, PositionY2 = 30;
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
             PositionPrint(PositionX2, PositionY2 + 1, "2.Обычный удар");
