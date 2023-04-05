@@ -1,10 +1,10 @@
-﻿/*
-public class Button
+﻿
+public class Cell
 {
     public string name;
     public bool isSelected;
 
-    public Button(string _name, bool _isSelected)
+    public Cell(string _name, bool _isSelected)
     {
         name = _name;
         isSelected = _isSelected;
@@ -41,7 +41,7 @@ public class Button
         Console.Write("\n");
     }
 
-    public void WriteButtonName(int x, int y)
+    public void WriteCellName(int x, int y)
     {
 
         Console.CursorVisible = false;
@@ -63,7 +63,7 @@ public class Button
         Console.Write("\n");
     }
 
-    public void DrawButton(int x, int y)
+    public void DrawCell(int x, int y)
     {
 
         Console.CursorVisible = false;
@@ -78,7 +78,7 @@ public class Button
 
         DrawBorder(x, y);
         DrawSpace(x, y + 1);
-        WriteButtonName(x, y + 2);
+        WriteCellName(x, y + 2);
         DrawSpace(x, y + 3);
         DrawBorder(x, y + 4);
 
@@ -86,45 +86,35 @@ public class Button
     }
 }
 
-public class Invenary
+public class Inventory
 {
 
     public string ammunition = "";
-   // public bool isHeroChosen = false;
-    public Invenary() {}
+    public bool isHeroChosen = false;
+    public Inventory() {}
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button 4, Button button_5, Button button_6, Button button_7, Button button_8, Button button_9)
+    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
 
-       // Console.CursorVisible = false;
-        button_1.DrawButton(10, 5);
-        //Console.Write("  ");
-        button_2.DrawButton(42, 5);
-        //Console.Write("  ");
-        button_3.DrawButton(74, 5);
-        //Console.Write("\n\n");
-        button_3.DrawButton(10, 12);
-        //Console.Write("  ");
-        button_5.DrawButton(42, 12);
-        //Console.Write("  ");
-        button_6.DrawButton(74, 12);
-        //Console.Write("\n\n");
-        button_7.DrawButton(10, 19);
-       //Console.Write("  ");
-        button_8.DrawButton(42, 19);
-        //Console.Write("  ");
-        button_9.DrawButton(74, 19);
+        // Console.CursorVisible = false;
+        Cell_1.DrawCell(10, 5);
+        Cell_2.DrawCell(42, 5);
+        Cell_3.DrawCell(74, 5);
+        Cell_4.DrawCell(10, 12);
+        Cell_5.DrawCell(42, 12);
+        Cell_6.DrawCell(74, 12);
+        Cell_7.DrawCell(10, 19);
+        Cell_8.DrawCell(42, 19);
+        Cell_9.DrawCell(74, 19);
     }
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3,)
+    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3)
     {
 
         Console.CursorVisible = false;
-        button_1.DrawButton(57, 5);
-        Console.Write("\n\n");
-        button_2.DrawButton(57, 12);
-        Console.Write("\n\n");
-        button_3.DrawButton(57, 19);
+        Cell_1.DrawCell(57, 5);
+        Cell_2.DrawCell(57, 12);
+        Cell_3.DrawCell(57, 19);
         
     }
 
@@ -142,15 +132,15 @@ public class Invenary
     {
 
         Console.CursorVisible = false;
-        Button Cell1 = new Button("Посох", true);
-        Button Cell2 = new Button("Оружие", false);
-        Button Cell3 = new Button("Броня", false);
-        Button Cell4 = new Button("Зелье", false);
-        Button Cell5 = new Button("Пусто", false);
-        Button Cell6 = new Button("Пусто", false);
-        Button Cell7 = new Button("Пусто", false);
-        Button Cell8 = new Button("Пусто", false);
-        Button Cell9 = new Button("Пусто", false);
+        Cell Cell1 = new Cell("Посох", true);
+        Cell Cell2 = new Cell("Оружие", false);
+        Cell Cell3 = new Cell("Броня", false);
+        Cell Cell4 = new Cell("Зелье", false);
+        Cell Cell5 = new Cell("Пусто", false);
+        Cell Cell6 = new Cell("Пусто", false);
+        Cell Cell7 = new Cell("Пусто", false);
+        Cell Cell8 = new Cell("Пусто", false);
+        Cell Cell9 = new Cell("Пусто", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -356,7 +346,7 @@ public class Invenary
                     break;
 
                 case 'e' or 'у':
-                    if (Cell9.isSelected)
+                    if (Cell1.isSelected)
                     {
                         Console.Clear();
                         SelectAction();
@@ -376,9 +366,9 @@ public class Invenary
     {
 
         Console.CursorVisible = false;
-        Button choice = new Button("Взять", true);
-        Button blowoutn = new Button("Выбросить", false);
-        Button cancellation = new Button("Отмена", false);
+        Cell choice = new Cell("Взять", true);
+        Cell blowoutn = new Cell("Выбросить", false);
+        Cell cancellation = new Cell("Отмена", false);
 
 
         ConsoleKeyInfo keyInfo;
@@ -388,7 +378,7 @@ public class Invenary
         {
             Console.Clear();
             Console.SetCursorPosition(62, 2);
-            DrawButtons(wizard, barbarian, prowler, back);
+            DrawButtons(choice, blowoutn, cancellation);
             WriteTip();
 
             keyInfo = Console.ReadKey(true);
@@ -422,7 +412,7 @@ public class Invenary
                         blowoutn.isSelected = false;
                         cancellation.isSelected = true;
                     }
-                    else if (prowler.isSelected)
+                    else if (cancellation.isSelected)
                     {
                         cancellation.isSelected = false;
                         choice.isSelected = true;
@@ -430,7 +420,7 @@ public class Invenary
 
                     break;
                 case 'e' or 'у':
-                    if (wizard.isSelected)
+                    /*if (wizard.isSelected)
                     {
                         this.hero_class = "wizard";
                         continue_cycle = false;
@@ -447,8 +437,8 @@ public class Invenary
                         this.hero_class = "prowler";
                         continue_cycle = false;
                         this.isHeroChosen = true;
-                    }
-                    else
+                    }*/
+                    if (cancellation.isSelected)
                     {
                         continue_cycle = false;
                     }
@@ -458,7 +448,7 @@ public class Invenary
         }
     }
 }
-*/
+
 /*
 public class Button
 {

@@ -2,6 +2,8 @@
 using Rogulike_way;
 using System.Threading;
 Console.CursorVisible = false;    //Отключение курсора
+//Inventory inventory = new();
+//inventory.ChooseAmmunition();
 
 //Вызываю меню и создаю мир(комнаты, героя и тд)
 Menu menu = new();
@@ -32,8 +34,8 @@ while (true)
             break;
 
         case 'e' or 'у':
-            //Invenary invenary = new Invenary();
-            // invenary.ChooseAmmunition();
+            Inventory inventory = new Inventory();
+             inventory.ChooseAmmunition();
             break;
 
         case 'q' or 'й':

@@ -3,12 +3,12 @@
 // В основном коде создается экземпляр класса Menu (без параметров) и вызывается метод Show().
 
 
-public class Button
+public class MenuButton
 {
     public string name;
     public bool isSelected;
 
-    public Button(string _name, bool _isSelected)
+    public MenuButton(string _name, bool _isSelected)
     {
         name = _name;
         isSelected = _isSelected;
@@ -96,25 +96,21 @@ public class Menu
     public bool isHeroChosen = false;
     public Menu() {}
 
-    public void DrawButtons(Button button_1,  Button button_2)
+    public void DrawButtons(MenuButton button_1, MenuButton button_2)
     {
 
         Console.CursorVisible = false;
         button_1.DrawButton(57, 5);
-        Console.Write("\n\n");
         button_2.DrawButton(57, 12);
     }
 
-    public void DrawButtons(Button button_1, Button button_2, Button button_3, Button button_4)
+    public void DrawButtons(MenuButton button_1, MenuButton button_2, MenuButton button_3, MenuButton button_4)
     {
 
         Console.CursorVisible = false;
         button_1.DrawButton(57, 5);
-        Console.Write("\n\n");
         button_2.DrawButton(57, 12);
-        Console.Write("\n\n");
         button_3.DrawButton(57, 19);
-        Console.Write("\n\n");
         button_4.DrawButton(57, 26);
     }
 
@@ -126,12 +122,18 @@ public class Menu
         Console.WriteLine("W - Вверх, S - Вниз, E - Выбрать");
     }
 
+    public void SwitchButton(ref MenuButton from, ref MenuButton to)
+    {
+        from.isSelected = false;
+        to.isSelected = true;
+    }
+
     public void Show()
     {
 
         Console.CursorVisible = false;
-        Button start = new Button("Начать", true);
-        Button exit = new Button("Выйти", false);
+        MenuButton start = new("Начать", true);
+        MenuButton exit = new("Выйти", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -152,24 +154,20 @@ public class Menu
                 case 'w' or 'ц': 
                     if (start.isSelected)
                     {
-                        start.isSelected = false;
-                        exit.isSelected = true;
+                        SwitchButton(ref start, ref exit);
                     } else
                     {
-                        exit.isSelected = false;
-                        start.isSelected = true;
+                        SwitchButton(ref exit, ref start);
                     }
                     break;
                 case 's' or 'ы':
                     if (start.isSelected)
                     {
-                        start.isSelected = false;
-                        exit.isSelected = true;
+                        SwitchButton(ref start, ref exit);
                     }
                     else
                     {
-                        exit.isSelected = false;
-                        start.isSelected = true;
+                        SwitchButton(ref exit, ref start);
                     }
                     break;
                 case 'e' or 'у':
@@ -193,12 +191,11 @@ public class Menu
 
     public void ChooseCharacter()
     {
-
         Console.CursorVisible = false;
-        Button wizard = new Button("Маг", true);
-        Button barbarian = new Button("Варвар", false);
-        Button prowler = new Button("Бродяга", false);
-        Button back = new Button("Назад", false);
+        MenuButton wizard = new("Маг", true);
+        MenuButton barbarian = new("Варвар", false);
+        MenuButton prowler = new("Бродяга", false);
+        MenuButton back = new("Назад", false);
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -217,67 +214,58 @@ public class Menu
                 case 'w' or 'ц':
                     if (wizard.isSelected)
                     {
-                        wizard.isSelected = false;
-                        back.isSelected = true;
+                        SwitchButton(ref wizard, ref back);
                     }
                     else if (barbarian.isSelected)
                     {
-                        barbarian.isSelected = false;
-                        wizard.isSelected = true;
+                        SwitchButton(ref barbarian, ref wizard);
                     }
                     else if (prowler.isSelected)
                     {
-                        prowler.isSelected = false;
-                        barbarian.isSelected = true;
+                        SwitchButton(ref prowler, ref barbarian);
                     } else 
                     {
-                        back.isSelected = false;
-                        prowler.isSelected = true;
+                        SwitchButton(ref back, ref prowler);
                     }
                     break;
                 case 's' or 'ы':
                     if (wizard.isSelected)
                     {
-                        wizard.isSelected = false;
-                        barbarian.isSelected = true;
+                        SwitchButton(ref wizard, ref barbarian);
                     }
                     else if (barbarian.isSelected)
                     {
-                        barbarian.isSelected = false;
-                        prowler.isSelected = true;
+                        SwitchButton(ref barbarian, ref prowler);
                     }
                     else if (prowler.isSelected)
                     {
-                        prowler.isSelected = false;
-                        back.isSelected = true;
+                        SwitchButton(ref prowler, ref back);
                     }
                     else
                     {
-                        back.isSelected = false;
-                        wizard.isSelected = true;
+                        SwitchButton(ref back, ref wizard);
                     }
                     break;
                 case 'e' or 'у':
-                    if (wizard.isSelected)
+                    if (back.isSelected)
                     {
-                        this.hero_class = "wizard";
                         continue_cycle = false;
-                        this.isHeroChosen = true;
-                    }
-                    else if (barbarian.isSelected)
-                    {
-                        this.hero_class = "barbarian";
-                        continue_cycle = false;
-                        this.isHeroChosen = true;
-                    }
-                    else if (prowler.isSelected)
-                    {
-                        this.hero_class = "prowler";
-                        continue_cycle = false;
-                        this.isHeroChosen = true;
                     } else
                     {
+                        if (wizard.isSelected)
+                        {
+                            this.hero_class = "wizard";
+                        }
+                        else if (barbarian.isSelected)
+                        {
+                            this.hero_class = "barbarian";
+                        }
+                        else if (prowler.isSelected)
+                        {
+                            this.hero_class = "prowler";
+                        }
                         continue_cycle = false;
+                        this.isHeroChosen = true;
                     }
                     break;
                 default: break;

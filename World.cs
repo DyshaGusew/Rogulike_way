@@ -2,6 +2,7 @@
 
 
 //Класс Мини комнат с разными характеристиками
+
 using System;
 
 public class MiniRoom

@@ -44,6 +44,109 @@ namespace Rogulike_way
             string HeroST = Hero.NowStamina.ToString("F1");
             string HeroAT = Hero.damage.ToString("F1");
             Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
+            if (Hero.name == "Маг")
+            {
+                PositionPrint(0, 5, "" +
+                    "                                                            \r\n" +
+                    "            @@@@@++++++,                                    \r\n" +
+                    "              ?@@@@@@@@@@@@@%+                              \r\n" +
+                    "                   ?@@@@@@@@@@@@@#+                         \r\n" +
+                    "               .%@@@@@@@@@@@@@@@@@@@@,                      \r\n" +
+                    "              @@@@@@@@@@@@@@@@@@@@@@@@+    ???:             \r\n" +
+                    "                     @   ?@@   ?         +@@@@@?            \r\n" +
+                    "                     @@@@@@@@@@S         +@@@@@%            \r\n" +
+                    "                      +@@@@@@S+,          ++++,             \r\n" +
+                    "                       .@@@@.             ?##+             \r\n" +
+                    "                   ,@@@@@@@@@@@?         @@@@@             \r\n" +
+                    "                 ,@@@@@@@@@@@@@@S.        @@@@              \r\n" +
+                    "                .+@@@@@@@@@@@@@@@@+       @@@               \r\n" +
+                    "                ,@@@@@@@@@@@@@@@@@@,      @@%               \r\n" +
+                    "                S@@@@@@@@@@@@@@@@@@@?:    @@%               \r\n" +
+                    "                @@@@@@@@@@@@@@@@%.@@@@@@@@@@                \r\n" +
+                    "                @@@@@@@@@@@@@@@@%         @+                \r\n" +
+                    "               ,@@@@@@@@@@@@@@@@@         @+               \r\n" +
+                    "               +@@@@@@@@@@@@@@@@@?        @+               \r\n" +
+                    "              *@@@@@@@@@@@@@@@@@%         @+                \r\n" +
+                    "             ?@@@@@@@@@@@@@@@@@@@         @%                \r\n" +
+                    "             @@@@@@@@@@@@@@@@@@@@#        @@                \r\n" +
+                    "            @@@@@@@@@@@@@@@@@@@@@@+       @@                \r\n" +
+                    "           +@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
+                    "           @@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
+                    "          @@@@@@@@@@@@@@@@@@@@@@@@@%      @@                \r\n" +
+                    "         @@@@@S@@@@@@@@@@@?@@@@@@@@@      @@                \r\n" +
+                    "         @@@@+  @@@   @@@  @@@@+ @@@     +@+                \r\n" +
+                    "                 S@@   :%  +@    +%%                        \r\n");
+            }
+            if(Hero.name == "Варвар")
+            {
+                PositionPrint(0, 5, "" +
+                    "                    +@             +@+                      \r\n" +
+                    "                   @*                S@                     \r\n" +
+                    "                   @+    ?????+       +@                    \r\n" +
+                    "                   ?@#?%        @@+  @%                     \r\n" +
+                    "                      ?%.@+..++@.@S%                        \r\n" +
+                    "                      @%        %@,                         \r\n" +
+                    "                       @@      @%                           \r\n" +
+                    "                         %S@@@                              \r\n" +
+                    "                       ?@@@@@@@@@?                        \r\n" +
+                    "                 ##@@@@@@@@@@@@@@@@@@@@#                +@@@\r\n" +
+                    "@@             +@@@@@@@@@@@@@@@@@@@@@@@@@              ,@@@#\r\n" +
+                    "@@%           %@@@@@@@@@@@@@@@@@@@@@@@@@@@            ?@@@? \r\n" +
+                    "@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@@@@           #@@@@  \r\n" +
+                    "@@@@+         +@@@@@@ @@@@@@@@@@@@@%%@@@@%          %@@@%   \r\n" +
+                    "@@@@@          @@@@@: @@@@@@@@@@@@@% ?@@@@@@%     %@@@@?    \r\n" +
+                    " @@@@@      #@@@@@@+  @@@@@@@@@@@@@%  @@@@@@@@   ?@@@@@     \r\n" +
+                    " ?@@@@@    *@@@@@@@   ?@@@@@@@@@@@@    @@@@@@@  @@@@@       \r\n" +
+                    "  @@@@@%  ?@@@@@@%    @@@@@@@@@@@@@%    %@@@@@ %@@@@,       \r\n" +
+                    "  +@@@@@%.@@@@@@+     ?@@@@@@@@@@@@%     +@@@@+@@@%         \r\n" +
+                    "    ?@@@@@@@@@#       @@@@@@@@@@@@@       S@@@@@+           \r\n" +
+                    "     @@@@@?:         @@@@@@@@@@@@@@S       %@@++            \r\n" +
+                    "       @@@@         @@@@@@+    @@@@@@      ?@              \r\n" +
+                    "          S@       @@@@@@+     @@@@@@@                    \r\n" +
+                    "                  @@@@@@+      +@@@@@@                     \r\n" +
+                    "                  @@@@@%         @@@@@                      \r\n" +
+                    "                  @@@@@*         @@@@@%                     \r\n" +
+                    "                 @@@@@@          @@@@@%                     \r\n" +
+                    "                 @@@@@+           @@@@%                     \r\n" +
+                    "                @@@@@@            @@@@@@                      \r\n" +
+                    "             ?@@@@@@@@+           @@@@@@@@");
+
+            }
+            if (Hero.name == "Бродяга")
+            {
+                PositionPrint(0, 5, "" +
+                    "                                                            \r\n" +
+                    "                          :******:                          \r\n" +
+                    "                        ?####@@####%                        \r\n" +
+                    "                      ,S####????####S,                      \r\n" +
+                    "                      S###%,    ,%###S                      \r\n" +
+                    "                     %@@S+        +S@@%                     \r\n" +
+                    "                    +###+          +###+                    \r\n" +
+                    "                   *####SSSSSSSSSSSS####*.                  \r\n" +
+                    "                ,%######@@@@@@@@@@@@######%,                \r\n" +
+                    "               *########@@@@@@@@@@@@########*               \r\n" +
+                    "              ?#####@@@@@@@@@@@@@@@@@@@@#####?              \r\n" +
+                    "             ,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,             \r\n" +
+                    "             ,#@@@@@####@@@@@@@@@@@@####@@@@@#,             \r\n" +
+                    "             *#@@@@#? ##@@@@@@@@@@@@##+?#@@@@#*             \r\n" +
+                    "            *##@@##?  ?#@@@@@@@@@@@@#?  ?##@@##*            \r\n" +
+                    "          :%###@@#:   ,#@@@@@@@@@@@@#    :#@@###%:          \r\n" +
+                    "   :?    +######%:     *#@@@@@@@@@@@*     :%######+    ?:   \r\n" +
+                    "    ?S%SS####%+        ,#@@@@@@@@@@#         +%####SS%S?    \r\n" +
+                    "     +#####%:           #@@@@@@@@@@#           :%#####+     \r\n" +
+                    "    ,S####*             #@@@####@@@#             +####S     \r\n" +
+                    "        ?S#?,          +#@@@#%%#@@@#+          ,?#S?        \r\n" +
+                    "          :S#%*       ,#@@@@?  ?@@@@#,       *%#S+          \r\n" +
+                    "             ,++*,    ,#@@@#    #@@@#,    ,*++,             \r\n" +
+                    "                      ,#@@@#    #@@@#,                      \r\n" +
+                    "                      *####S    %####*                      \r\n" +
+                    "                      %####+    +####%                      \r\n" +
+                    "                     :#####,    ,#####+                     \r\n" +
+                    "                     *####*      *####*                     \r\n" +
+                    "                   +S#####*      +#####S+                   \r\n" +
+                    "                 :?#@@@@#%       %#@@@@#?:                     ");
+
+            }
             int PositionX1 = 130, PositionY1 = 0;
             string MonsterHealht = Monster.NowHealht.ToString("F1");
             string MonsterDA = Monster.damage.ToString("F1");
@@ -54,19 +157,68 @@ namespace Rogulike_way
             PositionPrint(PositionX1, PositionY1 + 3, $"Урон: {MonsterDA}");
             PositionPrint(PositionX1, PositionY1 + 4, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1 + 5);
-
+            if(Monster.name == "Рыцарь")
+            {
+                PositionX1 = 90;
+                PositionPrint(PositionX1, PositionY1 + 5, "");
+                PositionPrint(PositionX1, PositionY1 + 6, "                                                             ");
+                PositionPrint(PositionX1, PositionY1 + 7, "                                                             ");
+                PositionPrint(PositionX1, PositionY1 + 8 , "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 9 , "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 10 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 11 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 12 , "                                                           ");
+                PositionPrint(PositionX1, PositionY1 + 13, "                                                            ");
+                PositionPrint(PositionX1, PositionY1 + 14, "                     @?+++++++++++++++?@@@@:                ");
+                PositionPrint(PositionX1, PositionY1 + 15, "       SSSSSSSSSSSSSSSSSS:              @%.@%               ");
+                PositionPrint(PositionX1, PositionY1 + 16, "       SSSSSSSSSSSSSSSSSS:              S@  +@+             ");
+                PositionPrint(PositionX1, PositionY1 + 17, "       SSSSSSSSSSSSSSSSSS:              @%    %S            ");
+                PositionPrint(PositionX1, PositionY1 + 18, "       SSSSSSSSSSSSSSSSSS:              @%#    @@+          ");
+                PositionPrint(PositionX1, PositionY1 + 19, "       SSSSSSSSSSSSSSSSSS:              @:@?    @@,         ");
+                PositionPrint(PositionX1, PositionY1 + 20, "       SSSSSSSSSSSSSSSSSS:              @  %+    %@         ");
+                PositionPrint(PositionX1, PositionY1 + 21, "       SSSSSSSSSSSSSSSSSS:              @   +     +.        ");
+                PositionPrint(PositionX1, PositionY1 + 22, "       +SSSSSSSSSSSSSSSS?               @     @   @@@+@:    ");
+                PositionPrint(PositionX1, PositionY1 + 23, "         :SSSSSSSSSSSS#                 @      ?.?.@@@      ");
+                PositionPrint(PositionX1, PositionY1 + 24, "           :SSSSSSSS?.@                 @+       ?@@@%      ");
+                PositionPrint(PositionX1, PositionY1 + 25, "             +SSSS?   ?@+          +++@@@+       .@@@?      ");
+                PositionPrint(PositionX1, PositionY1 + 26, "               :*      @++@@@@++++%S++?@%       @@@@+S      ");
+                PositionPrint(PositionX1, PositionY1 + 27, "                      ?%    @%     @@+  ??     #@@@         ");
+                PositionPrint(PositionX1, PositionY1 + 28, "                     +@    @+      @.*  ?%    @@@@*         ");
+                PositionPrint(PositionX1, PositionY1 + 29, "                     @@   @        @.?  ?%  ,@@@@+          ");
+                PositionPrint(PositionX1, PositionY1 + 30, "                    +@   @%        @@   ?%  #@@@            ");
+                PositionPrint(PositionX1, PositionY1 + 31, "                    +@   @          @,   @  S@@*            ");
+                PositionPrint(PositionX1, PositionY1 + 32, "                    @@   @          @+.  +@                 ");
+                PositionPrint(PositionX1, PositionY1 + 33, "                   ?%    ?%         @@   +@                 ");
+                PositionPrint(PositionX1, PositionY1 + 34, "                 ++S     ?@         @@%   %@++,             ");
+                PositionPrint(PositionX1, PositionY1 + 35, "             +@@@@@%?????S@         @@??????%@@@?");
+            }
             int PositionX2 = 65, PositionY2 = 30;
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
             PositionPrint(PositionX2, PositionY2 + 1, "2.Обычный удар");
             PositionPrint(PositionX2, PositionY2 + 2, "3.Блок");
             Console.SetCursorPosition(PositionX2, PositionY2 + 5);
         }
-        
-
-        public int Start(Hero Hero, Monsters Monster)
+        private void Blinking()
         {
             System.Threading.Thread.Sleep(1000);
             Console.CursorVisible = false;
+            //Моргание
+            //i меньше чего-то - количество interval - время
+            for (int i = 0; i < 3; i++)
+            {
+                int interval = 500;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Clear();
+                System.Threading.Thread.Sleep(interval);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Clear();
+                System.Threading.Thread.Sleep(interval);
+            }
+        }
+
+        public int Start(Hero Hero, Monsters Monster)
+        {
+            Blinking();
             Rendering(Hero, Monster);
             double HeroAt = Alpha(Hero.damage);//атака героя
             char Keys = ' ';//не получается присвоить Keys значение KeyChar
@@ -124,6 +276,30 @@ namespace Rogulike_way
 
                 if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                 {
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+                    Console.WriteLine("         " +
+                        "" +
+                        "  \r\nYYYYYYY       YYYYYYY     OOOOOOOOO     UUUUUUUU     UUUUUUUU     WWWWWWWW" +
+                        "                           WWWWWWWWIIIIIIIIIINNNNNNNN        NNNNNNNN      !!! \r\n" +
+                        "Y:::::Y       Y:::::Y   OO:::::::::OO   U::::::U     U::::::U     W::::::W                           " +
+                        "" +
+                        "W::::::WI::::::::IN:::::::N       N::::::N     !!:!!\r\n" +
+                        "Y:::::Y       Y:::::Y OO:::::::::::::OO U::::::U     U::::::U     W::::::W                           W::::::WI::::::::IN::::::::N      N::::::N     !:::!\r\n" +
+                        "Y::::::Y     Y::::::YO:::::::OOO:::::::OUU:::::U     U:::::UU     W::::::W                           W::::::WII::::::IIN:::::::::N     N::::::N     !:::!\r\n" +
+                        "YYY:::::Y   Y:::::YYYO::::::O   O::::::O U:::::U     U:::::U       W:::::W           WWWWW           W:::::W   I::::I  N::::::::::N    N::::::N     !:::!\r\n" +
+                        "   Y:::::Y Y:::::Y   O:::::O     O:::::O U:::::D     D:::::U        W:::::W         W:::::W         W:::::W    I::::I  N:::::::::::N   N::::::N     !:::!\r\n" +
+                        "    Y:::::Y:::::Y    O:::::O     O:::::O U:::::D     D:::::U         W:::::W       W:::::::W       W:::::W     I::::I  N:::::::N::::N  N::::::N     !:::!\r\n " +
+                        "    Y:::::::::Y     O:::::O     O:::::O U:::::D     D:::::U          W:::::W     W:::::::::W     W:::::W      I::::I  N::::::N N::::N N::::::N     !:::!\r\n" +
+                        "      Y:::::::Y      O:::::O     O:::::O U:::::D     D:::::U           W:::::W   W:::::W:::::W   W:::::W       I::::I  N::::::N  N::::N:::::::N     !:::!\r\n " +
+                        "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U            W:::::W W:::::W W:::::W W:::::W        I::::I  N::::::N   N:::::::::::N     !:::!\r\n " +
+                        "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U             W:::::W:::::W   W:::::W:::::W         I::::I  N::::::N    N::::::::::N     !!:!!\r\n " +
+                        "      Y:::::Y       O::::::O   O::::::O U::::::U   U::::::U              W:::::::::W     W:::::::::W          I::::I  N::::::N     N:::::::::N      !!! \r\n" +
+                        "       Y:::::Y       O:::::::OOO:::::::O U:::::::UUU:::::::U               W:::::::W       W:::::::W         II::::::IIN::::::N      N::::::::N          \r\n" +
+                        "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU                 W:::::W         W:::::W          I::::::::IN::::::N       N:::::::N      !!! \r\n" +
+                        "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W           I::::::::IN::::::N        N::::::N     !!:!!\r\n" +
+                        "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW            IIIIIIIIIINNNNNNNN         NNNNNNN      !!! ");
+                    System.Threading.Thread.Sleep(2000);
                     return 1;
                 }
                 
@@ -149,6 +325,26 @@ namespace Rogulike_way
                 }
                 if ((Monster.NowHealht >= 0) && (Hero.NowHealht <= 0))
                 {
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+                    Console.WriteLine(
+                        "\n\n\n\n      ППППППППППППППППППППППППППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRRRRRRRRRRR   \r\n" +
+                        "      П:::::::::::::::::::::::::::::П        OO:::::::::OO        M:::::::M             M:::::::M     E::::::::::::::::::::E     R::::::::::::::::R  \r\n" +
+                        "      П:::::::::::::::::::::::::::::П      OO:::::::::::::OO      M::::::::M           M::::::::M     E::::::::::::::::::::E     R::::::RRRRRR:::::R \r\n" +
+                        "      П::::::ППППППППППППППППП::::::П     O:::::::OOO:::::::O     M:::::::::M         M:::::::::M     EE::::::EEEEEEEEE::::E     RR:::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::::::M       M::::::::::M       E:::::E       EEEEEE       R::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::::::M     M:::::::::::M       E:::::E                    R::::R     R:::::R\r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::M::::M   M::::M:::::::M       E::::::EEEEEEEEEE          R::::RRRRRR:::::R \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M M::::M M::::M M::::::M       E:::::::::::::::E          R:::::::::::::RR  \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M  M::::M::::M  M::::::M       E:::::::::::::::E          R::::RRRRRR::R \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M   M:::::::M   M::::::M       E::::::EEEEEEEEEE          R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M    M:::::M    M::::::M       E:::::E                    R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::M     MMMMM     M::::::M       E:::::E       EEEEEE       R::::R            \r\n" +
+                        "      П::::::П               П::::::П     O:::::::OOO:::::::O     M::::::M               M::::::M     EE::::::EEEEEEEE:::::E     RR:::::R            \r\n" +
+                        "      П::::::П               П::::::П      OO:::::::::::::OO      M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
+                        "      П::::::П               П::::::П        OO:::::::::OO        M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
+                        "      ПППППППП               ПППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRR          ");
+                    System.Threading.Thread.Sleep(2000);
                     return 0;
                 }
             }
