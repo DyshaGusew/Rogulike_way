@@ -159,11 +159,6 @@ class DraftGame
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
         }
-
-        else if (ch == World.charChest)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-        }
     }
 
 
@@ -189,7 +184,22 @@ class DraftGame
         Console.Clear();
         for (int y = 0; y < y_len; y++)
             for (int x = 0; x < x_len; x++)
+            {
                 PutCurs(room.map[y, x], y, x);
+
+                //Проверка для сундука(тк такой же символ)
+                if (room.chest != null)
+                {
+                    if (room.chest.coordinates[0] == x && room.chest.coordinates[1] == y)
+                    {
+                        Console.SetCursorPosition(StatX + x, StatY + y);
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+                        Console.Write(World.charChest);
+                        Console.ResetColor();
+                    }
+                }
+            }
 
         //Отрисовка миникарты
         DraftMinyMap(room, world);

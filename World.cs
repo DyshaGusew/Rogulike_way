@@ -6,9 +6,9 @@
 using System;
 using System.Threading;
 
-public class Chests{
+public class Chest{
     public Items item;
-    public int[] coordinates = { 0, 0 };
+    public int[] coordinates = {100, 100};
     public char designation = World.charChest;
 }
 
@@ -44,10 +44,10 @@ public class RealRoom
     public bool visitings;
     public List<Borders> borders_list = new();
     public List<Doors> doors_list = new();
-    public Chests chest = new();
+    
 
     public List<Monsters> monsters_list = new();  //Пустая коллекция монстров
-    public List<Items> items_list = new();           //Пустая коллекция объектов
+    public Chest chest;          //Пустая коллекция сундуков с объектами
 
     public RealRoom()
     {
@@ -114,7 +114,7 @@ public class World
     static public char charMiniRoom = '#';
     static public char charMiniEmpty = ' ';
 
-    static public char charChest = '$';
+    static public char charChest = '#';
 
     static public char charHero = '@';
 
@@ -129,8 +129,9 @@ public class World
     //Коллекции комнат и карты
     public char[,] map;
     public RealRoom currentRoom;
-    public List<MiniRoom> roomsMini = new List<MiniRoom>();
-    public List<RealRoom> roomsReal = new List<RealRoom>();
+    public List<MiniRoom> roomsMini = new();
+    public List<RealRoom> roomsReal = new();
+    public List<Chest> roomsChests = new();
 
 
     //Заполняю/удаляю, если должна быть дверь
@@ -506,24 +507,34 @@ public class World
     }
 
     //Создание сундука в комнате
-    public void RoomAppendChest(RealRoom room)
-    { 
+    public void RoomAppendChest(List<RealRoom> roomsReal)
+    {
         Random random = new Random();
-        int ChanceChest = random.Next(1, 6);
-        if(ChanceChest == 1 || ChanceChest == 4 || ChanceChest == 2)
+        int chestCount = random.Next(4, 7); 
+        while(roomsChests.Count != chestCount)
         {
-            Chests chest = new Chests();
-            chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
-
-            //Проверка на наличие чего-либо
-            while (DefiningArea(chest.coordinates, room) != null)
+            int ChanceChest = random.Next(0, roomsReal.Count);
+            foreach (RealRoom room in roomsReal)
             {
-                chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
-            }
+                if (room.number == ChanceChest && room.chest == null)
+                {
+                    Chest chest = new Chest();
+                    chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
 
-            room.map[chest.coordinates[1], chest.coordinates[0]] = chest.designation;
-            room.chest = chest; 
+                    //Проверка на наличие чего-либо
+                    while (DefiningArea(chest.coordinates, room) != null)
+                    {
+                        chest.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
+                    }
+
+                    room.map[chest.coordinates[1], chest.coordinates[0]] = chest.designation;
+                    room.chest = chest;
+                    roomsChests.Add(chest);
+                }
+            }
         }
+
+
     }
 
     //Заполнение коллекции комнат
@@ -536,30 +547,32 @@ public class World
         foreach(MiniRoom miniRoom in roomsMini_)
         {
             RealRoom room = CreateRoomReal(miniRoom.number, miniRoom, roomsMini_);
-            RoomAppendChest(room);
+
             roomsReal.Add(room);
         }
-        
+        RoomAppendChest(roomsReal);
+
         return roomsReal;
     }
 
 
     //Проверка объекта в координатах(изучение области) куда надо пойти
-    public Object DefiningArea(int[] coordinates_move, RealRoom room)      
+    public Object? DefiningArea(int[] coordinates_move, RealRoom room)      
    {
         if (hero.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
         {
-            return hero;                 //Возыращает предмет на указанных координатах
+            return hero;                 //Возыращает героя
         }
 
-        foreach (Items item in room.items_list)
+        if(room.chest != null)
         {
-            if (item.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
-              {                       
-                  return item;                 //Возыращает предмет на указанных координатах
-              }
-            
+            if (room.chest.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
+            {
+                return room.chest;                 //Возыращает героя
+            }
         }
+
+
 
         foreach (Monsters monster in room.monsters_list)
         {
@@ -586,7 +599,7 @@ public class World
             {
                 return door;                 //Возыращает монстра на указанных координатах
             }
-
+            
         }
         return null;
 
