@@ -307,10 +307,10 @@ namespace Rogulike_way
                 Console.CursorVisible = false;
                 Rendering(Hero, Monster);
                 Console.SetCursorPosition(0, 0);
-               // if (Keys != '3')
-               // {
-                 //   PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
-               // }
+                if (Keys != '3')
+                {
+                    PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
+                }
 
                 if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                 {

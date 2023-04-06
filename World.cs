@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 
 public class Chest{
-    public Items item;
+    public Items? item;
     public int[] coordinates = {100, 100};
     public char designation = World.charChest;
 }
@@ -49,24 +49,9 @@ public class RealRoom
     public List<Monsters> monsters_list = new();  //Пустая коллекция монстров
     public Chest chest;          //Пустая коллекция сундуков с объектами
 
-    public RealRoom()
-    {
-        number = 1;
-    }
     public RealRoom(int number_)
     {
         number = number_;
-    }
-
-    public RealRoom(char[,] map_)
-    {
-        map = map_;
-    }
-
-    public RealRoom(int number_, char[,] map_)
-    {
-        number = number_;
-        map = map_;
     }
 }
 
@@ -127,11 +112,13 @@ public class World
     public Hero hero = new Hero();
 
     //Коллекции комнат и карты
-    public char[,] map;
-    public RealRoom currentRoom;
+    public char[,]? map;
+    public RealRoom? currentRoom;
     public List<MiniRoom> roomsMini = new();
     public List<RealRoom> roomsReal = new();
     public List<Chest> roomsChests = new();
+
+    public List<Items> Items = new();
 
 
     //Заполняю/удаляю, если должна быть дверь

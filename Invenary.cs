@@ -413,7 +413,7 @@ public class Inventory
                 case 'q' or 'й':
                     Console.Clear();
                     return ;
-                    break;
+
                 default: break;
             }
         }
@@ -504,7 +504,7 @@ public class Inventory
                 case 'q' or 'й':
                     Console.Clear();
                     return;
-                    break;
+
                 default: break;
             }
         }

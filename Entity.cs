@@ -1,4 +1,7 @@
-﻿public class Hero
+﻿using System.Reflection;
+using System.Threading;
+
+public class Hero
 {
     public string? name;
     public int[] coordinates = { 0, 0 };
@@ -12,19 +15,50 @@
     public int experience = 0;
     public double boost = 1.0;
 
-    public void CheckAndLevelUp()
+
+    public void MonsterLevelUp(Monsters monster, int nowLevel)
+    {
+        for(int i = nowLevel; i>0; i--)
+        {
+            monster.level++;
+
+            monster.boost = 1.0 + 0.1 * (monster.level - 1);
+            monster.StaticHealht *= monster.boost;
+            monster.NowHealht = monster.StaticHealht;
+            monster.damage *= monster.boost;
+
+        }
+
+
+    }
+
+    public void CheckAndLevelUp(World world)
     // В том числе восполняет хп и стамину
     {
         if (experience >= 100)
         {
-            this.level++;
-            this.boost += 0.1;
-            this.StaticHealht *= this.boost;
-            this.NowHealht = HealHp((int)this.StaticHealht/2);
-            this.StaticStamina *= this.boost;
-            this.NowStamina = HealSp((int)this.StaticStamina / 2);
-            this.damage *= this.boost;
-            this.experience = 0;
+            level++;
+            boost += 0.1;
+            StaticHealht *= boost;
+            NowHealht = HealHp((int)StaticHealht /2);
+            StaticStamina *= boost;
+            NowStamina = HealSp((int)StaticStamina / 2);
+            damage *= boost;
+            experience = 0;
+
+            //Проверяю все комнаты и увеличиваю силу монстров в каждой
+            foreach(RealRoom room in world.roomsReal)
+            {
+                foreach (Monsters monster in room.monsters_list)
+                {
+                    if(world.hero.level - monster.level >= 1)
+                    {
+                        MonsterLevelUp(monster, world.hero.level - monster.level);
+                    }
+
+                }
+            }
+            
         }
     }
 
@@ -93,11 +127,12 @@ public class Monsters
     public double StaticHealht;
     public double NowHealht;
     public double damage;
-    public int level;
+    public int level = 1;
     public int experience; // При смерти моба можно передавать его опыт герою
     public double boost;
 
     public Monsters() { }
+
 
     public static void CreateMonsters(RealRoom room, Hero hero)
     {
@@ -128,27 +163,27 @@ public class Monsters
             {
                 case 1:
                     {
-                        monster = new Ghost(hero.level);
+                        monster = new Ghost();
                         break;
                     }
                 case 2:
                     {
-                        monster = new Ork(hero.level);
+                        monster = new Ork();
                         break;
                     }
                 case 3:
                     {
-                        monster = new Rat(hero.level);
+                        monster = new Rat();
                         break;
                     }
                 case 4:
                     {
-                        monster = new Knight(hero.level);
+                        monster = new Knight();
                         break;
                     }
                 case 5:
                     {
-                        monster = new Skeleton(hero.level);
+                        monster = new Skeleton();
                         break;
                     }
 
@@ -163,38 +198,36 @@ public class Monsters
 }
 public class Ork : Monsters
 {
-    public Ork(int level)
+    public Ork()
     {
         designation = 'O';
         name = "Орк";
         StaticHealht = 50;
         damage = 20;
-        experience = 30;
-        this.level = level;
-
+        experience = 40;
         if (level > 0)
         {
-            boost = 1.0 + 0.1 * (this.level - 1);
+            boost = 1.0 + 0.1 * (level - 1);
             StaticHealht *= boost;
             NowHealht = StaticHealht;
             damage *= boost;
         };
+
     }
 }
 public class Ghost : Monsters
 {
-    public Ghost(int level)
+    public Ghost()
     {
         designation = 'G';
         name = "Призрак";
         StaticHealht = 35;
         damage = 40;
-        experience = 50;
-        this.level = level;
+        experience = 45;
 
         if (level > 0)
         {
-            boost = 1.0 + 0.1 * (this.level - 1);
+            boost = 1.0 + 0.1 * (level - 1);
             StaticHealht *= boost;
             NowHealht = StaticHealht;
             damage *= boost;
@@ -203,18 +236,17 @@ public class Ghost : Monsters
 }
 public class Knight : Monsters
 {
-    public Knight(int level)
+    public Knight()
     {
         designation = 'K';
         name = "Рыцарь";
         StaticHealht = 100;
         damage = 30;
-        experience = 50;
-        this.level = level;
+        experience = 60;
 
         if (level > 0)
         {
-            boost = 1.0 + 0.1 * (this.level - 1);
+            boost = 1.0 + 0.1 * (level - 1);
             StaticHealht *= boost;
             NowHealht = StaticHealht;
             damage *= boost;
@@ -223,18 +255,18 @@ public class Knight : Monsters
 }
 public class Skeleton : Monsters
 {
-    public Skeleton(int level)
+    public Skeleton()
     {
         designation = 'S';
         name = "Скелет";
         StaticHealht = 50;
         damage = 30;
-        experience = 40;
-        this.level = level;
+        experience = 35;
+
 
         if (level > 0)
         {
-            boost = 1.0 + 0.1 * (this.level - 1);
+            boost = 1.0 + 0.1 * (level - 1);
             StaticHealht *= boost;
             NowHealht = StaticHealht;
             damage *= boost;
@@ -243,18 +275,18 @@ public class Skeleton : Monsters
 }
 public class Rat : Monsters
 {
-    public Rat(int level)
+    public Rat()
     {
         designation = 'R';
         name = "Крыса";
         StaticHealht = 10;
         damage = 15;
         experience = 15;
-        this.level = level;
+
 
         if (level > 0)
         {
-            boost = 1.0 + 0.1 * (this.level - 1);
+            boost = 1.0 + 0.1 * (level - 1);
             StaticHealht *= boost;
             NowHealht = StaticHealht;
             damage *= boost;

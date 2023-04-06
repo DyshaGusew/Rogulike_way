@@ -30,7 +30,7 @@ public class Weapon : Items
     public int stamina;
     public int id;
 
-    public Weapon(int x, int y) : base(x, y) {}
+    public Weapon() : base() {}
 
     // левел ап оружия
     public void LevelUp()
@@ -42,7 +42,7 @@ public class Weapon : Items
 
 public class WoodSword : Weapon
 {
-    public WoodSword(int x, int y) : base(x, y) 
+    public WoodSword() : base() 
     {
         name = "Деревянный меч";
         level = 1;
@@ -53,7 +53,7 @@ public class WoodSword : Weapon
 
 public class StoneSword : Weapon
 {
-    public StoneSword(int x, int y) : base(x, y)
+    public StoneSword() : base()
     {
         name = "Каменный меч";
         level = 2;
@@ -64,7 +64,7 @@ public class StoneSword : Weapon
 
 public class SteelSword : Weapon
 {
-    public SteelSword(int x, int y) : base(x, y)
+    public SteelSword() : base()
     {
         name = "Стальной меч";
         level = 3;
@@ -75,7 +75,7 @@ public class SteelSword : Weapon
 
 public class SilverSword : Weapon
 {
-    public SilverSword(int x, int y) : base(x, y)
+    public SilverSword() : base()
     {
         name = "Серебряный меч";
         level = 4;
@@ -86,7 +86,7 @@ public class SilverSword : Weapon
 
 public class JadeSword : Weapon
 {
-    public JadeSword(int x, int y) : base(x, y)
+    public JadeSword() : base()
     {
         name = "Нефритовый меч";
         level = 5;
@@ -97,7 +97,7 @@ public class JadeSword : Weapon
 
 public class RookieStick : Weapon
 {
-    public RookieStick(int x, int y) : base(x, y)
+    public RookieStick() : base()
     {
         name = "Посох новичка";
         level = 1;
@@ -108,7 +108,7 @@ public class RookieStick : Weapon
 
 public class WarriorStick : Weapon
 {
-    public WarriorStick(int x, int y) : base(x, y)
+    public WarriorStick() : base()
     {
         name = "Посох воина";
         level = 2;
@@ -119,7 +119,7 @@ public class WarriorStick : Weapon
 
 public class EnlightenedStick : Weapon
 {
-    public EnlightenedStick(int x, int y) : base(x, y)
+    public EnlightenedStick() : base()
     {
         name = "Посох просвещенного";
         level = 3;
@@ -130,7 +130,7 @@ public class EnlightenedStick : Weapon
 
 public class MasterStick : Weapon
 {
-    public MasterStick(int x, int y) : base(x, y)
+    public MasterStick() : base()
     {
         name = "Посох магистра";
         level = 4;
@@ -141,7 +141,7 @@ public class MasterStick : Weapon
 
 public class GreatStick : Weapon
 {
-    public GreatStick(int x, int y) : base(x, y)
+    public GreatStick() : base()
     {
         name = "Посох Великого Мага";
         level = 5;
@@ -152,7 +152,7 @@ public class GreatStick : Weapon
 
 public class SmallKnives : Weapon
 {
-    public SmallKnives(int x, int y) : base(x, y)
+    public SmallKnives() : base()
     {
         name = "Маленькие клинки";
         level = 1;
@@ -163,7 +163,7 @@ public class SmallKnives : Weapon
 
 public class SteelKnives : Weapon
 {
-    public SteelKnives(int x, int y) : base(x, y)
+    public SteelKnives() : base()
     {
         name = "Стальные кинжалы";
         level = 2;
@@ -174,7 +174,7 @@ public class SteelKnives : Weapon
 
 public class SilverKnives : Weapon
 {
-    public SilverKnives(int x, int y) : base(x, y)
+    public SilverKnives() : base()
     {
         name = "Серебряные кинжалы";
         level = 3;
@@ -185,7 +185,7 @@ public class SilverKnives : Weapon
 
 public class SteelSwords : Weapon
 {
-    public SteelSwords(int x, int y) : base(x, y)
+    public SteelSwords() : base()
     {
         name = "Стальные одноручные мечи";
         level = 4;
@@ -196,7 +196,7 @@ public class SteelSwords : Weapon
 
 public class SilverSwords : Weapon
 {
-    public SilverSwords(int x, int y) : base(x, y)
+    public SilverSwords() : base()
     {
         name = "Серебряные одноручные мечи";
         level = 5;
@@ -212,7 +212,7 @@ public class Armor : Items
     public int armor;
     public int id;
 
-    public Armor(int x, int y) : base(x, y) {}
+    public Armor() : base() {}
 
     // левел ап брони
     public void LevelUp()
@@ -224,7 +224,7 @@ public class Armor : Items
 
 public class LeatherArmor : Armor
 {
-    public LeatherArmor(int x, int y) : base(x, y)
+    public LeatherArmor() : base()
     {
         name = "Кожаный плащ";
         level = 1;
@@ -234,7 +234,7 @@ public class LeatherArmor : Armor
 
 public class MailArmor : Armor
 {
-    public MailArmor(int x, int y) : base(x, y)
+    public MailArmor() : base()
     {
         name = "Кольчуга воина";
         level = 2;
@@ -243,7 +243,7 @@ public class MailArmor : Armor
 }
 public class KnightArmor : Armor
 {
-    public KnightArmor(int x, int y) : base(x, y)
+    public KnightArmor() : base()
     {
         name = "Латы рыцаря";
         level = 3;
@@ -253,7 +253,7 @@ public class KnightArmor : Armor
 
 public class JadeArmor : Armor
 {
-    public JadeArmor(int x, int y) : base(x, y)
+    public JadeArmor() : base()
     {
         name = "Нефритовый панцирь";
         level = 4;
@@ -263,7 +263,7 @@ public class JadeArmor : Armor
 
 public class MagicArmor : Armor
 {
-    public MagicArmor(int x, int y) : base(x, y)
+    public MagicArmor() : base()
     {
         name = "Доспехи мага";
         level = 5;
@@ -275,7 +275,7 @@ public class MagicArmor : Armor
 public class HealingPotion: Items {
     public int heal;
 
-    public HealingPotion(int x, int y, int _heal) : base(x, y)
+    public HealingPotion(int _heal) : base()
     {
         heal = _heal;
     }
@@ -286,7 +286,7 @@ public class StaminaPotion : Items
 {
     public int stamina;
 
-    public StaminaPotion(int x, int y, int _stamina) : base(x, y)
+    public StaminaPotion(int _stamina) : base()
     {
         stamina = _stamina;
     }

@@ -17,19 +17,19 @@ while (true)
     switch (keyInfo.KeyChar)
     {
         case 'w' or 'ц':
-            MovePlayer.Move("Up", ref world.currentRoom, world);
+            MovePlayer.Move("Up", ref world.currentRoom, ref world);
             break;
 
         case 's' or 'ы':
-            MovePlayer.Move("Down", ref world.currentRoom, world);
+            MovePlayer.Move("Down", ref world.currentRoom, ref world);
             break;
 
         case 'd' or 'в':
-            MovePlayer.Move("Right", ref world.currentRoom, world);
+            MovePlayer.Move("Right", ref world.currentRoom, ref world);
             break;
 
         case 'a' or 'ф':
-            MovePlayer.Move("Left", ref world.currentRoom, world);
+            MovePlayer.Move("Left", ref world.currentRoom, ref world);
             break;
 
         case 'e' or 'у':
@@ -40,6 +40,7 @@ while (true)
 
         case 'q' or 'й':
             menu.Show();
+            world = new();
             world = StartGame.CreateWorld(menu);
             break;
     }
@@ -266,13 +267,13 @@ class DraftGame
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
 class MovePlayer
 {
-    static public void Move(string trend, ref RealRoom roomCurrent, World world)
+    static public void Move(string trend, ref RealRoom roomCurrent, ref World world)
     {
         if (trend == "Left")
         {
             //Указываю координаты смещения и сохраняю объект, который в них находится
             int[] moveCoordinates = { world.hero.coordinates[0] - 1, world.hero.coordinates[1] };   //Указываю каково смещение
-            Object obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
+            Object? obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
 
             //Проверка на наличее в перемещаемой координате чего-либо
             if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
@@ -287,7 +288,7 @@ class MovePlayer
 
             else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
             {
-                ModsterDef((Monsters)obj, roomCurrent, world, trend);
+                ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
             //Если простанство пустое
@@ -302,7 +303,7 @@ class MovePlayer
         if (trend == "Right")
         {
             int[] move_coordinates = { world.hero.coordinates[0] + 1, world.hero.coordinates[1] };
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
 
             if (obj is Borders)
             {
@@ -317,7 +318,7 @@ class MovePlayer
 
             else if (obj is Monsters)
             {
-                ModsterDef((Monsters)obj, roomCurrent, world, trend);
+                ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
             else
@@ -330,7 +331,7 @@ class MovePlayer
         if (trend == "Up")
         {
             int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1] - 1 };
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
 
             if (obj is Borders)
                 return;
@@ -343,7 +344,7 @@ class MovePlayer
 
             else if (obj is Monsters)
             {
-                ModsterDef((Monsters)obj, roomCurrent, world, trend);
+                ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
             else
@@ -355,7 +356,7 @@ class MovePlayer
         if (trend == "Down")
         {
             int[] move_coordinates = { world.hero.coordinates[0], world.hero.coordinates[1] + 1 };
-            Object obj = world.DefiningArea(move_coordinates, roomCurrent);
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
 
             if (obj is Borders)
             {
@@ -369,7 +370,7 @@ class MovePlayer
 
             else if (obj is Monsters)
             {
-                ModsterDef((Monsters)obj, roomCurrent, world, trend);
+                ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
             else
@@ -380,7 +381,7 @@ class MovePlayer
     }
 
     //При обнаружении монстра
-    static public void ModsterDef(Monsters monster, RealRoom roomCurrent, World world, string move)
+    static public void ModsterDef(Monsters monster, RealRoom roomCurrent, ref World world, string move)
     {
         roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
         DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
@@ -410,7 +411,7 @@ class MovePlayer
             roomCurrent.monsters_list.Remove(monster);
             world.hero.experience += monster.experience;
             //Проверка уровня
-            world.hero.CheckAndLevelUp();
+            world.hero.CheckAndLevelUp(world);
             DraftGame.DraftPlane(roomCurrent, world);
         }
         else
@@ -427,9 +428,10 @@ class MovePlayer
                 Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
             }
            
-            Thread.Sleep(2000);
+            Thread.Sleep(2500);
             Menu menu = new();
             menu.Show();
+            world = new World();
             world = StartGame.CreateWorld(menu);
         }
 
