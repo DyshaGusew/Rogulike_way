@@ -92,16 +92,18 @@ public class Inventory
     public string ammunition = "";
     public bool isHeroChosen = false;
     public Inventory() {}
+    //List<Items> bag = new List<Items>();    
+    //List<Items> hand = new List<Items>();
+    var salmons = new List<string>();
+    salmons.Add("chinook");
+    salmons.Add("coho");
+    salmons.Add("pink");
+    salmons.Add("sockeye");
 
-    //Пустая функция для переданных предметов
-    public void AcceptItem(Items item)
-    {
-        Console.Clear();
-        Console.WriteLine($"Предмет {item.name} в инвентаре");
-        System.Threading.Thread.Sleep(1500);
-    }
 
-    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
+    
+
+public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
 
         // Console.CursorVisible = false;
@@ -134,6 +136,8 @@ public class Inventory
         Console.CursorVisible = false;
         Console.SetCursorPosition(56, 33);
         Console.WriteLine("W - Вверх, S - Вниз, A - Влево, D - Вправо, E - Выбрать, Q - Выйти");
+        //Console.WriteLine(Person[0]);
+
     }
 
 
@@ -142,6 +146,8 @@ public class Inventory
     {
 
         Console.CursorVisible = false;
+
+        
         Cell Cell1 = new Cell("Посох", true);
         Cell Cell2 = new Cell("Оружие", false);
         Cell Cell3 = new Cell("Броня", false);
@@ -151,7 +157,9 @@ public class Inventory
         Cell Cell7 = new Cell("Пусто", false);
         Cell Cell8 = new Cell("Пусто", false);
         Cell Cell9 = new Cell("Пусто", false);
+        
 
+        
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
 
