@@ -115,11 +115,7 @@ public class Inventory
         Cell_8.DrawCell(62, 19);
         Cell_9.DrawCell(94, 19);
 
-        Console.SetCursorPosition(0, 5);
-        //Console.ForegroundColor = ConsoleColor.Blue;
-        {
-            Console.Write($"Тип: {1}\nНазвание: {1}\nУрон: {1}\nЗащита: {1}\nВостановление маны: {1}\nВостановление здоровья: {1}\nТраты стамины: {1}");
-        }
+        
     }
 
     public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3)
@@ -166,6 +162,8 @@ public class Inventory
             DrawButtons(Cell1, Cell2, Cell3, Cell4, Cell5, Cell6, Cell7, Cell8, Cell9);
             WriteTip();
 
+
+
             keyInfo = Console.ReadKey(true);
             switch (keyInfo.KeyChar)
             {
@@ -174,6 +172,7 @@ public class Inventory
                     {
                         Cell1.isSelected = false;
                         Cell7.isSelected = true;
+
                     }
                     else if (Cell4.isSelected)
                     {
@@ -358,7 +357,7 @@ public class Inventory
                         Cell8.isSelected = true;
                     }
                     break;
-                
+
 
                 case 'e' or 'у':
                     if (Cell1.isSelected)
@@ -417,12 +416,18 @@ public class Inventory
                     }
 
                     break;
-               
+
                 case 'q' or 'й':
                     Console.Clear();
                     return ;
 
                 default: break;
+
+            }
+            if (Cell1.isSelected == true)
+            {
+                Console.SetCursorPosition(0, 5);
+                Console.Write($"Тип: {1}\nНазвание: {1}\nУрон: {1}\nЗащита: {1}\nВостановление маны: {1}\nВостановление здоровья: {1}\nТраты стамины: {1}");
             }
         }
     }
