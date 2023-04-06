@@ -136,7 +136,7 @@ public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell
         Console.CursorVisible = false;
         Console.SetCursorPosition(56, 33);
         Console.WriteLine("W - Вверх, S - Вниз, A - Влево, D - Вправо, E - Выбрать, Q - Выйти");
-        //Console.WriteLine(Person[0]);
+        //Console.WriteLine(Person(0));
 
     }
 
