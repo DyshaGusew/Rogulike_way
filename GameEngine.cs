@@ -132,6 +132,7 @@ class StartGame
         {
             world.hero = new Prowler();
         }
+        world.hero.name = menu.hero_name;
 
         //Выбор начальной комнаты для отрисовки из мира
         Random rand = new Random();

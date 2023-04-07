@@ -93,6 +93,7 @@ public class Menu
 {
 
     public string hero_class = "";
+    public string hero_name = "";
     public bool isHeroChosen = false;
     public Menu() {}
 
@@ -264,6 +265,7 @@ public class Menu
                         {
                             this.hero_class = "prowler";
                         }
+                        NameForChar();
                         continue_cycle = false;
                         this.isHeroChosen = true;
                     }
@@ -271,5 +273,29 @@ public class Menu
                 default: break;
             }
         }
+    }
+
+    public void NameForChar()
+    {
+        Console.Clear();
+        // Отрисовка интерфейса ввода
+        Console.SetCursorPosition(55, 10);
+        Console.WriteLine("Введите имя персонажа");
+        for (int j = 0; j < 2; j++)
+        {
+            Console.SetCursorPosition(55, 12 + 2*j);
+            for (int i = 0; i < 40; i++)
+            {
+                Console.Write("─");
+            }
+        }
+        Console.SetCursorPosition(55, 17);
+        Console.WriteLine("ENTER - Продолжить");
+
+        // Метод ввода
+        Console.CursorVisible = true;
+        Console.SetCursorPosition(56, 13);
+        this.hero_name = Console.ReadLine();
+        Console.CursorVisible = false;
     }
 }
