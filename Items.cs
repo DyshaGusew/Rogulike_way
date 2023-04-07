@@ -24,28 +24,28 @@ public class Items
     static readonly Items SteelKnives = new Weapon("Стальные кинжалы", 2, 17, 9);
     static readonly Items MailArmor = new Armor("Кольчуга воина", 2, 20);
     static readonly Items Hil2 = new HealingPotion(2, 35);
-    static readonly Items Stam2 = new StaminaPotion(1, 30);
+    static readonly Items Stam2 = new StaminaPotion(2, 30);
 
     static readonly Items SteelSword = new Weapon("Стальной меч", 3, 20, 10);
     static readonly Items EnlightenedStick = new Weapon("Посох просвещенного", 3, 25, 13);
     static readonly Items SilverKnives = new Weapon("Серебряные кинжалы", 3, 22, 11);
     static readonly Items KnightArmor = new Armor("Латы рыцаря", 3, 30);
     static readonly Items Hil3 = new HealingPotion(3, 35);
-    static readonly Items Stam3 = new StaminaPotion(1, 35);
+    static readonly Items Stam3 = new StaminaPotion(3, 35);
 
     static readonly Items SilverSword = new Weapon("Серебрянный меч", 4, 25, 13);
     static readonly Items MasterStick = new Weapon("Посох магистра", 4, 30, 15);
     static readonly Items SteelSwords = new Weapon("Стальные одноручные мечи", 4, 27, 14);
     static readonly Items JadeArmor = new Armor("Нефритовый панцирь", 4, 40);
     static readonly Items Hil4 = new HealingPotion(4, 40);
-    static readonly Items Stam4 = new StaminaPotion(1, 40);
+    static readonly Items Stam4 = new StaminaPotion(4, 40);
 
     static readonly Items JadeSword = new Weapon("Нефритовый меч", 5, 30, 15);
     static readonly Items GreatStick = new Weapon("Посох Великого Мага", 5, 35, 18);
     static readonly Items SilverSwords = new Weapon("Серебряные одноручные мечи", 5, 32, 16);
     static readonly Items MagicArmor = new Armor("Доспехи мага", 5, 50);
     static readonly Items Hil5  = new HealingPotion(5, 50);
-    static readonly Items Stam5 = new StaminaPotion(1, 45);
+    static readonly Items Stam5 = new StaminaPotion(5, 45);
 
 
 
@@ -62,27 +62,27 @@ public class Items
         List<Items> itemsArr = new List<Items>();
         if (level == 1)
         {
-            itemsArr.Add(WoodSword); itemsArr.Add(RookieStick); itemsArr.Add(SmallKnives); itemsArr.Add(LeatherArmor); itemsArr.Add(Hil1);
+            itemsArr.Add(WoodSword); itemsArr.Add(RookieStick); itemsArr.Add(SmallKnives); itemsArr.Add(LeatherArmor); itemsArr.Add(Hil1); itemsArr.Add(Stam1);
         }
     
         else if (level == 2)
         {
-            itemsArr.Add(StounSword); itemsArr.Add(WarriorStick); itemsArr.Add(SteelKnives); itemsArr.Add(MailArmor); itemsArr.Add(Hil2);
+            itemsArr.Add(StounSword); itemsArr.Add(WarriorStick); itemsArr.Add(SteelKnives); itemsArr.Add(MailArmor); itemsArr.Add(Hil2); itemsArr.Add(Stam2);
         }
          
         else if (level == 3)
         {
-            itemsArr.Add(SteelSword); itemsArr.Add(EnlightenedStick); itemsArr.Add(SilverKnives); itemsArr.Add(KnightArmor); itemsArr.Add(Hil3);
+            itemsArr.Add(SteelSword); itemsArr.Add(EnlightenedStick); itemsArr.Add(SilverKnives); itemsArr.Add(KnightArmor); itemsArr.Add(Hil3); itemsArr.Add(Stam3);
         } 
        
         else if (level == 4)
         {
-            itemsArr.Add(SilverSword); itemsArr.Add(MasterStick); itemsArr.Add(SteelSwords); itemsArr.Add(JadeArmor); itemsArr.Add(Hil4);
+            itemsArr.Add(SilverSword); itemsArr.Add(MasterStick); itemsArr.Add(SteelSwords); itemsArr.Add(JadeArmor); itemsArr.Add(Hil4); itemsArr.Add(Stam4);
         }
 
         else if (level == 5)
         {
-            itemsArr.Add(JadeSword); itemsArr.Add(GreatStick); itemsArr.Add(SilverSwords); itemsArr.Add(MagicArmor); itemsArr.Add(Hil5);
+            itemsArr.Add(JadeSword); itemsArr.Add(GreatStick); itemsArr.Add(SilverSwords); itemsArr.Add(MagicArmor); itemsArr.Add(Hil5); itemsArr.Add(Stam5);
         }
         
         return itemsArr;

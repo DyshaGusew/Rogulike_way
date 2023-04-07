@@ -19,48 +19,47 @@ public class Hero
     public Inventory inventory = new Inventory();
 
 
-    public void MonsterLevelUp(Monsters monster, int nowLevel)
+    public void MonsterLevelUp(Monsters monster_)
     {
-        for(int i = nowLevel; i>0; i--)
-        {
-            monster.level++;
+        monster_.level++;
+        monster_.boost = 1.0 + 0.2 * (monster_.level - 1);
+        monster_.StaticHealht *= monster_.boost;
+        monster_.NowHealht = monster_.StaticHealht;
+        monster_.damage *= monster_.boost;
 
-            monster.boost = 1.0 + 0.1 * (monster.level - 1);
-            monster.StaticHealht *= monster.boost;
-            monster.NowHealht = monster.StaticHealht;
-            monster.damage *= monster.boost;
-
-        }
     }
 
     public void CheckAndLevelUp(World world)
     // В том числе восполняет хп и стамину
     {
-        if (experience >= 100)
+        if (world.hero.experience >= 100)
         {
-            level++;
-            boost += 0.1;
-            StaticHealht *= boost;
-            NowHealht = HealHp((int)StaticHealht /2);
-            StaticStamina *= boost;
-            NowStamina = HealSp((int)StaticStamina / 2);
-            damage *= boost;
-            experience = 0;
+            world.hero.level++;
+            world.hero.boost += 0.1;
+            world.hero.StaticHealht *= boost;
+            world.hero.NowHealht = HealHp((int)StaticHealht /2);
+            world.hero.StaticStamina *= boost;
+            world.hero.NowStamina = HealSp((int)StaticStamina / 2);
+            world.hero.damage *= boost;
+            world.hero.experience = 0;
 
             //Проверяю все комнаты и увеличиваю силу монстров в каждой
             foreach (RealRoom room in world.roomsReal)
             {
                 foreach (Monsters monster in room.monsters_list)
                 {
-                    if(world.hero.level - monster.level == 1)
-                    {
-                        MonsterLevelUp(monster, 1);
+                        MonsterLevelUp(monster);
                         world.AppItemMonster(world.hero, monster);
-                    }
-
                 }
+
+                if(room.chest != null)
+                {
+                    world.AppChest(world.hero, room);
+                }
+                
             }
-            
+
+
         }
     }
 
