@@ -5,6 +5,7 @@ public class Hero
 {
     public int countDeadMonsters = 0;
     public string? name;
+    public string ClassName;
     public int[] coordinates = { 0, 0 };
     public double StaticHealht = 100;
     public double NowHealht = 100;
@@ -82,7 +83,7 @@ public class Wizard : Hero
 {
     public Wizard()
     {
-        name = "Маг";
+        ClassName = "Маг";
         StaticHealht = 50;
         NowHealht = 50;
         StaticStamina = 80;
@@ -96,7 +97,7 @@ public class Barbarian : Hero
 {
     public Barbarian()
     {
-        name = "Варвар";
+        ClassName = "Варвар";
         StaticHealht = 110;
         NowHealht = 110;
         StaticStamina = 45;
@@ -110,7 +111,7 @@ public class Prowler : Hero
 {
     public Prowler()
     {
-        name = "Ассасин";
+        ClassName = "Ассасин";
         StaticHealht = 60;
         NowHealht = 60;
         StaticStamina = 60;

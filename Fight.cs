@@ -45,108 +45,33 @@ namespace Rogulike_way
             string HeroST = Hero.NowStamina.ToString("F1");
             string HeroAT = Hero.damage.ToString("F1");
             Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
-            if (Hero.name == "Маг")
+            FileStream fileStream = new FileStream("Knight.txt", FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
+            int i = 0; ;
+            // считываем строки из файла
+            string line;
+            // закрываем StreamReader и файловый поток
+            streamReader.Close();
+            fileStream.Close();
+            if (Hero.ClassName == "Маг")
             {
-                PositionPrint(0, 5, "" +
-                    "                                                            \r\n" +
-                    "            @@@@@++++++,                                    \r\n" +
-                    "              ?@@@@@@@@@@@@@%+                              \r\n" +
-                    "                   ?@@@@@@@@@@@@@#+                         \r\n" +
-                    "               .%@@@@@@@@@@@@@@@@@@@@,                      \r\n" +
-                    "              @@@@@@@@@@@@@@@@@@@@@@@@+    ???:             \r\n" +
-                    "                     @   ?@@   ?         +@@@@@?            \r\n" +
-                    "                     @@@@@@@@@@S         +@@@@@%            \r\n" +
-                    "                      +@@@@@@S+,          ++++,             \r\n" +
-                    "                       .@@@@.             ?##+             \r\n" +
-                    "                   ,@@@@@@@@@@@?         @@@@@             \r\n" +
-                    "                 ,@@@@@@@@@@@@@@S.        @@@@              \r\n" +
-                    "                .+@@@@@@@@@@@@@@@@+       @@@               \r\n" +
-                    "                ,@@@@@@@@@@@@@@@@@@,      @@%               \r\n" +
-                    "                S@@@@@@@@@@@@@@@@@@@?:    @@%               \r\n" +
-                    "                @@@@@@@@@@@@@@@@%.@@@@@@@@@@                \r\n" +
-                    "                @@@@@@@@@@@@@@@@%         @+                \r\n" +
-                    "               ,@@@@@@@@@@@@@@@@@         @+               \r\n" +
-                    "               +@@@@@@@@@@@@@@@@@?        @+               \r\n" +
-                    "              *@@@@@@@@@@@@@@@@@%         @+                \r\n" +
-                    "             ?@@@@@@@@@@@@@@@@@@@         @%                \r\n" +
-                    "             @@@@@@@@@@@@@@@@@@@@#        @@                \r\n" +
-                    "            @@@@@@@@@@@@@@@@@@@@@@+       @@                \r\n" +
-                    "           +@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
-                    "           @@@@@@@@@@@@@@@@@@@@@@@@       @@                \r\n" +
-                    "          @@@@@@@@@@@@@@@@@@@@@@@@@%      @@                \r\n" +
-                    "         @@@@@S@@@@@@@@@@@?@@@@@@@@@      @@                \r\n" +
-                    "         @@@@+  @@@   @@@  @@@@+ @@@     +@+                \r\n" +
-                    "                 S@@   :%  +@    +%%                        \r\n");
+                fileStream = new FileStream("Wizard.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
             }
-            if(Hero.name == "Варвар")
+            if(Hero.ClassName == "Варвар")
             {
-                PositionPrint(0, 5, "" +
-                    "                    +@             +@+                      \r\n" +
-                    "                   @*                S@                     \r\n" +
-                    "                   @+    ?????+       +@                    \r\n" +
-                    "                   ?@#?%        @@+  @%                     \r\n" +
-                    "                      ?%.@+..++@.@S%                        \r\n" +
-                    "                      @%        %@,                         \r\n" +
-                    "                       @@      @%                           \r\n" +
-                    "                         %S@@@                              \r\n" +
-                    "                       ?@@@@@@@@@?                        \r\n" +
-                    "                 ##@@@@@@@@@@@@@@@@@@@@#                +@@@\r\n" +
-                    "@@             +@@@@@@@@@@@@@@@@@@@@@@@@@              ,@@@#\r\n" +
-                    "@@%           %@@@@@@@@@@@@@@@@@@@@@@@@@@@            ?@@@? \r\n" +
-                    "@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@@@@           #@@@@  \r\n" +
-                    "@@@@+         +@@@@@@ @@@@@@@@@@@@@%%@@@@%          %@@@%   \r\n" +
-                    "@@@@@          @@@@@: @@@@@@@@@@@@@% ?@@@@@@%     %@@@@?    \r\n" +
-                    " @@@@@      #@@@@@@+  @@@@@@@@@@@@@%  @@@@@@@@   ?@@@@@     \r\n" +
-                    " ?@@@@@    *@@@@@@@   ?@@@@@@@@@@@@    @@@@@@@  @@@@@       \r\n" +
-                    "  @@@@@%  ?@@@@@@%    @@@@@@@@@@@@@%    %@@@@@ %@@@@,       \r\n" +
-                    "  +@@@@@%.@@@@@@+     ?@@@@@@@@@@@@%     +@@@@+@@@%         \r\n" +
-                    "    ?@@@@@@@@@#       @@@@@@@@@@@@@       S@@@@@+           \r\n" +
-                    "     @@@@@?:         @@@@@@@@@@@@@@S       %@@++            \r\n" +
-                    "       @@@@         @@@@@@+    @@@@@@      ?@              \r\n" +
-                    "          S@       @@@@@@+     @@@@@@@                    \r\n" +
-                    "                  @@@@@@+      +@@@@@@                     \r\n" +
-                    "                  @@@@@%         @@@@@                      \r\n" +
-                    "                  @@@@@*         @@@@@%                     \r\n" +
-                    "                 @@@@@@          @@@@@%                     \r\n" +
-                    "                 @@@@@+           @@@@%                     \r\n" +
-                    "                @@@@@@            @@@@@@                      \r\n" +
-                    "             ?@@@@@@@@+           @@@@@@@@");
-
+                fileStream = new FileStream("Barbarian.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
             }
-            if (Hero.name == "Ассасин")
+            if (Hero.ClassName == "Ассасин")
             {
-                PositionPrint(0, 5, "" +
-                    "                                                            \r\n" +
-                    "                          :******:                          \r\n" +
-                    "                        ?####@@####%                        \r\n" +
-                    "                      ,S####????####S,                      \r\n" +
-                    "                      S###%,    ,%###S                      \r\n" +
-                    "                     %@@S+        +S@@%                     \r\n" +
-                    "                    +###+          +###+                    \r\n" +
-                    "                   *####SSSSSSSSSSSS####*.                  \r\n" +
-                    "                ,%######@@@@@@@@@@@@######%,                \r\n" +
-                    "               *########@@@@@@@@@@@@########*               \r\n" +
-                    "              ?#####@@@@@@@@@@@@@@@@@@@@#####?              \r\n" +
-                    "             ,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,             \r\n" +
-                    "             ,#@@@@@####@@@@@@@@@@@@####@@@@@#,             \r\n" +
-                    "             *#@@@@#? ##@@@@@@@@@@@@##+?#@@@@#*             \r\n" +
-                    "            *##@@##?  ?#@@@@@@@@@@@@#?  ?##@@##*            \r\n" +
-                    "          :%###@@#:   ,#@@@@@@@@@@@@#    :#@@###%:          \r\n" +
-                    "   :?    +######%:     *#@@@@@@@@@@@*     :%######+    ?:   \r\n" +
-                    "    ?S%SS####%+        ,#@@@@@@@@@@#         +%####SS%S?    \r\n" +
-                    "     +#####%:           #@@@@@@@@@@#           :%#####+     \r\n" +
-                    "    ,S####*             #@@@####@@@#             +####S     \r\n" +
-                    "        ?S#?,          +#@@@#%%#@@@#+          ,?#S?        \r\n" +
-                    "          :S#%*       ,#@@@@?  ?@@@@#,       *%#S+          \r\n" +
-                    "             ,++*,    ,#@@@#    #@@@#,    ,*++,             \r\n" +
-                    "                      ,#@@@#    #@@@#,                      \r\n" +
-                    "                      *####S    %####*                      \r\n" +
-                    "                      %####+    +####%                      \r\n" +
-                    "                     :#####,    ,#####+                     \r\n" +
-                    "                     *####*      *####*                     \r\n" +
-                    "                   +S#####*      +#####S+                   \r\n" +
-                    "                 :?#@@@@#%       %#@@@@#?:                     ");
-
+                fileStream = new FileStream("Assasin.txt", FileMode.Open);
+                streamReader = new StreamReader(fileStream);
+            }
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                PositionPrint(0, 5 + i, line);
+                i++;
             }
 
 
@@ -161,11 +86,8 @@ namespace Rogulike_way
             PositionPrint(PositionX1, PositionY1 + 4, $"level: {Monster.level}");
             Console.SetCursorPosition(PositionX1, PositionY1 + 5);
 
-            FileStream fileStream = new FileStream("Knight.txt", FileMode.Open);
-            StreamReader streamReader = new StreamReader(fileStream);
-            int i = 0; ;
+            i = 0; ;
             // считываем строки из файла
-            string line;
             PositionX1 = 100;
 
             // закрываем StreamReader и файловый поток
@@ -216,12 +138,10 @@ namespace Rogulike_way
             {
                 fileStream = new FileStream("Boss.txt", FileMode.Open);
                 streamReader = new StreamReader(fileStream);
-                i = 5;
+                i = 3;
                 // считываем строки из файла
-                PositionX1 = 95;
+                PositionX1 = 83;
             }
-
-
             while ((line = streamReader.ReadLine()) != null)
             {
                 PositionPrint(PositionX1, PositionY1 + i, line);
@@ -231,10 +151,6 @@ namespace Rogulike_way
             // закрываем StreamReader и файловый поток
             streamReader.Close();
             fileStream.Close();
-
-
-
-
 
             int PositionX2 = 65, PositionY2 = 35;
             PositionPrint(PositionX2, PositionY2, "1.Сильный удар");
@@ -348,8 +264,7 @@ namespace Rogulike_way
                           "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W           I::::::::IN::::::N        N::::::N     !!:!!\r\n" +
                           "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW            IIIIIIIIIINNNNNNNN         NNNNNNN      !!! ");
                       */
-                System.Threading.Thread.Sleep(1500);
-              
+                    System.Threading.Thread.Sleep(1500);              
                     return 1;
                 }
                 
@@ -381,23 +296,19 @@ namespace Rogulike_way
                     Console.SetCursorPosition(0, 0);
                     System.Threading.Thread.Sleep(1500);
                     Console.Clear();
-                    Console.WriteLine(
-                        "\n\n\n\n      ППППППППППППППППППППППППППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRRRRRRRRRRR   \r\n" +
-                        "      П:::::::::::::::::::::::::::::П        OO:::::::::OO        M:::::::M             M:::::::M     E::::::::::::::::::::E     R::::::::::::::::R  \r\n" +
-                        "      П:::::::::::::::::::::::::::::П      OO:::::::::::::OO      M::::::::M           M::::::::M     E::::::::::::::::::::E     R::::::RRRRRR:::::R \r\n" +
-                        "      П::::::ППППППППППППППППП::::::П     O:::::::OOO:::::::O     M:::::::::M         M:::::::::M     EE::::::EEEEEEEEE::::E     RR:::::R     R:::::R\r\n" +
-                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::::::M       M::::::::::M       E:::::E       EEEEEE       R::::R     R:::::R\r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::::::M     M:::::::::::M       E:::::E                    R::::R     R:::::R\r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M:::::::M::::M   M::::M:::::::M       E::::::EEEEEEEEEE          R::::RRRRRR:::::R \r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M M::::M M::::M M::::::M       E:::::::::::::::E          R:::::::::::::RR  \r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M  M::::M::::M  M::::::M       E:::::::::::::::E          R::::RRRRRR::R \r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M   M:::::::M   M::::::M       E::::::EEEEEEEEEE          R::::R            \r\n" +
-                        "      П::::::П               П::::::П     O:::::O     O:::::O     M::::::M    M:::::M    M::::::M       E:::::E                    R::::R            \r\n" +
-                        "      П::::::П               П::::::П     O::::::O   O::::::O     M::::::M     MMMMM     M::::::M       E:::::E       EEEEEE       R::::R            \r\n" +
-                        "      П::::::П               П::::::П     O:::::::OOO:::::::O     M::::::M               M::::::M     EE::::::EEEEEEEE:::::E     RR:::::R            \r\n" +
-                        "      П::::::П               П::::::П      OO:::::::::::::OO      M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
-                        "      П::::::П               П::::::П        OO:::::::::OO        M::::::M               M::::::M     E::::::::::::::::::::E     R::::::R            \r\n" +
-                        "      ПППППППП               ПППППППП          OOOOOOOOO          MMMMMMMM               MMMMMMMM     EEEEEEEEEEEEEEEEEEEEEE     RRRRRRRR          ");
+                    FileStream fileStream = new FileStream("Dead.txt", FileMode.Open);
+                    StreamReader streamReader = new StreamReader(fileStream);
+                    string line;
+                    int i = 0;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        PositionPrint(5, 5 + i, line);
+                        i++;
+                    }
+
+                    // закрываем StreamReader и файловый поток
+                    streamReader.Close();
+                    fileStream.Close();
                     System.Threading.Thread.Sleep(2000);
                     return 0;
                 }
