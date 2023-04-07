@@ -14,6 +14,7 @@ public class Hero
     public int level = 1;
     public int experience = 0;
     public double boost = 1.0;
+    public Inventory inventory = new Inventory();
 
 
     public void MonsterLevelUp(Monsters monster, int nowLevel)
@@ -28,8 +29,6 @@ public class Hero
             monster.damage *= monster.boost;
 
         }
-
-
     }
 
     public void CheckAndLevelUp(World world)
@@ -47,13 +46,14 @@ public class Hero
             experience = 0;
 
             //Проверяю все комнаты и увеличиваю силу монстров в каждой
-            foreach(RealRoom room in world.roomsReal)
+            foreach (RealRoom room in world.roomsReal)
             {
                 foreach (Monsters monster in room.monsters_list)
                 {
-                    if(world.hero.level - monster.level >= 1)
+                    if(world.hero.level - monster.level == 1)
                     {
-                        MonsterLevelUp(monster, world.hero.level - monster.level);
+                        MonsterLevelUp(monster, 1);
+                        world.AppItemMonster(world.hero, monster);
                     }
 
                 }
@@ -96,11 +96,11 @@ public class Barbarian : Hero
     public Barbarian()
     {
         name = "Варвар";
-        StaticHealht = 100;
-        NowHealht = 100;
+        StaticHealht = 110;
+        NowHealht = 110;
         StaticStamina = 45;
         NowStamina = 45;
-        armor = 40;
+        armor = 60;
         damage = 25;
     }
 }
@@ -130,11 +130,12 @@ public class Monsters
     public int level = 1;
     public int experience; // При смерти моба можно передавать его опыт герою
     public double boost;
+    public Items item = null;
 
     public Monsters() { }
 
 
-    public static void CreateMonsters(RealRoom room, Hero hero)
+    public static void CreateMonsters(RealRoom room, World world)
     {
         Random random = new Random();
         int count_monsters;
@@ -188,7 +189,7 @@ public class Monsters
                     }
 
             }
-
+            world.AppItemMonster(world.hero, monster);
             monster.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
             room.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
             room.monsters_list.Add(monster);
@@ -240,7 +241,7 @@ public class Knight : Monsters
     {
         designation = 'K';
         name = "Рыцарь";
-        StaticHealht = 100;
+        StaticHealht = 85;
         damage = 30;
         experience = 60;
 

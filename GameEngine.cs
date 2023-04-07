@@ -75,7 +75,7 @@ class StartGame
         Random rand = new Random();
         int numRoom = rand.Next(0, 9);
         world.currentRoom = world.roomsReal[numRoom];
-        Monsters.CreateMonsters(world.currentRoom, world.hero);
+        Monsters.CreateMonsters(world.currentRoom, world);
 
         //Задаю герою координаты
         world.hero.coordinates = new int[2] { world.currentRoom.map.GetLength(1) / 2, world.currentRoom.map.GetLength(0) / 2 };  //Делаю так, чтобы он был посередине комнаты
@@ -262,6 +262,35 @@ class DraftGame
                 PutCursRange(world.map[y, x], y, x, 82, 1);
             }
     }
+
+    //Отображение предмета, который подобран
+    static public void DraftChoisItem(Items item, Inventory inventory)
+    {
+       
+        ConsoleKeyInfo keyInfo;
+        while (true)
+        {
+            Console.Clear();
+            Console.SetCursorPosition(50, 15);
+            Console.Write($"Вам достался предмет: {item.name} Уровень: {item.level}");
+            Console.SetCursorPosition(68, 16);
+            Console.Write("Взять - 1");
+            Console.SetCursorPosition(68, 17);
+            Console.Write("Выбросить - 0");
+            keyInfo = Console.ReadKey(true);
+            switch (keyInfo.KeyChar)
+            {
+                case '1':
+                    inventory.AcceptItem(item);
+                    return;
+
+                case '0':
+                    return;
+            }
+        }
+
+    }
+
 }
 
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
@@ -289,6 +318,11 @@ class MovePlayer
             else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
             {
                 ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
+            }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                ChestDef((Chest)obj, roomCurrent, ref world, trend);
             }
 
             //Если простанство пустое
@@ -321,6 +355,12 @@ class MovePlayer
                 ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                ChestDef((Chest)obj, roomCurrent, ref world, trend);
+            }
+
+
             else
             {
                 EmptyDef(roomCurrent, world, trend);
@@ -347,6 +387,12 @@ class MovePlayer
                 ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
 
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                ChestDef((Chest)obj, roomCurrent, ref world, trend);
+            }
+
+
             else
             {
                 EmptyDef(roomCurrent, world, trend);
@@ -372,6 +418,12 @@ class MovePlayer
             {
                 ModsterDef((Monsters)obj, roomCurrent, ref world, trend);
             }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                ChestDef((Chest)obj, roomCurrent, ref world, trend);
+            }
+
 
             else
             {
@@ -412,6 +464,46 @@ class MovePlayer
             world.hero.experience += monster.experience;
             //Проверка уровня
             world.hero.CheckAndLevelUp(world);
+
+            //Проверка на предмет в монстре
+            if(monster.item != null)
+            {
+                if(monster.item is StaminaPotion)
+                {
+                    
+                    StaminaPotion staminaPotion = (StaminaPotion)monster.item;
+
+                    Console.Clear();
+                    Console.SetCursorPosition(50, 15);
+                    Console.Write($"Вам достался предмет: {staminaPotion.name} Уровень: {staminaPotion.level}");
+                    Console.SetCursorPosition(50, 16);
+                    Console.Write($"Ваша выносливость увеличелась на {staminaPotion.stamina}");
+                    Thread.Sleep(3000);
+
+                    world.hero.HealSp(staminaPotion.stamina);
+                }
+                else if (monster.item is HealingPotion)
+                {
+                    HealingPotion healingPotion = (HealingPotion)monster.item;
+
+                    Console.Clear();
+                    Console.SetCursorPosition(50, 15);
+                    Console.Write($"Вам достался предмет: {healingPotion.name} Уровень: {healingPotion.level}");
+                    Console.SetCursorPosition(50, 16);
+                    Console.Write($"Ваш уровень жизней увеличелся на {healingPotion.heal}");
+                    Thread.Sleep(3000);
+
+                    world.hero.HealHp(healingPotion.heal);
+
+                }
+                else
+                {
+                    DraftGame.DraftChoisItem(monster.item, world.hero.inventory);
+                }
+                
+            }
+            
+
             DraftGame.DraftPlane(roomCurrent, world);
         }
         else
@@ -437,6 +529,69 @@ class MovePlayer
 
     }
 
+    static public void ChestDef(Chest chest, RealRoom roomCurrent, ref World world, string move)
+    {
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = ' ';
+        DraftGame.PutCurs(' ', world.hero.coordinates[1], world.hero.coordinates[0]);
+        if (move == "Up")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] -= 1;
+        }
+        else if (move == "Down")
+        {
+            world.hero.coordinates[0] += 0; world.hero.coordinates[1] += 1;
+        }
+        else if (move == "Left")
+        {
+            world.hero.coordinates[0] -= 1; world.hero.coordinates[1] -= 0;
+        }
+        else if (move == "Right")
+        {
+            world.hero.coordinates[0] += 1; world.hero.coordinates[1] -= 0;
+        }
+
+        Thread.Sleep(100);
+        roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
+        DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
+
+        if (chest.item is StaminaPotion)
+        {
+            StaminaPotion staminaPotion = (StaminaPotion)chest.item;
+
+            Console.Clear();
+            Console.SetCursorPosition(50, 15);
+            Console.Write($"Вам достался предмет: {staminaPotion.name} Уровень: {staminaPotion.level}");
+            Console.SetCursorPosition(50, 16);
+            Console.Write($"Ваша выносливость увеличелась на {staminaPotion.stamina}");
+            Thread.Sleep(3000);
+
+
+            world.hero.HealSp(staminaPotion.stamina);
+        }
+        else if (chest.item is HealingPotion)
+        {
+            HealingPotion healingPotion = (HealingPotion)chest.item;
+
+            Console.Clear();
+            Console.SetCursorPosition(50, 15);
+            Console.Write($"Вам достался предмет: {healingPotion.name} Уровень: {healingPotion.level}");
+            Console.SetCursorPosition(50, 16);
+            Console.Write($"Ваш уровень жизней увеличелся на {healingPotion.heal}");
+            Thread.Sleep(3000);
+
+
+            world.hero.HealHp(healingPotion.heal);
+        }
+        else
+        {
+            DraftGame.DraftChoisItem(chest.item, world.hero.inventory);
+        }
+
+        roomCurrent.chest = new Chest();
+
+        DraftGame.DraftPlane(roomCurrent, world);
+
+    }
     static public void DoorDef(Doors door, ref RealRoom roomCurrent, World world, string move)
     {
         //Координаты игрока меняются
@@ -449,7 +604,7 @@ class MovePlayer
             {
                 if (room1.visitings == false)
                 {
-                    Monsters.CreateMonsters(room1, world.hero);
+                    Monsters.CreateMonsters(room1, world);
                 }
                 roomCurrent = room1;
 

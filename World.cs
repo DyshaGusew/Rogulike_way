@@ -493,8 +493,134 @@ public class World
         
     }
 
+    //Добавляю в сундуки предметы взависимости от уровня героя
+    public void AppChest(Hero hero, RealRoom room)
+    {
+        List<Items> correctItems = new List<Items>();
+        Items items = new();
+        //Создаю подходящий
+         if(hero.level == 1)
+         {
+
+             foreach(Items items1 in items.itemsArr2)
+             {
+                 correctItems.Add(items1);
+             }
+             foreach (Items items1 in items.itemsArr3)
+             {
+                 correctItems.Add(items1);
+             }
+         }
+
+         else if (hero.level == 2)
+         {
+             foreach (Items items1 in items.itemsArr3)
+             {
+                 correctItems.Add(items1);
+             }
+             foreach (Items items1 in items.itemsArr4)
+             {
+                 correctItems.Add(items1);
+             }
+         }
+
+          if (hero.level >= 3)
+         {
+             foreach (Items items1 in items.itemsArr5)
+             {
+                 correctItems.Add(items1);
+             }
+             foreach (Items items1 in items.itemsArr4)
+             {
+                 correctItems.Add(items1);
+             }
+         }
+
+         //Рандомно кладу в сундук нужный
+         Random random = new Random();
+         room.chest.item = correctItems[random.Next(0, 10)];
+         
+    }
+    
+
+    //Добавление предметов в монстров
+    public void AppItemMonster(Hero hero, Monsters monster)
+    {
+        List<Items> correctItems = new List<Items>();
+        Items items = new();
+        //Создаю подходящий
+        if (hero.level == 1)
+        {
+
+            foreach (Items items1 in items.itemsArr1)
+            {
+                correctItems.Add(items1);
+            }
+            foreach (Items items1 in items.itemsArr2)
+            {
+                correctItems.Add(items1);
+            }
+        }
+
+        else if (hero.level == 2)
+        {
+            foreach (Items items1 in items.itemsArr2)
+            {
+                correctItems.Add(items1);
+            }
+            foreach (Items items1 in items.itemsArr3)
+            {
+                correctItems.Add(items1);
+            }
+        }
+
+        if (hero.level == 3)
+        {
+            foreach (Items items1 in items.itemsArr3)
+            {
+                correctItems.Add(items1);
+            }
+            foreach (Items items1 in items.itemsArr4)
+            {
+                correctItems.Add(items1);
+            }
+        }
+
+        if (hero.level == 4)
+        {
+            foreach (Items items1 in items.itemsArr4)
+            {
+                correctItems.Add(items1);
+            }
+            foreach (Items items1 in items.itemsArr5)
+            {
+                correctItems.Add(items1);
+            }
+        }
+
+        //Рандомно кладу в сундук нужный
+        Random random = new Random();
+
+        //Проверка, чтобы 
+        if(random.Next(1, 3) == 2)
+        {
+            if (hero.level == 1)
+            {
+                monster.item = correctItems[random.Next(0, 10)];
+            }
+
+            else
+            {
+                if (monster.item != null)
+                {
+                    monster.item = correctItems[random.Next(0, 10)];
+                }
+            }
+        }
+    }
+
     //Создание сундука в комнате
-    public void RoomAppendChest(List<RealRoom> roomsReal)
+    public void RoomsAppendChest(List<RealRoom> roomsReal)
     {
         Random random = new Random();
         int chestCount = random.Next(4, 7); 
@@ -516,6 +642,7 @@ public class World
 
                     room.map[chest.coordinates[1], chest.coordinates[0]] = chest.designation;
                     room.chest = chest;
+                    AppChest(hero, room);
                     roomsChests.Add(chest);
                 }
             }
@@ -537,7 +664,7 @@ public class World
 
             roomsReal.Add(room);
         }
-        RoomAppendChest(roomsReal);
+        RoomsAppendChest(roomsReal);
 
         return roomsReal;
     }

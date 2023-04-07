@@ -9,275 +9,129 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class Items
 {
+    public int level;
     public string name = "";
-    public int[] coordinates;
-    public Items()
-    {
-        coordinates = new int[2] { 0, 0 };
-    }
 
-    public Items(int x, int y)
+    static readonly Items WoodSword = new Weapon("Деревянный меч", 1, 10, 5);
+    static readonly Items RookieStick = new Weapon("Посох новичка", 1, 15, 8);
+    static readonly Items SmallKnives = new Weapon("Маленькие клинки", 1, 12, 6);
+    static readonly Items LeatherArmor = new Armor("Кожанный плащ", 1, 10);
+    static readonly Items Hil1 = new HealingPotion(1, 30);
+    static readonly Items Stam1 = new StaminaPotion(1, 20);
+
+    static readonly Items StounSword = new Weapon("Каменный меч", 2, 15, 8);
+    static readonly Items WarriorStick = new Weapon("Посох воина", 2, 20, 10);
+    static readonly Items SteelKnives = new Weapon("Стальные кинжалы", 2, 17, 9);
+    static readonly Items MailArmor = new Armor("Кольчуга воина", 2, 20);
+    static readonly Items Hil2 = new HealingPotion(2, 35);
+    static readonly Items Stam2 = new StaminaPotion(1, 30);
+
+    static readonly Items SteelSword = new Weapon("Стальной меч", 3, 20, 10);
+    static readonly Items EnlightenedStick = new Weapon("Посох просвещенного", 3, 25, 13);
+    static readonly Items SilverKnives = new Weapon("Серебряные кинжалы", 3, 22, 11);
+    static readonly Items KnightArmor = new Armor("Латы рыцаря", 3, 30);
+    static readonly Items Hil3 = new HealingPotion(3, 35);
+    static readonly Items Stam3 = new StaminaPotion(1, 35);
+
+    static readonly Items SilverSword = new Weapon("Серебрянный меч", 4, 25, 13);
+    static readonly Items MasterStick = new Weapon("Посох магистра", 4, 30, 15);
+    static readonly Items SteelSwords = new Weapon("Стальные одноручные мечи", 4, 27, 14);
+    static readonly Items JadeArmor = new Armor("Нефритовый панцирь", 4, 40);
+    static readonly Items Hil4 = new HealingPotion(4, 40);
+    static readonly Items Stam4 = new StaminaPotion(1, 40);
+
+    static readonly Items JadeSword = new Weapon("Нефритовый меч", 5, 30, 15);
+    static readonly Items GreatStick = new Weapon("Посох Великого Мага", 5, 35, 18);
+    static readonly Items SilverSwords = new Weapon("Серебряные одноручные мечи", 5, 32, 16);
+    static readonly Items MagicArmor = new Armor("Доспехи мага", 5, 50);
+    static readonly Items Hil5  = new HealingPotion(5, 50);
+    static readonly Items Stam5 = new StaminaPotion(1, 45);
+
+
+
+
+    public List<Items> itemsArr1 = CreateItemsArr(1);
+    public List<Items> itemsArr2 = CreateItemsArr(2);
+    public List<Items> itemsArr3 = CreateItemsArr(3);
+    public List<Items> itemsArr4 = CreateItemsArr(4);
+    public List<Items> itemsArr5 = CreateItemsArr(5);
+
+    //Заполняю массивы предметов в зависимости от уровня
+    static List<Items>  CreateItemsArr(int level)
     {
-        coordinates = new int[2] { x, y };
+        List<Items> itemsArr = new List<Items>();
+        if (level == 1)
+        {
+            itemsArr.Add(WoodSword); itemsArr.Add(RookieStick); itemsArr.Add(SmallKnives); itemsArr.Add(LeatherArmor); itemsArr.Add(Hil1);
+        }
+    
+        else if (level == 2)
+        {
+            itemsArr.Add(StounSword); itemsArr.Add(WarriorStick); itemsArr.Add(SteelKnives); itemsArr.Add(MailArmor); itemsArr.Add(Hil2);
+        }
+         
+        else if (level == 3)
+        {
+            itemsArr.Add(SteelSword); itemsArr.Add(EnlightenedStick); itemsArr.Add(SilverKnives); itemsArr.Add(KnightArmor); itemsArr.Add(Hil3);
+        } 
+       
+        else if (level == 4)
+        {
+            itemsArr.Add(SilverSword); itemsArr.Add(MasterStick); itemsArr.Add(SteelSwords); itemsArr.Add(JadeArmor); itemsArr.Add(Hil4);
+        }
+
+        else if (level == 5)
+        {
+            itemsArr.Add(JadeSword); itemsArr.Add(GreatStick); itemsArr.Add(SilverSwords); itemsArr.Add(MagicArmor); itemsArr.Add(Hil5);
+        }
+        
+        return itemsArr;
     }
 }
 
 // Оружие (5 мечей, 5 посохов, 5 клинков для бродяги[ассассина])
 public class Weapon : Items
 {
-    public int level;
+
     public int damage;
     public int stamina;
     public int id;
 
     public Weapon() : base() {}
-
-    // левел ап оружия
-    public void LevelUp()
-    {
-        this.level++;
-        this.damage += 10;
+    public Weapon(string name_, int level_, int damage_, int stamina_) : base() {
+        this.level = level_;
+        this.damage = damage_;
+        this.stamina = stamina_;
+        this.name = name_;
+    
     }
 }
 
-public class WoodSword : Weapon
-{
-    public WoodSword() : base() 
-    {
-        name = "Деревянный меч";
-        level = 1;
-        damage = 10;
-        stamina = 5;
-    }
-}
-
-public class StoneSword : Weapon
-{
-    public StoneSword() : base()
-    {
-        name = "Каменный меч";
-        level = 2;
-        damage = 15;
-        stamina = 8;
-    }
-}
-
-public class SteelSword : Weapon
-{
-    public SteelSword() : base()
-    {
-        name = "Стальной меч";
-        level = 3;
-        damage = 20;
-        stamina = 10;
-    }
-}
-
-public class SilverSword : Weapon
-{
-    public SilverSword() : base()
-    {
-        name = "Серебряный меч";
-        level = 4;
-        damage = 25;
-        stamina = 13;
-    }
-}
-
-public class JadeSword : Weapon
-{
-    public JadeSword() : base()
-    {
-        name = "Нефритовый меч";
-        level = 5;
-        damage = 30;
-        stamina = 15;
-    }
-}
-
-public class RookieStick : Weapon
-{
-    public RookieStick() : base()
-    {
-        name = "Посох новичка";
-        level = 1;
-        damage = 15;
-        stamina = 8;
-    }
-}
-
-public class WarriorStick : Weapon
-{
-    public WarriorStick() : base()
-    {
-        name = "Посох воина";
-        level = 2;
-        damage = 20;
-        stamina = 10;
-    }
-}
-
-public class EnlightenedStick : Weapon
-{
-    public EnlightenedStick() : base()
-    {
-        name = "Посох просвещенного";
-        level = 3;
-        damage = 25;
-        stamina = 13;
-    }
-}
-
-public class MasterStick : Weapon
-{
-    public MasterStick() : base()
-    {
-        name = "Посох магистра";
-        level = 4;
-        damage = 30;
-        stamina = 15;
-    }
-}
-
-public class GreatStick : Weapon
-{
-    public GreatStick() : base()
-    {
-        name = "Посох Великого Мага";
-        level = 5;
-        damage = 35;
-        stamina = 18;
-    }
-}
-
-public class SmallKnives : Weapon
-{
-    public SmallKnives() : base()
-    {
-        name = "Маленькие клинки";
-        level = 1;
-        damage = 12;
-        stamina = 6;
-    }
-}
-
-public class SteelKnives : Weapon
-{
-    public SteelKnives() : base()
-    {
-        name = "Стальные кинжалы";
-        level = 2;
-        damage = 17;
-        stamina = 9;
-    }
-}
-
-public class SilverKnives : Weapon
-{
-    public SilverKnives() : base()
-    {
-        name = "Серебряные кинжалы";
-        level = 3;
-        damage = 22;
-        stamina = 11;
-    }
-}
-
-public class SteelSwords : Weapon
-{
-    public SteelSwords() : base()
-    {
-        name = "Стальные одноручные мечи";
-        level = 4;
-        damage = 27;
-        stamina = 14;
-    }
-}
-
-public class SilverSwords : Weapon
-{
-    public SilverSwords() : base()
-    {
-        name = "Серебряные одноручные мечи";
-        level = 5;
-        damage = 32;
-        stamina = 16;
-    }
-}
 
 // Броня
 public class Armor : Items
 {
-    public int level;
     public int armor;
     public int id;
 
     public Armor() : base() {}
 
-    // левел ап брони
-    public void LevelUp()
-    {
-        this.level++;
-        this.armor += 10; // либо определенная прибавка, либо умножение на коэфициент
+    public Armor(string name, int level, int arm) : base() { 
+        this.name = name;
+        this.level = level;
+        this.armor = arm; 
     }
 }
 
-public class LeatherArmor : Armor
-{
-    public LeatherArmor() : base()
-    {
-        name = "Кожаный плащ";
-        level = 1;
-        armor = 10;
-    }
-}
-
-public class MailArmor : Armor
-{
-    public MailArmor() : base()
-    {
-        name = "Кольчуга воина";
-        level = 2;
-        armor = 20;
-    }
-}
-public class KnightArmor : Armor
-{
-    public KnightArmor() : base()
-    {
-        name = "Латы рыцаря";
-        level = 3;
-        armor = 30;
-    }
-}
-
-public class JadeArmor : Armor
-{
-    public JadeArmor() : base()
-    {
-        name = "Нефритовый панцирь";
-        level = 4;
-        armor = 40;
-    }
-}
-
-public class MagicArmor : Armor
-{
-    public MagicArmor() : base()
-    {
-        name = "Доспехи мага";
-        level = 5;
-        armor = 50;
-    }
-}
 
 // Зелье восстановления ХП
 public class HealingPotion: Items {
     public int heal;
-
-    public HealingPotion(int _heal) : base()
+    public new string name = "Зелье здоровья";
+    public HealingPotion(int level, int heal) : base()
     {
-        heal = _heal;
+        this.level = level;
+        this.heal = heal;
     }
 }
 
@@ -285,9 +139,11 @@ public class HealingPotion: Items {
 public class StaminaPotion : Items
 {
     public int stamina;
+    public new string name = "Зелье выносливости";
 
-    public StaminaPotion(int _stamina) : base()
+    public StaminaPotion(int level, int stamina) : base()
     {
-        stamina = _stamina;
+        this.level = level;
+        this.stamina = stamina;
     }
 }

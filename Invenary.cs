@@ -93,6 +93,14 @@ public class Inventory
     public bool isHeroChosen = false;
     public Inventory() {}
 
+    //Пустая функция для переданных предметов
+    public void AcceptItem(Items item)
+    {
+        Console.Clear();
+        Console.WriteLine($"Предмет {item.name} в инвентаре");
+        System.Threading.Thread.Sleep(1500);
+    }
+
     public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
 
