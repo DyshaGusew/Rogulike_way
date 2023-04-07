@@ -44,6 +44,68 @@ while (true)
             world = StartGame.CreateWorld(menu);
             break;
     }
+    //Условие появления босса
+    if(world.hero.countDeadMonsters == 10)
+    {
+        world.hero.NowHealht = world.hero.StaticHealht;
+        world.hero.NowStamina = world.hero.StaticStamina;
+        Bosses boss = new Bosses(100, 50, "БАЛРОГ, демон тьмы");
+        Console.Clear();
+        Console.SetCursorPosition(60, 15);
+        Console.Write($"Кажется, вы слышите шаги...");
+        System.Threading.Thread.Sleep(2500);
+
+        Console.Clear();
+        Console.SetCursorPosition(50, 15);
+        Console.Write($"Похоже своими действиями вы кое-кого очень сильно разозлили...");
+        System.Threading.Thread.Sleep(2500);
+
+        Console.Clear();
+        Console.SetCursorPosition(60, 15);
+        Console.Write($"Да начнется же великий бой!");
+        System.Threading.Thread.Sleep(2500);
+
+        Fight bossFight = new();
+        
+        if(bossFight.Start(world.hero, boss) == 0)
+        {
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
+            if (world.hero.level > 1)
+            {
+                Console.SetCursorPosition(70, 16); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
+            }
+            else
+            {
+                Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+            }
+
+            Thread.Sleep(2500);
+            Menu menu_ = new();
+            menu_.Show();
+            world = new World();
+            world = StartGame.CreateWorld(menu_);
+        }
+        else
+        {
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.SetCursorPosition(40, 15); Console.Write("Поздравляем, вы уничтожили великое зло! Вы - настящий воин!");
+            if (world.hero.level > 1)
+            {
+                Console.SetCursorPosition(60, 16); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
+            }
+            else
+            {
+                Console.SetCursorPosition(60, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+            }
+            Console.SetCursorPosition(55, 25);
+            return;
+
+        }
+        
+    }
 }
 
 
@@ -457,9 +519,10 @@ class MovePlayer
 
         roomCurrent.map[world.hero.coordinates[1], world.hero.coordinates[0]] = World.charHero;
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
-        Fight gg = new();
-        if (gg.Start(world.hero, monster) == 1)
+        Fight normalMonter = new();
+        if (normalMonter.Start(world.hero, monster) == 1)
         {
+            world.hero.countDeadMonsters++;
             roomCurrent.monsters_list.Remove(monster);
             world.hero.experience += monster.experience;
             //Проверка уровня
@@ -469,8 +532,7 @@ class MovePlayer
             if(monster.item != null)
             {
                 if(monster.item is StaminaPotion)
-                {
-                    
+                {   
                     StaminaPotion staminaPotion = (StaminaPotion)monster.item;
 
                     Console.Clear();
@@ -662,3 +724,5 @@ class MovePlayer
         DraftGame.PutCurs(World.charHero, world.hero.coordinates[1], world.hero.coordinates[0]);
     }
 }
+
+

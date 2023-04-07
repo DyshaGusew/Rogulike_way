@@ -3,6 +3,7 @@ using System.Threading;
 
 public class Hero
 {
+    public int countDeadMonsters = 0;
     public string? name;
     public int[] coordinates = { 0, 0 };
     public double StaticHealht = 100;
@@ -223,7 +224,7 @@ public class Ghost : Monsters
         designation = 'G';
         name = "Призрак";
         StaticHealht = 35;
-        damage = 40;
+        damage = 55;
         experience = 45;
 
         if (level > 0)
