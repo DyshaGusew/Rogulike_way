@@ -14,7 +14,7 @@ public class Hero
     public int armor = 0;
     public double damage = 40;
     public int level = 1;
-    public int experience = 0;
+    public int experience = 90;
     public double boost = 1.0;
     public Inventory inventory = new Inventory();
 
