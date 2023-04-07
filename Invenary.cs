@@ -98,7 +98,7 @@ public class Inventory
     public Inventory() {}
     //List<Items> bag = new List<Items>();    
     //List<Items> hand = new List<Items>();
-    List<int> namber = new List<int>();
+    List<string> namber = new List<string>();
 
 
 
@@ -144,7 +144,7 @@ public class Inventory
 
     public void ChooseAmmunition()
     {
-        namber.Add(1);
+        namber.Add("посох");
         Console.CursorVisible = false;
 
         
