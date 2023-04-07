@@ -1,4 +1,8 @@
 ﻿
+using System.Collections.Specialized;
+using System.Collections.Generic;
+
+
 public class Cell
 {
     public string name;
@@ -98,7 +102,18 @@ public class Inventory
     public Inventory() {}
     //List<Items> bag = new List<Items>();    
     //List<Items> hand = new List<Items>();
-    List<string> namber = new List<string>();
+    List<string> names = new List<string>();
+
+    //Пустая функция для переданных предметов
+    public void AcceptItem(Items item)
+    {
+        Console.Clear();
+        Console.WriteLine($"Предмет {item.name} в инвентаре");
+        System.Threading.Thread.Sleep(1500);
+    }
+
+    
+    
 
 
 
@@ -132,10 +147,11 @@ public class Inventory
 
     public void WriteTip()
     {
-
+        //name[0] = "fsk";
         Console.CursorVisible = false;
         Console.SetCursorPosition(56, 33);
         Console.WriteLine("W - Вверх, S - Вниз, A - Влево, D - Вправо, E - Выбрать, Q - Выйти");
+        //Console.WriteLine(namber[0]);
         //Console.WriteLine(Person(0));
 
     }
@@ -144,14 +160,23 @@ public class Inventory
 
     public void ChooseAmmunition()
     {
-        namber.Add("посох");
+        //namber.Add("посох");
         Console.CursorVisible = false;
-        Console.WriteLine(namber[1]);
+        //Console.WriteLine(namber[1]);
+        names.Add("посох");
+        names.Add("меч");
+        names.Add("броня");
+        foreach ( string name in names)
+        {
+            Console.WriteLine(name);
+        }
+        string ass = names[1];
 
-        
-        Cell Cell1 = new Cell("Посох", true);
-        Cell Cell2 = new Cell("Оружие", false);
-        Cell Cell3 = new Cell("Броня", false);
+        //string ass = name[0];
+        //Console.WriteLine(ass);
+        Cell Cell1 = new Cell(ass, true);
+        Cell Cell2 = new Cell(ass, false);
+        Cell Cell3 = new Cell(ass, false);
         Cell Cell4 = new Cell("Зелье", false);
         Cell Cell5 = new Cell("Пусто", false);
         Cell Cell6 = new Cell("Пусто", false);
