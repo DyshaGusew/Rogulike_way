@@ -44,7 +44,7 @@ namespace Rogulike_way
             string HeroHealht = Hero.NowHealht.ToString("F1");
             string HeroST = Hero.NowStamina.ToString("F1");
             string HeroAT = Hero.damage.ToString("F1");
-            Console.WriteLine($"Герой\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
+            Console.WriteLine($"Герой {Hero.name}\nЗдоровье: {HeroHealht}\nВыносливость: {HeroST}\nУрон: {HeroAT}\nlevel: {Hero.level}");
             FileStream fileStream = new FileStream("Knight.txt", FileMode.Open);
             StreamReader streamReader = new StreamReader(fileStream);
             int i = 0; ;
