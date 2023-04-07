@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 
 public class Chest{
-    public Items? item;
+    public Items item;
     public int[] coordinates = {100, 100};
     public char designation = World.charChest;
 }
@@ -501,7 +501,6 @@ public class World
         //Создаю подходящий
          if(hero.level == 1)
          {
-
              foreach(Items items1 in items.itemsArr2)
              {
                  correctItems.Add(items1);
@@ -538,7 +537,8 @@ public class World
 
          //Рандомно кладу в сундук нужный
          Random random = new Random();
-         room.chest.item = correctItems[random.Next(0, 10)];
+         room.chest.item = null;
+         room.chest.item = correctItems[random.Next(0, 12)];
          
     }
     
@@ -574,7 +574,7 @@ public class World
             }
         }
 
-        if (hero.level == 3)
+        else if(hero.level == 3)
         {
             foreach (Items items1 in items.itemsArr3)
             {
@@ -586,7 +586,7 @@ public class World
             }
         }
 
-        if (hero.level == 4)
+        else if(hero.level == 4)
         {
             foreach (Items items1 in items.itemsArr4)
             {
@@ -608,14 +608,10 @@ public class World
             {
                 monster.item = correctItems[random.Next(0, 10)];
             }
-
-            else
-            {
-                if (monster.item != null)
+        }
+        if(monster.item != null && hero.level != 1)
                 {
-                    monster.item = correctItems[random.Next(0, 10)];
-                }
-            }
+            monster.item = correctItems[random.Next(0, 10)];
         }
     }
 
