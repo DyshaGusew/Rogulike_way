@@ -140,7 +140,7 @@ namespace Rogulike_way
                 streamReader = new StreamReader(fileStream);
                 i = 3;
                 // считываем строки из файла
-                PositionX1 = 83;
+                PositionX1 = 80;
             }
             while ((line = streamReader.ReadLine()) != null)
             {
@@ -180,11 +180,11 @@ namespace Rogulike_way
         {
             Blinking();
             Rendering(Hero, Monster);
-            double HeroAt = Alpha(Hero.damage);//атака героя
             char Keys = ' ';//не получается присвоить Keys значение KeyChar
             Console.SetCursorPosition(0, 0);
             while (true)
             {
+                double HeroAt = Alpha(Hero.damage);//атака героя
                 double MonsterAt = Alpha(Monster.damage);
                 while (true)
                 {
@@ -238,35 +238,9 @@ namespace Rogulike_way
 
                   if ((Monster.NowHealht <= 0) && (Hero.NowHealht>0))
                   {
-                    /*
-                      PositionPrint(63, 0, $"Вы нанесли: {HeroAtt}");
-                      System.Threading.Thread.Sleep(1500);
-                      Console.Clear();
-                      Console.WriteLine("         " +
-                          "" +
-                          "  \r\nYYYYYYY       YYYYYYY     OOOOOOOOO     UUUUUUUU     UUUUUUUU     WWWWWWWW" +
-                          "                           WWWWWWWWIIIIIIIIIINNNNNNNN        NNNNNNNN      !!! \r\n" +
-                          "Y:::::Y       Y:::::Y   OO:::::::::OO   U::::::U     U::::::U     W::::::W                           " +
-                          "" +
-                          "W::::::WI::::::::IN:::::::N       N::::::N     !!:!!\r\n" +
-                          "Y:::::Y       Y:::::Y OO:::::::::::::OO U::::::U     U::::::U     W::::::W                           W::::::WI::::::::IN::::::::N      N::::::N     !:::!\r\n" +
-                          "Y::::::Y     Y::::::YO:::::::OOO:::::::OUU:::::U     U:::::UU     W::::::W                           W::::::WII::::::IIN:::::::::N     N::::::N     !:::!\r\n" +
-                          "YYY:::::Y   Y:::::YYYO::::::O   O::::::O U:::::U     U:::::U       W:::::W           WWWWW           W:::::W   I::::I  N::::::::::N    N::::::N     !:::!\r\n" +
-                          "   Y:::::Y Y:::::Y   O:::::O     O:::::O U:::::D     D:::::U        W:::::W         W:::::W         W:::::W    I::::I  N:::::::::::N   N::::::N     !:::!\r\n" +
-                          "    Y:::::Y:::::Y    O:::::O     O:::::O U:::::D     D:::::U         W:::::W       W:::::::W       W:::::W     I::::I  N:::::::N::::N  N::::::N     !:::!\r\n " +
-                          "    Y:::::::::Y     O:::::O     O:::::O U:::::D     D:::::U          W:::::W     W:::::::::W     W:::::W      I::::I  N::::::N N::::N N::::::N     !:::!\r\n" +
-                          "      Y:::::::Y      O:::::O     O:::::O U:::::D     D:::::U           W:::::W   W:::::W:::::W   W:::::W       I::::I  N::::::N  N::::N:::::::N     !:::!\r\n " +
-                          "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U            W:::::W W:::::W W:::::W W:::::W        I::::I  N::::::N   N:::::::::::N     !:::!\r\n " +
-                          "      Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U             W:::::W:::::W   W:::::W:::::W         I::::I  N::::::N    N::::::::::N     !!:!!\r\n " +
-                          "      Y:::::Y       O::::::O   O::::::O U::::::U   U::::::U              W:::::::::W     W:::::::::W          I::::I  N::::::N     N:::::::::N      !!! \r\n" +
-                          "       Y:::::Y       O:::::::OOO:::::::O U:::::::UUU:::::::U               W:::::::W       W:::::::W         II::::::IIN::::::N      N::::::::N          \r\n" +
-                          "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU                 W:::::W         W:::::W          I::::::::IN::::::N       N:::::::N      !!! \r\n" +
-                          "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W           I::::::::IN::::::N        N::::::N     !!:!!\r\n" +
-                          "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW            IIIIIIIIIINNNNNNNN         NNNNNNN      !!! ");
-                      */
                     System.Threading.Thread.Sleep(1500);              
                     return 1;
-                }
+                  }
                 
 
 

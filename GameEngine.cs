@@ -91,14 +91,28 @@ while (true)
         {
             Thread.Sleep(1000);
             Console.Clear();
-            Console.SetCursorPosition(40, 15); Console.Write("Поздравляем, вы уничтожили великое зло! Вы - настящий воин!");
+            Console.SetCursorPosition(40, 24); Console.Write("Поздравляем, вы уничтожили великое зло! Вы - настящий воин!");
+            FileStream fileStream = new FileStream("Win.txt", FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
+            int i = 0; ;
+            // считываем строки из файла
+            string line;
+            // закрываем StreamReader и файловый поток
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                Console.SetCursorPosition(2, 5+i);
+                Console.Write(line);
+                i++;
+            }
+            streamReader.Close();
+            fileStream.Close();
             if (world.hero.level > 1)
             {
-                Console.SetCursorPosition(60, 16); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
+                Console.SetCursorPosition(60, 25); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
             }
             else
             {
-                Console.SetCursorPosition(60, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+                Console.SetCursorPosition(60, 25); Console.Write($"  Ваш счет: {world.hero.experience}");
             }
             Console.SetCursorPosition(55, 25);
             return;
