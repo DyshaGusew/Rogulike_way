@@ -86,6 +86,10 @@ public class Cell
     }
 }
 
+
+  
+
+
 public class Inventory
 {
 
@@ -94,16 +98,12 @@ public class Inventory
     public Inventory() {}
     //List<Items> bag = new List<Items>();    
     //List<Items> hand = new List<Items>();
-    var salmons = new List<string>();
-    salmons.Add("chinook");
-    salmons.Add("coho");
-    salmons.Add("pink");
-    salmons.Add("sockeye");
+    List<int> namber = new List<int>();
 
 
-    
 
-public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
+
+    public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
 
         // Console.CursorVisible = false;
@@ -139,12 +139,12 @@ public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell
         //Console.WriteLine(Person(0));
 
     }
-
+    
 
 
     public void ChooseAmmunition()
     {
-
+        namber.Add(1);
         Console.CursorVisible = false;
 
         
@@ -432,11 +432,7 @@ public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell
                 default: break;
 
             }
-            if (Cell1.isSelected == true)
-            {
-                Console.SetCursorPosition(0, 5);
-                Console.Write($"Тип: {1}\nНазвание: {1}\nУрон: {1}\nЗащита: {1}\nВостановление маны: {1}\nВостановление здоровья: {1}\nТраты стамины: {1}");
-            }
+            
         }
     }
     public void SelectAction()
