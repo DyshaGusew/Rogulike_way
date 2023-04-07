@@ -146,6 +146,7 @@ public class Inventory
     {
         namber.Add("посох");
         Console.CursorVisible = false;
+        Console.WriteLine(namber[1]);
 
         
         Cell Cell1 = new Cell("Посох", true);
