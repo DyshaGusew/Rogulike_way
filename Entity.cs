@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Rogulike_way;
+using System.Reflection;
 using System.Threading;
 
 public class Hero
@@ -227,6 +228,7 @@ public class Monsters
                 return;
             }
 
+            
 
 
             //Если простанство пустое
@@ -268,6 +270,7 @@ public class Monsters
             {
                 return;
             }
+           
 
 
             //Если простанство пустое
@@ -307,7 +310,7 @@ public class Monsters
             {
                 return;
             }
-
+           
 
             //Если простанство пустое
             else
@@ -346,6 +349,7 @@ public class Monsters
             {
                 return;
             }
+            
 
             //Если простанство пустое
             else

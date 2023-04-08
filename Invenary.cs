@@ -97,6 +97,7 @@ public class Inventory
     public void AcceptItem(Items item)
     {
         Console.Clear();
+        Console.SetCursorPosition(60, 15);
         Console.WriteLine($"Предмет {item.name} в инвентаре");
         System.Threading.Thread.Sleep(1500);
     }

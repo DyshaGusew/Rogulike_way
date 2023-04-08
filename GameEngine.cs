@@ -17,23 +17,29 @@ while (true)
     switch (keyInfo.KeyChar)
     {
         case 'w' or 'ц':
-            MoveEntity.MovePlayer("Up", ref world.currentRoom, ref world);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Up", ref world.currentRoom, ref world);
+
+
             break;
 
         case 's' or 'ы':
-            MoveEntity.MovePlayer("Down", ref world.currentRoom, ref world);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Down", ref world.currentRoom, ref world);
+
             break;
 
         case 'd' or 'в':
             MoveEntity.MovePlayer("Right", ref world.currentRoom, ref world);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+
             break;
 
         case 'a' or 'ф':
-            MoveEntity.MovePlayer("Left", ref world.currentRoom, ref world);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Left", ref world.currentRoom, ref world);
+
+
             break;
 
         case 'e' or 'у':
@@ -593,7 +599,13 @@ class MoveEntity
                 }
                 
             }
-            
+            foreach(Monsters monster_ in roomCurrent.monsters_list)
+            {
+                if(monster_ == monster)
+                {
+                    roomCurrent.monsters_list.Remove(monster_);
+                }
+            }
 
             DraftGame.DraftPlane(roomCurrent, world);
         }
