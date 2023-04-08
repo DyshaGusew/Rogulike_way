@@ -1,4 +1,8 @@
 ﻿
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+
 public class Cell
 {
     public string name;
@@ -86,21 +90,40 @@ public class Cell
     }
 }
 
+
+  
+
+
 public class Inventory
 {
 
     public string ammunition = "";
     public bool isHeroChosen = false;
     public Inventory() {}
-
+    //List<Items> bag = new List<Items>();    
+    //List<Items> hand = new List<Items>();
+    List<string> bag = new List<string>(9);
+    List<string> hand = new List<string>(9);
     //Пустая функция для переданных предметов
     public void AcceptItem(Items item)
     {
+        //bag.Add(item);
         Console.Clear();
         Console.SetCursorPosition(60, 15);
         Console.WriteLine($"Предмет {item.name} в инвентаре");
         System.Threading.Thread.Sleep(1500);
+       // List<Items> bag = new List<Items>();
     }
+    int n;
+    
+    /*
+    public class Items
+    {
+        string name;
+    }
+    */
+
+
 
     public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3, Cell Cell_4, Cell Cell_5, Cell Cell_6, Cell Cell_7, Cell Cell_8, Cell Cell_9)
     {
@@ -116,11 +139,7 @@ public class Inventory
         Cell_8.DrawCell(62, 19);
         Cell_9.DrawCell(94, 19);
 
-        Console.SetCursorPosition(0, 5);
-        //Console.ForegroundColor = ConsoleColor.Blue;
-        {
-            Console.Write($"Тип: {1}\nНазвание: {1}\nУрон: {1}\nЗащита: {1}\nВостановление маны: {1}\nВостановление здоровья: {1}\nТраты стамины: {1}");
-        }
+        
     }
 
     public void DrawButtons(Cell Cell_1, Cell Cell_2, Cell Cell_3)
@@ -135,27 +154,71 @@ public class Inventory
 
     public void WriteTip()
     {
-
+        //name[0] = "fsk";
         Console.CursorVisible = false;
         Console.SetCursorPosition(56, 33);
         Console.WriteLine("W - Вверх, S - Вниз, A - Влево, D - Вправо, E - Выбрать, Q - Выйти");
-    }
+        //Console.WriteLine(namber[0]);
+        //Console.WriteLine(Person(0));
 
+    }
+    
 
 
     public void ChooseAmmunition()
     {
-
+        //namber.Add("посох");
         Console.CursorVisible = false;
-        Cell Cell1 = new Cell("Посох", true);
-        Cell Cell2 = new Cell("Оружие", false);
-        Cell Cell3 = new Cell("Броня", false);
-        Cell Cell4 = new Cell("Зелье", false);
-        Cell Cell5 = new Cell("Пусто", false);
-        Cell Cell6 = new Cell("Пусто", false);
-        Cell Cell7 = new Cell("Пусто", false);
-        Cell Cell8 = new Cell("Пусто", false);
-        Cell Cell9 = new Cell("Пусто", false);
+        //Console.WriteLine(namber[1]);
+        bag.Add("Каменный меч");
+        
+        bag.Add("Латы царя");
+
+        for (int i=0; i < 10; i++)
+         {
+             bag.Add("Пусто");
+         }
+        /*
+        bag.Add("Оружие");
+        bag.Add("Посох");
+        bag.Add("Броня");
+        bag.Add("Пусто");
+        bag.Add("Пусто");
+        bag.Add("Пусто");
+        bag.Add("Пусто");
+        bag.Add("Пусто");
+        bag.Add("Пусто");
+        */
+        //bool Contains(bag[0] item);
+        /*
+        internal void PossibleDereferenceNullExamples(Items? messege)
+        {
+            for (int i = 0; i < 10; i++)
+                bag.Add(NULL);
+        }
+        */
+
+        //string ass = name[0];
+        //Console.WriteLine(ass);
+
+        Cell Cell1 = new Cell(bag[0], true);
+        
+        Cell Cell2 = new Cell(bag[1], false);
+        Cell Cell3 = new Cell(bag[2], false);
+        Cell Cell4 = new Cell(bag[3], false);
+        Cell Cell5 = new Cell(bag[4], false);
+        Cell Cell6 = new Cell(bag[5], false);
+        Cell Cell7 = new Cell(bag[6], false);
+        Cell Cell8 = new Cell(bag[7], false);
+        Cell Cell9 = new Cell(bag[8], false);
+        /*
+        Cell Cell1 = new Cell();
+        if (bag[0] == NULL)
+            Cell1("Пусто", true);
+        else
+            Cell1(bag[0].name, true);
+        */
+
 
         ConsoleKeyInfo keyInfo;
         bool continue_cycle = true;
@@ -167,6 +230,8 @@ public class Inventory
             DrawButtons(Cell1, Cell2, Cell3, Cell4, Cell5, Cell6, Cell7, Cell8, Cell9);
             WriteTip();
 
+
+
             keyInfo = Console.ReadKey(true);
             switch (keyInfo.KeyChar)
             {
@@ -175,6 +240,7 @@ public class Inventory
                     {
                         Cell1.isSelected = false;
                         Cell7.isSelected = true;
+
                     }
                     else if (Cell4.isSelected)
                     {
@@ -359,72 +425,83 @@ public class Inventory
                         Cell8.isSelected = true;
                     }
                     break;
-                
+
 
                 case 'e' or 'у':
                     if (Cell1.isSelected)
                     {
+                        n = 0;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell2.isSelected)
                     {
+                        n = 1;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell3.isSelected)
                     {
+                        n = 2;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell4.isSelected)
                     {
+                        n = 3;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell5.isSelected)
                     {
+                        n = 4;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell6.isSelected)
                     {
+                        n = 5;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell7.isSelected)
                     {
+                        n = 6; 
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell8.isSelected)
                     {
+                        n = 7;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
                     else if (Cell9.isSelected)
                     {
+                        n = 8;
                         Console.Clear();
                         SelectAction();
                         continue_cycle = false;
                     }
 
                     break;
-               
+
                 case 'q' or 'й':
                     Console.Clear();
                     return ;
 
                 default: break;
+
             }
+            
         }
     }
     public void SelectAction()
@@ -485,25 +562,23 @@ public class Inventory
 
                     break;
                 case 'e' or 'у':
-                    /*
-                    if (wizard.isSelected)
+                    
+                    if (choice.isSelected)
                     {
-                        this.hero_class = "wizard";
-                        continue_cycle = false;
-                        this.isHeroChosen = true;
+                        hand.Add(bag[n]);
+                        Console.Clear();
+                        ChooseAmmunition();
+
                     }
-                    else if (barbarian.isSelected)
+                    else if (blowoutn.isSelected)
                     {
-                        this.hero_class = "barbarian";
-                        continue_cycle = false;
-                        this.isHeroChosen = true;
+                        bag.RemoveAt(n);
+                        bag.Add("Пусто");
+                        Console.Clear();
+                        ChooseAmmunition();
                     }
-                    else if (prowler.isSelected)
-                    {
-                        this.hero_class = "prowler";
-                        continue_cycle = false;
-                        this.isHeroChosen = true;
-                    }*/
+                   
+                    
                     if (cancellation.isSelected)
                     {
                         Console.Clear();
