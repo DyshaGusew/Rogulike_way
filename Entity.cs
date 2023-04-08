@@ -144,8 +144,8 @@ public class Monsters
         {
             count_monsters = random.Next(1, 3);
         }
-        else if(room.map.GetLength(1) * room.map.GetLength(0) <= 700 && room.map.GetLength(1) * room.map.GetLength(0) >= 450) 
-        { 
+        else if (room.map.GetLength(1) * room.map.GetLength(0) <= 700 && room.map.GetLength(1) * room.map.GetLength(0) >= 450)
+        {
             count_monsters = random.Next(2, 3);
         }
         else if (room.map.GetLength(1) * room.map.GetLength(0) > 700)
@@ -156,7 +156,7 @@ public class Monsters
         {
             count_monsters = random.Next(1, 5);
         }
-        
+
 
         for (int i = 0; i < count_monsters; i++)
         {
@@ -194,8 +194,218 @@ public class Monsters
             monster.coordinates = new int[] { random.Next(1, room.map.GetLength(1) - 2), random.Next(2, room.map.GetLength(0) - 2) };
             room.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
             room.monsters_list.Add(monster);
-           
+
         }
+    }
+
+    static public void Move(string trend, ref RealRoom roomCurrent, Monsters monster, ref World world)
+    {
+        if (trend == "Left")
+        {
+            //Указываю координаты смещения и сохраняю объект, который в них находится
+            int[] moveCoordinates = { monster.coordinates[0] - 1, monster.coordinates[1] };   //Указываю каково смещение
+            Object? obj = world.DefiningArea(moveCoordinates, roomCurrent);  //Какой-то объект пока неизвестно какой на предположительно измененных координатах
+
+            //Проверка на наличее в перемещаемой координате чего-либо
+            if (obj is Borders)   //Проверяю принадлежит ли объект классу стен
+            {
+                return;
+            }
+
+            else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
+            {
+                return;
+            }
+
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
+            {
+                return;
+            }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                return;
+            }
+
+            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] -= 1; monster.coordinates[1] -= 0;
+
+
+               // roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+              //  DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+                MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
+            }
+
+            //Если простанство пустое
+            else
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] -= 1; monster.coordinates[1] -= 0;
+
+
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+                DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+            }
+        }
+
+        //Остальное работает подобно верхнему
+        if (trend == "Right")
+        {
+            int[] move_coordinates = { monster.coordinates[0] + 1, monster.coordinates[1] };
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
+
+            if (obj is Borders)
+            {
+                return;
+            }
+
+            else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
+            {
+                return;
+            }
+
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
+            {
+                return;
+            }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                return;
+            }
+            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] += 1; monster.coordinates[1] -= 0;
+
+
+              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+               // DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+                MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
+
+            }
+
+            //Если простанство пустое
+            else
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] += 1; monster.coordinates[1] -= 0;
+
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+                DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+            }
+        }
+
+        if (trend == "Up")
+        {
+            int[] move_coordinates = { monster.coordinates[0], monster.coordinates[1] - 1 };
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
+
+            if (obj is Borders)
+            {
+                return;
+            }
+
+            else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
+            {
+                return;
+            }
+
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
+            {
+                return;
+            }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                return;
+            }
+            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] += 0; monster.coordinates[1] -= 1;
+
+
+              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+              //  DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+                MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
+            }
+
+            //Если простанство пустое
+            else
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] += 0; monster.coordinates[1] -= 1;
+
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+                DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+            }
+        }
+
+        if (trend == "Down")
+        {
+            int[] move_coordinates = { monster.coordinates[0], monster.coordinates[1] + 1 };
+            Object? obj = world.DefiningArea(move_coordinates, roomCurrent);
+
+            if (obj is Borders)
+            {
+                return;
+            }
+
+            else if (obj is Doors)   //Проверяю принадлежит ли объект классу дверей
+            {
+                return;
+            }
+
+            else if (obj is Monsters)   //Проверяю принадлежит ли объект классу монстров
+            {
+                return;
+            }
+
+            else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
+            {
+                return;
+            }
+            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] -= 0; monster.coordinates[1] += 1;
+
+
+              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+             //   DraftGame.PutCurs(monster.designation, monster.coordinates[1]+1, monster.coordinates[0]);
+                MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
+            }
+
+            //Если простанство пустое
+            else
+            {
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
+                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
+
+                monster.coordinates[0] += 0; monster.coordinates[1] += 1;
+
+                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
+                DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
+            }
+        }
+
     }
 }
 public class Ork : Monsters

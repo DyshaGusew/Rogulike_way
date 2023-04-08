@@ -17,19 +17,23 @@ while (true)
     switch (keyInfo.KeyChar)
     {
         case 'w' or 'ц':
-            MovePlayer.Move("Up", ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Up", ref world.currentRoom, ref world);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             break;
 
         case 's' or 'ы':
-            MovePlayer.Move("Down", ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Down", ref world.currentRoom, ref world);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             break;
 
         case 'd' or 'в':
-            MovePlayer.Move("Right", ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Right", ref world.currentRoom, ref world);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             break;
 
         case 'a' or 'ф':
-            MovePlayer.Move("Left", ref world.currentRoom, ref world);
+            MoveEntity.MovePlayer("Left", ref world.currentRoom, ref world);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             break;
 
         case 'e' or 'у':
@@ -45,11 +49,11 @@ while (true)
             break;
     }
     //Условие появления босса
-    if(world.hero.countDeadMonsters == 10)
+    if(world.hero.countDeadMonsters == 15)
     {
         world.hero.NowHealht = world.hero.StaticHealht;
         world.hero.NowStamina = world.hero.StaticStamina;
-        Bosses boss = new Bosses(100, 50, "БАЛРОГ, демон тьмы");
+        Bosses boss = new Bosses(500, 70, "БАЛРОГ, демон тьмы");
         Console.Clear();
         Console.SetCursorPosition(60, 15);
         Console.Write($"Кажется, вы слышите шаги...");
@@ -371,9 +375,9 @@ class DraftGame
 }
 
 //Передвижение героя(необходимо добавить проверку на наличие чего-то кроме стен и дверей)
-class MovePlayer
+class MoveEntity
 {
-    static public void Move(string trend, ref RealRoom roomCurrent, ref World world)
+    static public void MovePlayer(string trend, ref RealRoom roomCurrent, ref World world)
     {
         if (trend == "Left")
         {
@@ -509,6 +513,16 @@ class MovePlayer
         }
     }
 
+    static public void MoveMonsters(ref RealRoom roomCurrent, ref World world)
+    {
+        string[] move = {"Up", "Down", "Left", "Right" };
+        foreach(Monsters monster in roomCurrent.monsters_list)
+        {
+            Random random = new Random();
+            Monsters.Move(move[random.Next(0, 4)],ref roomCurrent, monster, ref world);
+        }
+        
+    }
     //При обнаружении монстра
     static public void ModsterDef(Monsters monster, RealRoom roomCurrent, ref World world, string move)
     {
