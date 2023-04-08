@@ -17,27 +17,34 @@ while (true)
     switch (keyInfo.KeyChar)
     {
         case 'w' or 'ц':
-            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+            
             MoveEntity.MovePlayer("Up", ref world.currentRoom, ref world);
+            Thread.Sleep(50);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
 
 
             break;
 
         case 's' or 'ы':
-            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+           // MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             MoveEntity.MovePlayer("Down", ref world.currentRoom, ref world);
+            Thread.Sleep(50);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
 
             break;
 
         case 'd' or 'в':
             MoveEntity.MovePlayer("Right", ref world.currentRoom, ref world);
+            Thread.Sleep(50);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
 
             break;
 
         case 'a' or 'ф':
-            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
+            //MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             MoveEntity.MovePlayer("Left", ref world.currentRoom, ref world);
+            Thread.Sleep(50);
+            MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
 
 
             break;
