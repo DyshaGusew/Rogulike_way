@@ -14,7 +14,7 @@ public class Hero
     public int armor = 0;
     public double damage = 40;
     public int level = 1;
-    public int experience = 90;
+    public int experience = 0;
     public double boost = 1.0;
     public Inventory inventory = new Inventory();
 
@@ -229,15 +229,9 @@ public class Monsters
 
             else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
             {
-                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
 
-                monster.coordinates[0] -= 1; monster.coordinates[1] -= 0;
-
-
-               // roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
-              //  DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
                 MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
+
             }
 
             //Если простанство пустое
@@ -281,15 +275,9 @@ public class Monsters
             }
             else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
             {
-                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
 
-                monster.coordinates[0] += 1; monster.coordinates[1] -= 0;
-
-
-              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
-               // DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
                 MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
+
 
             }
 
@@ -332,15 +320,9 @@ public class Monsters
             }
             else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
             {
-                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
 
-                monster.coordinates[0] += 0; monster.coordinates[1] -= 1;
-
-
-              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
-              //  DraftGame.PutCurs(monster.designation, monster.coordinates[1], monster.coordinates[0]);
                 MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
+
             }
 
             //Если простанство пустое
@@ -382,15 +364,9 @@ public class Monsters
             }
             else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
             {
-                roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = ' ';
-                DraftGame.PutCurs(' ', monster.coordinates[1], monster.coordinates[0]);
 
-                monster.coordinates[0] -= 0; monster.coordinates[1] += 1;
-
-
-              //  roomCurrent.map[monster.coordinates[1], monster.coordinates[0]] = monster.designation;
-             //   DraftGame.PutCurs(monster.designation, monster.coordinates[1]+1, monster.coordinates[0]);
                 MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
+
             }
 
             //Если простанство пустое
