@@ -227,12 +227,7 @@ public class Monsters
                 return;
             }
 
-            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
-            {
 
-                MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
-
-            }
 
             //Если простанство пустое
             else
@@ -273,13 +268,7 @@ public class Monsters
             {
                 return;
             }
-            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
-            {
 
-                MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
-
-
-            }
 
             //Если простанство пустое
             else
@@ -318,12 +307,7 @@ public class Monsters
             {
                 return;
             }
-            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
-            {
 
-                MoveEntity.ModsterDef(monster, roomCurrent,ref world, trend);
-
-            }
 
             //Если простанство пустое
             else
@@ -361,12 +345,6 @@ public class Monsters
             else if (obj is Chest)   //Проверяю принадлежит ли объект классу сундуков
             {
                 return;
-            }
-            else if (obj is Hero)   //Проверяю принадлежит ли объект классу монстров
-            {
-
-                MoveEntity.ModsterDef(monster, roomCurrent, ref world, trend);
-
             }
 
             //Если простанство пустое
