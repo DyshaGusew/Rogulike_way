@@ -3,6 +3,7 @@
 
 //Класс Мини комнат с разными характеристиками
 
+using Rogulike_way;
 using System;
 using System.Threading;
 
@@ -669,6 +670,7 @@ public class World
     //Проверка объекта в координатах(изучение области) куда надо пойти
     public Object? DefiningArea(int[] coordinates_move, RealRoom room)      
    {
+ 
         if (hero.coordinates.SequenceEqual(coordinates_move)) //Штучка для сравнения массивов
         {
             return hero;                 //Возыращает героя

@@ -17,36 +17,27 @@ while (true)
     switch (keyInfo.KeyChar)
     {
         case 'w' or 'ц':
-            
             MoveEntity.MovePlayer("Up", ref world.currentRoom, ref world);
             Thread.Sleep(50);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
-
-
             break;
 
         case 's' or 'ы':
-           // MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             MoveEntity.MovePlayer("Down", ref world.currentRoom, ref world);
             Thread.Sleep(50);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
-
             break;
 
         case 'd' or 'в':
             MoveEntity.MovePlayer("Right", ref world.currentRoom, ref world);
             Thread.Sleep(50);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
-
             break;
 
         case 'a' or 'ф':
-            //MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
             MoveEntity.MovePlayer("Left", ref world.currentRoom, ref world);
             Thread.Sleep(50);
             MoveEntity.MoveMonsters(ref world.currentRoom, ref world);
-
-
             break;
 
         case 'e' or 'у':
@@ -392,6 +383,86 @@ class MoveEntity
 {
     static public void MovePlayer(string trend, ref RealRoom roomCurrent, ref World world)
     {
+        Object? obj = world.DefiningArea(world.hero.coordinates, roomCurrent);
+        if (obj is Monsters)
+        {
+            Monsters monster = (Monsters)obj;
+            Fight fight = new();
+            if (fight.Start(world.hero, monster) == 1)
+            {
+                world.hero.countDeadMonsters++;
+                roomCurrent.monsters_list.Remove(monster);
+                world.hero.experience += monster.experience;
+                //Проверка уровня
+                world.hero.CheckAndLevelUp(world);
+
+                //Проверка на предмет в монстре
+                if (monster.item != null)
+                {
+                    if (monster.item is StaminaPotion)
+                    {
+                        StaminaPotion staminaPotion = (StaminaPotion)monster.item;
+
+                        Console.Clear();
+                        Console.SetCursorPosition(50, 15);
+                        Console.Write($"Вам достался предмет: {staminaPotion.name} Уровень: {staminaPotion.level}");
+                        Console.SetCursorPosition(50, 16);
+                        Console.Write($"Ваша выносливость увеличелась на {staminaPotion.stamina}");
+                        Thread.Sleep(3000);
+
+                        world.hero.HealSp(staminaPotion.stamina);
+                    }
+                    else if (monster.item is HealingPotion)
+                    {
+                        HealingPotion healingPotion = (HealingPotion)monster.item;
+
+                        Console.Clear();
+                        Console.SetCursorPosition(50, 15);
+                        Console.Write($"Вам достался предмет: {healingPotion.name} Уровень: {healingPotion.level}");
+                        Console.SetCursorPosition(50, 16);
+                        Console.Write($"Ваш уровень жизней увеличелся на {healingPotion.heal}");
+                        Thread.Sleep(3000);
+
+                        world.hero.HealHp(healingPotion.heal);
+
+                    }
+                    else
+                    {
+                        DraftGame.DraftChoisItem(monster.item, world.hero.inventory);
+                    }
+
+                }
+                foreach (Monsters monster_ in roomCurrent.monsters_list)
+                {
+                    if (monster_ == monster)
+                    {
+                        roomCurrent.monsters_list.Remove(monster_);
+                    }
+                }
+
+                DraftGame.DraftPlane(roomCurrent, world);
+            }
+            else
+            {
+                Thread.Sleep(1000);
+                Console.Clear();
+                Console.SetCursorPosition(70, 15); Console.Write("Увы, вы проиграли");
+                if (world.hero.level > 1)
+                {
+                    Console.SetCursorPosition(70, 16); Console.Write($" Ваш счет: {world.hero.experience + (world.hero.level * 100)}");
+                }
+                else
+                {
+                    Console.SetCursorPosition(70, 16); Console.Write($"  Ваш счет: {world.hero.experience}");
+                }
+
+                Thread.Sleep(2500);
+                Menu menu = new();
+                menu.Show();
+                world = new World();
+                world = StartGame.CreateWorld(menu);
+            }
+        }
         if (trend == "Left")
         {
             //Указываю координаты смещения и сохраняю объект, который в них находится
